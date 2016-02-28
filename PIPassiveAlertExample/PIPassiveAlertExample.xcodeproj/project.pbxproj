@@ -13,6 +13,7 @@
 		2F9EAF991C83456500A18F84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EAF971C83456500A18F84 /* Main.storyboard */; };
 		2F9EAF9B1C83456500A18F84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EAF9A1C83456500A18F84 /* Assets.xcassets */; };
 		2F9EAF9E1C83456500A18F84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EAF9C1C83456500A18F84 /* LaunchScreen.storyboard */; };
+		95BB2D65139D01125FBD3B32 /* libPods-PIPassiveAlertExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9389B9E4A5430E22C7163090 /* libPods-PIPassiveAlertExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,9 @@
 		2F9EAF9A1C83456500A18F84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F9EAF9D1C83456500A18F84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F9EAF9F1C83456500A18F84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6281AB840300249201C90C5A /* Pods-PIPassiveAlertExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PIPassiveAlertExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PIPassiveAlertExample/Pods-PIPassiveAlertExample.release.xcconfig"; sourceTree = "<group>"; };
+		9389B9E4A5430E22C7163090 /* libPods-PIPassiveAlertExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PIPassiveAlertExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F060120091D47447AECBA3A0 /* Pods-PIPassiveAlertExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PIPassiveAlertExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PIPassiveAlertExample/Pods-PIPassiveAlertExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95BB2D65139D01125FBD3B32 /* libPods-PIPassiveAlertExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05E0DF985F3FA6675A1C02BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F060120091D47447AECBA3A0 /* Pods-PIPassiveAlertExample.debug.xcconfig */,
+				6281AB840300249201C90C5A /* Pods-PIPassiveAlertExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2F9EAF821C83456500A18F84 = {
 			isa = PBXGroup;
 			children = (
 				2F9EAF8D1C83456500A18F84 /* PIPassiveAlertExample */,
 				2F9EAF8C1C83456500A18F84 /* Products */,
+				05E0DF985F3FA6675A1C02BA /* Pods */,
+				A0DB53FAE327FD48DF351E9C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +95,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A0DB53FAE327FD48DF351E9C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9389B9E4A5430E22C7163090 /* libPods-PIPassiveAlertExample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F9EAFA21C83456500A18F84 /* Build configuration list for PBXNativeTarget "PIPassiveAlertExample" */;
 			buildPhases = (
+				10AEE543B9453483720FE110 /* Check Pods Manifest.lock */,
 				2F9EAF871C83456500A18F84 /* Sources */,
 				2F9EAF881C83456500A18F84 /* Frameworks */,
 				2F9EAF891C83456500A18F84 /* Resources */,
+				1095CFF3731B0528C61D1CA9 /* Embed Pods Frameworks */,
+				D8B790F892BA446D6FE93CAF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -143,6 +170,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1095CFF3731B0528C61D1CA9 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PIPassiveAlertExample/Pods-PIPassiveAlertExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		10AEE543B9453483720FE110 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D8B790F892BA446D6FE93CAF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PIPassiveAlertExample/Pods-PIPassiveAlertExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2F9EAF871C83456500A18F84 /* Sources */ = {
@@ -259,6 +334,7 @@
 		};
 		2F9EAFA31C83456500A18F84 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F060120091D47447AECBA3A0 /* Pods-PIPassiveAlertExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PIPassiveAlertExample/Info.plist;
@@ -270,6 +346,7 @@
 		};
 		2F9EAFA41C83456500A18F84 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6281AB840300249201C90C5A /* Pods-PIPassiveAlertExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PIPassiveAlertExample/Info.plist;
@@ -298,6 +375,7 @@
 				2F9EAFA41C83456500A18F84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
