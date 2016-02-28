@@ -1,5 +1,5 @@
 //
-//  PIPassiveAlert.h
+//  PassiveAlert.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,6 +23,13 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "PassiveAlert.h"
+
+@interface PassiveAlert ()
+
+@end
+
+
+@implementation PassiveAlert
+
+@end
