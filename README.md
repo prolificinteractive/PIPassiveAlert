@@ -1,3 +1,3 @@
 # PIPassiveAlert
 
-A banner alert library in Objective-C.
+A banner alert library in Objective-C. :rotating_light:
