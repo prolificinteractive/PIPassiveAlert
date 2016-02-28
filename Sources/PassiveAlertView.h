@@ -25,9 +25,47 @@
 
 #import <UIKit/UIKit.h>
 
+@class PassiveAlert;
+
+/**
+ *  The passive alert view show-types.
+ */
+typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
+    /**
+     *  Top.
+     */
+    PassiveAlertViewShowTypeTop,
+    /**
+     *  Bottom.
+     */
+    PassiveAlertViewShowTypeBottom,
+    /**
+     *  Navigation bar.
+     */
+    PassiveAlertViewShowTypeNavigationBar,
+    /**
+     *  Custom origin.
+     */
+    PassiveAlertViewShowTypeCustomOrigin
+};
+
 /**
  *  Passive alert view.
  */
 @interface PassiveAlertView : UIView
+
+/**
+ *  The show type of the passive alert view.
+ */
+@property (nonatomic, assign) PassiveAlertViewShowType showType;
+
+/**
+ *  Creates alert view for provided aleert.
+ *
+ *  @param alert Alert to base alert view off of.
+ *
+ *  @returns New alert view.
+ */
++ (instancetype)alertViewForAlert:(PassiveAlert *)alert;
 
 @end

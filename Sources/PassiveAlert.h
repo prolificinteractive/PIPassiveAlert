@@ -49,11 +49,32 @@
 - (void)passiveAlertDidReceiveCloseAction:(PassiveAlert *)passiveAlert;
 
 /**
+ *  Auto-hide delay to be used for passive alert.
+ *
+ *  @returns Auto-hide dealy.
+ */
+- (CGFloat)passiveAlertAutoHideDelay;
+
+/**
  *  Height to be used for passive alert.
  *
  *  @returns Height.
  */
 - (CGFloat)passiveAlertHeight;
+
+/**
+ *  Background color to be used for passive alert.
+ *
+ *  @returns Color.
+ */
+- (UIColor *)passiveAlertBackgroundColor;
+
+/**
+ *  Text color to be used for passive alert.
+ *
+ *  @returns Color.
+ */
+- (UIColor *)passiveAlertTextColor;
 
 /**
  *  Font to be used for passive alert.
@@ -127,6 +148,21 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 @property (nonatomic, assign) BOOL shouldAutoHide;
 
 /**
+ *  If auto-hiding, time after display before auto-hide occurs.
+ */
+@property (nonatomic, assign) CGFloat autoHideDelay;
+
+/**
+ *  Background color.
+ */
+@property (nonatomic, strong) UIColor *backgroundColor;
+
+/**
+ *  Text color.
+ */
+@property (nonatomic, strong) UIColor *textColor;
+
+/**
  *  The font of the passive alert.
  */
 @property (nonatomic, strong) UIFont *font;
@@ -177,11 +213,32 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 + (void)closeCurrentAlertAnimated:(BOOL)animated;
 
 /**
+ *  Default auto-hide delay used for passive alert if none provided.
+ *
+ *  @returns Auto-hide delay.
+ */
++ (CGFloat)defaultAutoHideDelay;
+
+/**
  *  Default height used for passive alert if none provided.
  *
  *  @returns Height.
  */
 + (CGFloat)defaultHeight;
+
+/**
+ *  Default background color used for passive alert if none provided.
+ *
+ *  @returns Color.
+ */
++ (UIColor *)defaultBackgroundColor;
+
+/**
+ *  Default text color used for passive alert if none provided.
+ *
+ *  @returns Height.
+ */
++ (UIColor *)defaultTextColor;
 
 /**
  *  Default font used for passive alert if none provided.
@@ -200,15 +257,18 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 /**
  *  Creates new passive alert with the specified attributes.
  *
- *  @param message         The message to display.
- *  @param height          The height.
- *  @param showType        The show type.
- *  @param shouldAutoHide: Whether the alert should auto-hide.
- *  @param font            The font to use in display.
- *  @param textAlignment:  The text alignment to use in display.
- *  @param delegate        The delegate for the alert.
+ *  @param message          The message to display.
+ *  @param showType         The show type.
+ *  @param shouldAutoHide:  Whether the alert should auto-hide.
+ *  @param autoHideDelay:   If auto-hiding, time after display before auto-hide occurs.
+ *  @param height           The height.
+ *  @param backgroundColor: Background color.
+ *  @param textColor:       Text color.
+ *  @param font             The font to use in display.
+ *  @param textAlignment:   The text alignment to use in display.
+ *  @param delegate         The delegate for the alert.
  */
-- (instancetype)initWithMessage:(NSString *)message height:(CGFloat)height showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
+- (instancetype)initWithMessage:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
  *  Shows alert in view controller.
@@ -216,5 +276,12 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
  *  @param vc View controller to display alert in.
  */
 - (void)showInViewController:(UIViewController *)vc;
+
+/**
+ *  Closes alert.
+ *
+ *  @param animated Whether closing of alert should be animated.
+ */
+- (void)closeAnimated:(BOOL)animted;
 
 @end

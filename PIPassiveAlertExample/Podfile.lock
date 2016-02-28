@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PIPassiveAlert: a20ef9199f26dac5d93d4b1fa76f7382841c789f
+  PIPassiveAlert: 2f7030dbbca83bb4ca18ff95603c296a72971046
 
 COCOAPODS: 0.39.0
