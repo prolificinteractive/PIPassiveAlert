@@ -10,9 +10,9 @@
 		2F9EAF671C833D4000A18F84 /* PIPassiveAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9EAF5C1C833D4000A18F84 /* PIPassiveAlert.framework */; };
 		2F9EAF6C1C833D4000A18F84 /* PIPassiveAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9EAF6B1C833D4000A18F84 /* PIPassiveAlertTests.swift */; };
 		2F9EAF7D1C833ED700A18F84 /* PIPassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2F9EAF801C8344AB00A18F84 /* PassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7E1C8344AB00A18F84 /* PassiveAlert.h */; };
+		2F9EAF801C8344AB00A18F84 /* PassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7E1C8344AB00A18F84 /* PassiveAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F9EAF811C8344AB00A18F84 /* PassiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9EAF7F1C8344AB00A18F84 /* PassiveAlert.m */; };
-		2F9EAFE91C83551100A18F84 /* PassiveAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAFE71C83551100A18F84 /* PassiveAlertView.h */; };
+		2F9EAFE91C83551100A18F84 /* PassiveAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAFE71C83551100A18F84 /* PassiveAlertView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F9EAFEA1C83551100A18F84 /* PassiveAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9EAFE81C83551100A18F84 /* PassiveAlertView.m */; };
 /* End PBXBuildFile section */
 
