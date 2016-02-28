@@ -23,11 +23,70 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@class PassiveAlert;
+@class PassiveAlertView;
+
+/**
+ *  Defines methods for receiving notifications from a passive alert.
+ */
+@protocol PassiveAlertDelegate <NSObject>
+
+@optional
+
+/**
+ *  Indicates that the passive alert received a tap.
+ *
+ *  @param passiveAlert The passive alert that received the tap.
+ */
+- (void)passiveAlertDidReceiveTapAction:(PassiveAlert *)passiveAlert;
+
+/**
+ *  Indicates that the passiev alert received a close action.
+ *
+ *  @param passiveAlert The passive alert that received the close action.
+ */
+- (void)passiveAlertDidReceiveCloseAction:(PassiveAlert *)passiveAlert;
+
+@end
 
 /**
  *  Passive alert.
  */
 @interface PassiveAlert : NSObject
+
+/**
+ *  The delegate of the passive alert.
+ */
+@property (nonatomic, weak) id<PassiveAlertDelegate> delegate;
+
+/**
+ *  Creates and displays a passive alert with the specified message in the specified view controller.
+ *  The passive alert will display from the top of the view controller's view.
+ *
+ *  @param message  The message to display in the passive alert.
+ *  @param vc       The view controller the alert should be displayed in.
+ *  @param delegate The delegate for the passive alert.
+ */
++ (void)showMessage:(NSString *)message
+   inViewController:(UIViewController *)vc
+           delegate:(id<PassiveAlertDelegate>)delegate;
+
+/**
+ *  Creates and displays a passive alert with the specified message in the root window of the application.
+ *
+ *  @param message        The message to display.
+ *  @param delegate       The delegate for the passive alert.
+ */
++ (void)showWindowMessage:(NSString *)message
+                 delegate:(id<PassiveAlertDelegate>)delegate;
+
+/**
+ *  Closes the currently displaying alert. If no alert is displaying, nothing happens.
+ *
+ *  @param animated YES if the alert should close with an animation; otherwise NO.
+ */
++ (void)closeCurrentAlertAnimated:(BOOL)animated;
 
 @end

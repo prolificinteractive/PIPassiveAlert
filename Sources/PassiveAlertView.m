@@ -1,5 +1,5 @@
 //
-//  PassiveAlert.h
+//  PassiveAlertView.m
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,30 +23,13 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlert.h"
+#import "PassiveAlertView.h"
 
-@interface PassiveAlert ()
+@interface PassiveAlertView ()
 
 @end
 
 
-@implementation PassiveAlert
-
-#pragma mark - Class methods
-
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PassiveAlertDelegate>)delegate {
-    NSLog(@"Showing alert message for view controller: %@", message);
-}
-
-+ (void)showWindowMessage:(NSString *)message
-                 delegate:(id<PassiveAlertDelegate>)delegate {
-    NSLog(@"Showing alet message for window: %@", message);
-}
-
-+ (void)closeCurrentAlertAnimated:(BOOL)animated {
-    NSLog(@"Closing alert; animated: %i", animated);
-}
+@implementation PassiveAlertView
 
 @end
