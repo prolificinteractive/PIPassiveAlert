@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F9EAF671C833D4000A18F84 /* PIPassiveAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9EAF5C1C833D4000A18F84 /* PIPassiveAlert.framework */; };
 		2F9EAF6C1C833D4000A18F84 /* PIPassiveAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9EAF6B1C833D4000A18F84 /* PIPassiveAlertTests.swift */; };
-		2F9EAF7C1C833ED700A18F84 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EAF7A1C833ED700A18F84 /* Info.plist */; };
-		2F9EAF7D1C833ED700A18F84 /* PIPassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */; };
+		2F9EAF7D1C833ED700A18F84 /* PIPassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,7 +177,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F9EAF7C1C833ED700A18F84 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
