@@ -42,11 +42,32 @@
 - (void)passiveAlertDidReceiveTapAction:(PassiveAlert *)passiveAlert;
 
 /**
- *  Indicates that the passiev alert received a close action.
+ *  Indicates that the passive alert received a close action.
  *
  *  @param passiveAlert The passive alert that received the close action.
  */
 - (void)passiveAlertDidReceiveCloseAction:(PassiveAlert *)passiveAlert;
+
+/**
+ *  Height to be used for passive alert.
+ *
+ *  @returns Height.
+ */
+- (CGFloat)passiveAlertHeight;
+
+/**
+ *  Font to be used for passive alert.
+ *
+ *  @returns Font.
+ */
+- (UIFont *)passiveAlertFont;
+
+/**
+ *  Text alignment to be used for passive alert.
+ *
+ *  @returns Text alignment.
+ */
+- (NSTextAlignment)passiveAlertTextAlignment;
 
 @end
 
@@ -84,6 +105,36 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
  *  The delegate of the passive alert.
  */
 @property (nonatomic, weak) id<PassiveAlertDelegate> delegate;
+
+/**
+ *  The message of the passive alert.
+ */
+@property (nonatomic, copy) NSString *message;
+
+/**
+ *  The height of the passive alert.
+ */
+@property (nonatomic, assign) CGFloat height;
+
+/**
+ *  The show type of the passive alert.
+ */
+@property (nonatomic, assign) PassiveAlertShowType showType;
+
+/**
+ *  Whether the passive alert should auto-hide.
+ */
+@property (nonatomic, assign) BOOL shouldAutoHide;
+
+/**
+ *  The font of the passive alert.
+ */
+@property (nonatomic, strong) UIFont *font;
+
+/**
+ *  The text alignment of the passive alert.
+ */
+@property (nonatomic, assign) NSTextAlignment textAlignment;
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
@@ -124,5 +175,46 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
  *  @param animated YES if the alert should close with an animation; otherwise NO.
  */
 + (void)closeCurrentAlertAnimated:(BOOL)animated;
+
+/**
+ *  Default height used for passive alert if none provided.
+ *
+ *  @returns Height.
+ */
++ (CGFloat)defaultHeight;
+
+/**
+ *  Default font used for passive alert if none provided.
+ *
+ *  @returns Font.
+ */
++ (UIFont *)defaultFont;
+
+/**
+ *  Default text alignment used for passive alert if none provided.
+ *
+ *  @returns Text alignment.
+ */
++ (NSTextAlignment)defaultTextAlignment;
+
+/**
+ *  Creates new passive alert with the specified attributes.
+ *
+ *  @param message         The message to display.
+ *  @param height          The height.
+ *  @param showType        The show type.
+ *  @param shouldAutoHide: Whether the alert should auto-hide.
+ *  @param font            The font to use in display.
+ *  @param textAlignment:  The text alignment to use in display.
+ *  @param delegate        The delegate for the alert.
+ */
+- (instancetype)initWithMessage:(NSString *)message height:(CGFloat)height showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
+
+/**
+ *  Shows alert in view controller.
+ *
+ *  @param vc View controller to display alert in.
+ */
+- (void)showInViewController:(UIViewController *)vc;
 
 @end
