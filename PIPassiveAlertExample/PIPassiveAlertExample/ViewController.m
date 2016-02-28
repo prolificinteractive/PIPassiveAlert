@@ -6,6 +6,7 @@
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
+#import "PIPassiveAlert.h"
 #import "ViewController.h"
 
 @interface ViewController ()
@@ -17,6 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    PassiveAlert *alert = [[PassiveAlert alloc] init];
+    
+    NSLog(@"%@", alert);
 }
 
 - (void)didReceiveMemoryWarning {
