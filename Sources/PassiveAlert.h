@@ -49,9 +49,16 @@
 - (void)passiveAlertDidReceiveCloseAction:(PassiveAlert *)passiveAlert;
 
 /**
+ *  Nib used for UI of passive alert.
+ *
+ *  @returns Nib.
+ */
+- (UINib *)passiveAlertNib;
+
+/**
  *  Auto-hide delay to be used for passive alert.
  *
- *  @returns Auto-hide dealy.
+ *  @returns Auto-hide delay.
  */
 - (CGFloat)passiveAlertAutoHideDelay;
 
@@ -126,6 +133,11 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
  *  The delegate of the passive alert.
  */
 @property (nonatomic, weak) id<PassiveAlertDelegate> delegate;
+
+/**
+ *  The nib used for UI of passive alert.
+ */
+@property (nonatomic, strong) UINib *nib;
 
 /**
  *  The message of the passive alert.
@@ -220,6 +232,13 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 + (CGFloat)defaultAutoHideDelay;
 
 /**
+ *  Default nib used for passive alert if none provided.
+ *
+ *  @returns Nib.
+ */
++ (UINib *)defaultNib;
+
+/**
  *  Default height used for passive alert if none provided.
  *
  *  @returns Height.
@@ -257,6 +276,7 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 /**
  *  Creates new passive alert with the specified attributes.
  *
+ *  @param nib              A nib containing a PassiveAlertView.
  *  @param message          The message to display.
  *  @param showType         The show type.
  *  @param shouldAutoHide:  Whether the alert should auto-hide.
@@ -268,7 +288,7 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
  *  @param textAlignment:   The text alignment to use in display.
  *  @param delegate         The delegate for the alert.
  */
-- (instancetype)initWithMessage:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
+- (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
  *  Shows alert in view controller.

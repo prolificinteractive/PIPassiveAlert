@@ -25,8 +25,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class PassiveAlert;
-
 /**
  *  The passive alert view show-types.
  */
@@ -60,12 +58,19 @@ typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
 @property (nonatomic, assign) PassiveAlertViewShowType showType;
 
 /**
- *  Creates alert view for provided aleert.
+ *  Creates alert view for provided attributes.
  *
- *  @param alert Alert to base alert view off of.
+ *  @param nib             Nib for alert view.
+ *  @param message         Message for alert view.
+ *  @param showType        Show type for alert view.
+ *  @param backgroundColor Background color type for alert view.
+ *  @param textColor       Text color for alert view.
+ *  @param font            Font for alert view.
+ *  @param textAlightment  Text alignment for alert view.
+ *  @param Height          Height for alert view.
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewForAlert:(PassiveAlert *)alert;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height;
 
 @end

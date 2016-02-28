@@ -26,6 +26,10 @@
 #import "PassiveAlert.h"
 #import "PassiveAlertView.h"
 
+#pragma mark - Constants
+
+static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
+
 @interface PassiveAlert ()
 
 @property (nonatomic, strong) PassiveAlertView *alertView;
@@ -52,6 +56,7 @@ static PassiveAlert *currentAlert = nil;
 
 + (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
     
+    UINib *nib = [self defaultNib];
     CGFloat autoHideDelay = [self defaultAutoHideDelay];
     CGFloat height = [self defaultHeight];
     UIColor *backgroundColor = [self defaultBackgroundColor];
@@ -60,6 +65,10 @@ static PassiveAlert *currentAlert = nil;
     NSTextAlignment textAlignment = [self defaultTextAlignment];
     
     if (delegate) {
+        if ([delegate respondsToSelector:@selector(passiveAlertNib)]) {
+            nib = [delegate passiveAlertNib];
+        }
+        
         if ([delegate respondsToSelector:@selector(passiveAlertAutoHideDelay)]) {
             autoHideDelay = [delegate passiveAlertAutoHideDelay];
         }
@@ -85,7 +94,8 @@ static PassiveAlert *currentAlert = nil;
         }
     }
     
-    PassiveAlert *alert = [[PassiveAlert alloc] initWithMessage:message showType:showType shouldAutoHide:shouldAutoHide autoHideDelay:autoHideDelay height:height backgroundColor:backgroundColor textColor:textColor font:font textAlignment:textAlignment delegate:delegate];
+    PassiveAlert *alert = [[PassiveAlert alloc] initWithNib:nib message:message showType:showType shouldAutoHide:shouldAutoHide autoHideDelay:autoHideDelay height:height backgroundColor:backgroundColor textColor:textColor font:font textAlignment:textAlignment delegate:delegate];
+    
     [alert showInViewController:vc];
 }
 
@@ -96,6 +106,10 @@ static PassiveAlert *currentAlert = nil;
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
     NSLog(@"Closing alert; animated: %i", animated);
+}
+
++ (UINib *)defaultNib {
+    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:nil];
 }
 
 + (CGFloat)defaultAutoHideDelay {
@@ -122,12 +136,39 @@ static PassiveAlert *currentAlert = nil;
     return NSTextAlignmentCenter;
 }
 
+#pragma mark Private class methods
+
++ (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {
+    switch (alertShowType) {
+        case PassiveAlertShowTypeTop:
+            return PassiveAlertViewShowTypeTop;
+            break;
+            
+        case PassiveAlertShowTypeBottom:
+            return PassiveAlertViewShowTypeBottom;
+            break;
+            
+        case PassiveAlertShowTypeNavigationBar:
+            return PassiveAlertViewShowTypeNavigationBar;
+            break;
+            
+        case PIPassiveAlertShowTypeCustomOrigin:
+            return PassiveAlertViewShowTypeCustomOrigin;
+            break;
+            
+        default:
+            return [self alertViewShowTypeForAlertType:PassiveAlertShowTypeTop];
+            break;
+    }
+}
+
 #pragma mark - Initialization
 
-- (instancetype)initWithMessage:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate {
+- (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate {
     self = [super init];
     
     if (self) {
+        self.nib = nib;
         self.message = message;
         self.showType = showType;
         self.shouldAutoHide = shouldAutoHide;
@@ -203,7 +244,7 @@ static PassiveAlert *currentAlert = nil;
     }
     
     currentAlert = self;
-    self.alertView = [PassiveAlertView alertViewForAlert:self];
+    self.alertView = [PassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;

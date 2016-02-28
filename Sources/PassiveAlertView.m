@@ -23,12 +23,7 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlert.h"
 #import "PassiveAlertView.h"
-
-#pragma mark - Constants
-
-static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
 
 @interface PassiveAlertView ()
 
@@ -43,51 +38,24 @@ static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewForAlert:(PassiveAlert *)alert {
-    UINib *nib = [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:nil];
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height {
     PassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
-    NSAssert([alertView isKindOfClass:[PassiveAlertView class]], @"Nib must contain view of type %@", kPIPassiveAlertDefaultNibName);
+    NSAssert([alertView isKindOfClass:[PassiveAlertView class]], @"Nib must contain view of type %@", [[PassiveAlertView class] description]);
     
-    alertView.messageLabel.text = alert.message;
-    alertView.showType = [self alertViewShowTypeForAlertType:alert.showType];
     alertView.clipsToBounds = YES;
-    alertView.backgroundColor = alert.backgroundColor;
-    alertView.messageLabel.textColor = alert.textColor;
-    alertView.messageLabel.font = alert.font;
-    alertView.messageLabel.textAlignment = alert.textAlignment;
+    alertView.messageLabel.text = message;
+    alertView.showType = showType;
+    alertView.backgroundColor = backgroundColor;
+    alertView.messageLabel.textColor = textColor;
+    alertView.messageLabel.font = font;
+    alertView.messageLabel.textAlignment = textAlignment;
     
-    if (alert.height) {
-        alertView.frame = CGRectMake(alertView.frame.origin.x, alertView.frame.origin.y, alertView.frame.size.width, alert.height);
+    if (height) {
+        alertView.frame = CGRectMake(alertView.frame.origin.x, alertView.frame.origin.y, alertView.frame.size.width, height);
     }
     
     return alertView;
-}
-
-#pragma mark Private class methods
-
-+ (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {
-    switch (alertShowType) {
-        case PassiveAlertShowTypeTop:
-            return PassiveAlertViewShowTypeTop;
-            break;
-            
-        case PassiveAlertShowTypeBottom:
-            return PassiveAlertViewShowTypeBottom;
-            break;
-            
-        case PassiveAlertShowTypeNavigationBar:
-            return PassiveAlertViewShowTypeNavigationBar;
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            return PassiveAlertViewShowTypeCustomOrigin;
-            break;
-            
-        default:
-            return [self alertViewShowTypeForAlertType:PassiveAlertShowTypeTop];
-            break;
-    }
 }
 
 #pragma mark - Initialization
