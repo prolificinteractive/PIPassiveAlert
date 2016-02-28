@@ -30,7 +30,7 @@
 
 static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
 
-@interface PassiveAlert ()
+@interface PassiveAlert () <PassiveAlertViewDelegate>
 
 @property (nonatomic, strong) PassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
@@ -244,7 +244,7 @@ static PassiveAlert *currentAlert = nil;
     }
     
     currentAlert = self;
-    self.alertView = [PassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height];
+    self.alertView = [PassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -411,6 +411,18 @@ static PassiveAlert *currentAlert = nil;
         default:
             return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
             break;
+    }
+}
+
+#pragma mark - Protocol conformance
+
+#pragma PassiveAlertViewDelegate
+
+- (void)passiveAlertViewDidReceiveTap:(PassiveAlertView *)alertView {
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTapAction:)]) {
+            [self.delegate passiveAlertDidReceiveTapAction:self];
+        }
     }
 }
 

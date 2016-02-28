@@ -25,6 +25,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class PassiveAlertView;
+
+/**
+ *  Defines methods for receiving notifications from a passive alert view.
+ */
+@protocol PassiveAlertViewDelegate <NSObject>
+
+/**
+ *  Indicates that the passive alert view received a tap action.
+ *
+ *  @param passiveAlert The passive alert that received the close action.
+ */
+- (void)passiveAlertViewDidReceiveTap:(PassiveAlertView *)alertView;
+
+@end
+
 /**
  *  The passive alert view show-types.
  */
@@ -53,6 +69,11 @@ typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
 @interface PassiveAlertView : UIView
 
 /**
+ *  The delegate of the passive alert view.
+ */
+@property (nonatomic, weak) id<PassiveAlertViewDelegate> delegate;
+
+/**
  *  The show type of the passive alert view.
  */
 @property (nonatomic, assign) PassiveAlertViewShowType showType;
@@ -67,10 +88,11 @@ typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
  *  @param textColor       Text color for alert view.
  *  @param font            Font for alert view.
  *  @param textAlightment  Text alignment for alert view.
- *  @param Height          Height for alert view.
+ *  @param height          Height for alert view.
+ *  @param delegate        The delegate for the alert view.
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PassiveAlertViewDelegate>)delegate;
 
 @end

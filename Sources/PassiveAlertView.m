@@ -38,7 +38,7 @@
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height {
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PassiveAlertViewDelegate>)delegate {
     PassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
     NSAssert([alertView isKindOfClass:[PassiveAlertView class]], @"Nib must contain view of type %@", [[PassiveAlertView class] description]);
@@ -50,6 +50,7 @@
     alertView.messageLabel.textColor = textColor;
     alertView.messageLabel.font = font;
     alertView.messageLabel.textAlignment = textAlignment;
+    alertView.delegate = delegate;
     
     if (height) {
         alertView.frame = CGRectMake(alertView.frame.origin.x, alertView.frame.origin.y, alertView.frame.size.width, height);
@@ -119,6 +120,15 @@
     self.supportingBackgroundView.backgroundColor = self.backgroundColor;
     [self insertSubview:self.supportingBackgroundView atIndex:[self.subviews count]];
     [self setNeedsLayout];
+}
+
+- (IBAction)didReceiveTap:(id)sender
+{
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(passiveAlertViewDidReceiveTap:)]) {
+            [self.delegate passiveAlertViewDidReceiveTap:self];
+        }
+    }
 }
 
 @end

@@ -18,6 +18,7 @@
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="K8O-83-Q0P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="LP9-Ej-fZl"/>
                 <constraint firstItem="K8O-83-Q0P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" constant="15" id="M83-2J-3bZ"/>
@@ -29,7 +30,13 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="messageLabel" destination="K8O-83-Q0P" id="oAv-1b-Npr"/>
+                <outletCollection property="gestureRecognizers" destination="ua1-0c-eVM" appends="YES" id="HOO-ou-5Tp"/>
             </connections>
         </view>
+        <tapGestureRecognizer id="ua1-0c-eVM">
+            <connections>
+                <action selector="didReceiveTap:" destination="iN0-l3-epB" id="eJ6-to-Pun"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

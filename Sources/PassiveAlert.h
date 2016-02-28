@@ -42,13 +42,6 @@
 - (void)passiveAlertDidReceiveTapAction:(PassiveAlert *)passiveAlert;
 
 /**
- *  Indicates that the passive alert received a close action.
- *
- *  @param passiveAlert The passive alert that received the close action.
- */
-- (void)passiveAlertDidReceiveCloseAction:(PassiveAlert *)passiveAlert;
-
-/**
  *  Nib used for UI of passive alert.
  *
  *  @returns Nib.
