@@ -1,5 +1,5 @@
 //
-//  PIPassiveAlert.h
+//  PassiveAlert.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -25,4 +25,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PassiveAlert.h"
+/**
+ *  Passive alert.
+ */
+@interface PassiveAlert : NSObject
+
+@end
