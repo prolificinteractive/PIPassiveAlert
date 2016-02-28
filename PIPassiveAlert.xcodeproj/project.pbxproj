@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F9EAF601C833D4000A18F84 /* PIPassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF5F1C833D4000A18F84 /* PIPassiveAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F9EAF671C833D4000A18F84 /* PIPassiveAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9EAF5C1C833D4000A18F84 /* PIPassiveAlert.framework */; };
 		2F9EAF6C1C833D4000A18F84 /* PIPassiveAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9EAF6B1C833D4000A18F84 /* PIPassiveAlertTests.swift */; };
+		2F9EAF7C1C833ED700A18F84 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EAF7A1C833ED700A18F84 /* Info.plist */; };
+		2F9EAF7D1C833ED700A18F84 /* PIPassiveAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +25,11 @@
 
 /* Begin PBXFileReference section */
 		2F9EAF5C1C833D4000A18F84 /* PIPassiveAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PIPassiveAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F9EAF5F1C833D4000A18F84 /* PIPassiveAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIPassiveAlert.h; sourceTree = "<group>"; };
-		2F9EAF611C833D4000A18F84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F9EAF661C833D4000A18F84 /* PIPassiveAlertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PIPassiveAlertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F9EAF6B1C833D4000A18F84 /* PIPassiveAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIPassiveAlertTests.swift; sourceTree = "<group>"; };
 		2F9EAF6D1C833D4000A18F84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F9EAF7A1C833ED700A18F84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
+		2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIPassiveAlert.h; path = Sources/PIPassiveAlert.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +72,8 @@
 		2F9EAF5E1C833D4000A18F84 /* PIPassiveAlert */ = {
 			isa = PBXGroup;
 			children = (
-				2F9EAF5F1C833D4000A18F84 /* PIPassiveAlert.h */,
-				2F9EAF611C833D4000A18F84 /* Info.plist */,
+				2F9EAF7A1C833ED700A18F84 /* Info.plist */,
+				2F9EAF7B1C833ED700A18F84 /* PIPassiveAlert.h */,
 			);
 			path = PIPassiveAlert;
 			sourceTree = "<group>";
@@ -93,7 +94,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F9EAF601C833D4000A18F84 /* PIPassiveAlert.h in Headers */,
+				2F9EAF7D1C833ED700A18F84 /* PIPassiveAlert.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +178,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9EAF7C1C833ED700A18F84 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +314,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PIPassiveAlert/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.PIPassiveAlert;
@@ -328,7 +330,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PIPassiveAlert/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.PIPassiveAlert;
@@ -376,6 +378,7 @@
 				2F9EAF721C833D4000A18F84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F9EAF731C833D4000A18F84 /* Build configuration list for PBXNativeTarget "PIPassiveAlertTests" */ = {
 			isa = XCConfigurationList;
@@ -384,6 +387,7 @@
 				2F9EAF751C833D4000A18F84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
