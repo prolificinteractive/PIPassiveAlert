@@ -26,7 +26,6 @@
 #import <UIKit/UIKit.h>
 
 @class PassiveAlert;
-@class PassiveAlertView;
 
 /**
  *  Defines methods for receiving notifications from a passive alert.
@@ -52,6 +51,31 @@
 @end
 
 /**
+ *  The passive alert show-types.
+ */
+typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
+    /**
+     *  Passive alerts with origin at the top of the window.
+     */
+    PassiveAlertShowTypeTop,
+    
+    /**
+     *  Passive alerts with origin at the bottom of the window.
+     */
+    PassiveAlertShowTypeBottom,
+    
+    /**
+     *  Passive alerts with origin at the navigationbar of the view.
+     */
+    PassiveAlertShowTypeNavigationBar,
+    
+    /**
+     *  Passive alerts with a specific origin specified.
+     */
+    PIPassiveAlertShowTypeCustomOrigin
+};
+
+/**
  *  Passive alert.
  */
 @interface PassiveAlert : NSObject
@@ -72,6 +96,18 @@
 + (void)showMessage:(NSString *)message
    inViewController:(UIViewController *)vc
            delegate:(id<PassiveAlertDelegate>)delegate;
+
+/**
+ *  Creates and displays a passive alert with the specified message in the specified view controller.
+ *  The passive alert will display from the top of the view controller's view.
+ *
+ *  @param message  The message to display in the passive alert.
+ *  @param vc       The view controller the alert should be displayed in.
+ *  @param showType Defines where the passive alert should display from.
+ *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
+ *  @param delegate The delegate for the passive alert.
+ */
++ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
  *  Creates and displays a passive alert with the specified message in the root window of the application.

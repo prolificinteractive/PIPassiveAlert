@@ -37,12 +37,16 @@
 + (void)showMessage:(NSString *)message
    inViewController:(UIViewController *)vc
            delegate:(id<PassiveAlertDelegate>)delegate {
-    NSLog(@"Showing alert message for view controller: %@", message);
+    [self showMessage:message inViewController:vc showType:PassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
+}
+
++ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
+    NSLog(@"Showing alert message for view controller: %@, showType: %i, shouldAutoHide: %i", message, showType, shouldAutoHide);
 }
 
 + (void)showWindowMessage:(NSString *)message
                  delegate:(id<PassiveAlertDelegate>)delegate {
-    NSLog(@"Showing alet message for window: %@", message);
+    NSLog(@"Showing alert message for window: %@", message);
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
