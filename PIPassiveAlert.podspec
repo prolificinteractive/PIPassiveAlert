@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PIPassiveAlert"
-  s.version          = "0.0.1"
+  s.version          = "0.0.2"
   s.summary          = "A passive alert"
   s.description      = "A passive alert."
   s.homepage         = "https://github.com/prolificinteractive/PIPassiveAlert"
@@ -13,5 +13,9 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
 
   s.source_files     = 'Sources/*.{h,m}'
+
+  s.resource_bundles = {
+    'PIPassiveAlert' => ['Sources/*.{xib}']
+  }
 
 end

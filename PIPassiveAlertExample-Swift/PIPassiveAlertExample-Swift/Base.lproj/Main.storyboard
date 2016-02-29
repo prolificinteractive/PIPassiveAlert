@@ -8,7 +8,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PIPassiveAlertExample_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -17,18 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Sf-gb-lQV">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMm-cc-eCg">
                                 <rect key="frame" x="266" y="285" width="68" height="30"/>
                                 <state key="normal" title="New Alert"/>
                                 <connections>
-                                    <action selector="didTapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8rR-Lu-Wry"/>
+                                    <action selector="didTapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kC7-NR-rh5"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Sf-gb-lQV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eB0-jZ-oit"/>
-                            <constraint firstItem="5Sf-gb-lQV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gFS-df-5NF"/>
+                            <constraint firstItem="eMm-cc-eCg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hEJ-Ta-sas"/>
+                            <constraint firstItem="eMm-cc-eCg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vAq-lC-dpp"/>
                         </constraints>
                     </view>
                 </viewController>

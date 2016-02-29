@@ -12,8 +12,5 @@ Released on 2016-MM-DD. All issues associated with this milestone can be found u
 
 #### Added
 
-#### Fixed
-
-#### Removed
-
-#### Updated
+* Passive alerts
+* Examples in Objective-C and Swift

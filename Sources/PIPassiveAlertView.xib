@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10102" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PassiveAlertView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert message here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8O-83-Q0P" userLabel="Message Label">
+                    <rect key="frame" x="15" y="15" width="290" height="40"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="K8O-83-Q0P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="LP9-Ej-fZl"/>
+                <constraint firstItem="K8O-83-Q0P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" constant="15" id="M83-2J-3bZ"/>
+                <constraint firstItem="K8O-83-Q0P" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bb4-fa-2e1"/>
+                <constraint firstAttribute="trailing" secondItem="K8O-83-Q0P" secondAttribute="trailing" constant="15" id="gyh-TW-gCB"/>
+                <constraint firstAttribute="bottom" secondItem="K8O-83-Q0P" secondAttribute="bottom" priority="750" constant="15" id="qX2-sf-R2p"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="messageLabel" destination="K8O-83-Q0P" id="oAv-1b-Npr"/>
+                <outletCollection property="gestureRecognizers" destination="ua1-0c-eVM" appends="YES" id="HOO-ou-5Tp"/>
+            </connections>
+        </view>
+        <tapGestureRecognizer id="ua1-0c-eVM">
+            <connections>
+                <action selector="didReceiveTap:" destination="iN0-l3-epB" id="eJ6-to-Pun"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>
