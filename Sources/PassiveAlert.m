@@ -430,8 +430,8 @@ static PassiveAlert *currentAlert = nil;
 
 - (void)passiveAlertViewDidReceiveTap:(PassiveAlertView *)alertView {
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTapAction:)]) {
-            [self.delegate passiveAlertDidReceiveTapAction:self];
+        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:)]) {
+            [self.delegate passiveAlertDidReceiveTap:self];
         }
     }
 }

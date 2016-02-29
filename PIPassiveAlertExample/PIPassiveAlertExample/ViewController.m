@@ -21,7 +21,7 @@
 
 #pragma mark PassiveAlertDelegate
 
-- (void)passiveAlertDidReceiveTapAction:(PassiveAlert *)passiveAlert {
+- (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert {
     self.alertCount++;
     
     [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];

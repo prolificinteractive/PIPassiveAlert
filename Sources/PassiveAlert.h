@@ -39,7 +39,7 @@
  *
  *  @param passiveAlert The passive alert that received the tap.
  */
-- (void)passiveAlertDidReceiveTapAction:(PassiveAlert *)passiveAlert;
+- (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert;
 
 /**
  *  Nib used for UI of passive alert.
