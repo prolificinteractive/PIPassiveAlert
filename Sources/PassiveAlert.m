@@ -28,6 +28,7 @@
 
 #pragma mark - Constants
 
+static NSString *const kPIPassiveAlertResourceBundleName = @"PIPassiveAlert";
 static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
 
 @interface PassiveAlert () <PassiveAlertViewDelegate>
@@ -74,7 +75,12 @@ static PassiveAlert *currentAlert = nil;
 }
 
 + (UINib *)defaultNib {
-    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:nil];
+    // Source: http://www.the-nerd.be/2015/08/07/load-assets-from-bundle-resources-in-cocoapods/
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *bundleURLForNib = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
+    NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
+    
+    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
 }
 
 + (CGFloat)defaultAutoHideDelay {
