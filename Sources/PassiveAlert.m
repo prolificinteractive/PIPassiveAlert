@@ -55,7 +55,55 @@ static PassiveAlert *currentAlert = nil;
 }
 
 + (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
+    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
+    CGFloat originY = [alert originForPassiveAlertOfShowType:showType inViewController:vc];
     
+    [alert showInViewController:vc originY:originY];
+}
+
++ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
+    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
+    
+    [alert showInViewController:vc originY:originY];
+}
+
++ (void)closeCurrentAlertAnimated:(BOOL)animated {
+    if (currentAlert) {
+        [currentAlert closeAnimated:animated];
+    }
+}
+
++ (UINib *)defaultNib {
+    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:nil];
+}
+
++ (CGFloat)defaultAutoHideDelay {
+    return 3.f;
+}
+
++ (CGFloat)defaultHeight {
+    return 70;
+}
+
++ (UIColor *)defaultBackgroundColor {
+    return [UIColor redColor];
+}
+
++ (UIColor *)defaultTextColor {
+    return [UIColor whiteColor];
+}
+
++ (UIFont *)defaultFont {
+    return [UIFont systemFontOfSize:15.f];
+}
+
++ (NSTextAlignment)defaultTextAlignment {
+    return NSTextAlignmentCenter;
+}
+
+#pragma mark Private class methods
+
++ (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
     UINib *nib = [self defaultNib];
     CGFloat autoHideDelay = [self defaultAutoHideDelay];
     CGFloat height = [self defaultHeight];
@@ -96,47 +144,8 @@ static PassiveAlert *currentAlert = nil;
     
     PassiveAlert *alert = [[PassiveAlert alloc] initWithNib:nib message:message showType:showType shouldAutoHide:shouldAutoHide autoHideDelay:autoHideDelay height:height backgroundColor:backgroundColor textColor:textColor font:font textAlignment:textAlignment delegate:delegate];
     
-    [alert showInViewController:vc];
+    return alert;
 }
-
-+ (void)showWindowMessage:(NSString *)message
-                 delegate:(id<PassiveAlertDelegate>)delegate {
-    NSLog(@"Showing alert message for window: %@", message);
-}
-
-+ (void)closeCurrentAlertAnimated:(BOOL)animated {
-    NSLog(@"Closing alert; animated: %i", animated);
-}
-
-+ (UINib *)defaultNib {
-    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:nil];
-}
-
-+ (CGFloat)defaultAutoHideDelay {
-    return 3.f;
-}
-
-+ (CGFloat)defaultHeight {
-    return 70;
-}
-
-+ (UIColor *)defaultBackgroundColor {
-    return [UIColor redColor];
-}
-
-+ (UIColor *)defaultTextColor {
-    return [UIColor whiteColor];
-}
-
-+ (UIFont *)defaultFont {
-    return [UIFont systemFontOfSize:15.f];
-}
-
-+ (NSTextAlignment)defaultTextAlignment {
-    return NSTextAlignmentCenter;
-}
-
-#pragma mark Private class methods
 
 + (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {
     switch (alertShowType) {
@@ -152,7 +161,7 @@ static PassiveAlert *currentAlert = nil;
             return PassiveAlertViewShowTypeNavigationBar;
             break;
             
-        case PIPassiveAlertShowTypeCustomOrigin:
+        case PassiveAlertShowTypeCustomOrigin:
             return PassiveAlertViewShowTypeCustomOrigin;
             break;
             
@@ -192,12 +201,8 @@ static PassiveAlert *currentAlert = nil;
 
 #pragma mark - Instance methods
 
-- (void)showInViewController:(UIViewController *)vc {
-    CGPoint origin = vc.view.bounds.origin;
-    
-    origin.y = [self originForPassiveAlertOfShowType:self.showType inViewController:vc];
-    
-    [self showInView:vc.view origin:origin];
+- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY {
+    [self showInView:vc.view origin:CGPointMake(0.0f, originY)];
 }
 
 - (void)closeAnimated:(BOOL)animated {
@@ -406,6 +411,11 @@ static PassiveAlert *currentAlert = nil;
             
         case PassiveAlertShowTypeNavigationBar:
             return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
+            break;
+            
+        case PassiveAlertShowTypeCustomOrigin:
+            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
+            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
             break;
             
         default:

@@ -87,7 +87,6 @@
     CGRect bounds = self.bounds;
     
     switch (self.showType) {
-        case PassiveAlertViewShowTypeCustomOrigin:
         case PassiveAlertViewShowTypeTop:
             bounds.origin.y = -(bounds.size.height);
             break;
@@ -97,6 +96,10 @@
             break;
             
         case PassiveAlertViewShowTypeNavigationBar:
+            bounds.origin.y = -(bounds.size.height);
+            break;
+            
+        case PassiveAlertViewShowTypeCustomOrigin:
             bounds.origin.y = -(bounds.size.height);
             break;
             

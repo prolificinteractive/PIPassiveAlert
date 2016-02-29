@@ -112,9 +112,9 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
     PassiveAlertShowTypeNavigationBar,
     
     /**
-     *  Passive alerts with a specific origin specified.
+     *  Passive alerts with custom origin.
      */
-    PIPassiveAlertShowTypeCustomOrigin
+    PassiveAlertShowTypeCustomOrigin
 };
 
 /**
@@ -202,13 +202,16 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 + (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
- *  Creates and displays a passive alert with the specified message in the root window of the application.
+ *  Creates and displays a passive alert with the specified message in the specified view controller.
+ *  The passive alert will display from the top of the view controller's view.
  *
- *  @param message        The message to display.
- *  @param delegate       The delegate for the passive alert.
+ *  @param message  The message to display in the passive alert.
+ *  @param vc       The view controller the alert should be displayed in.
+ *  @param originY  The y-coordinate of the alert origin.
+ *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
+ *  @param delegate The delegate for the passive alert.
  */
-+ (void)showWindowMessage:(NSString *)message
-                 delegate:(id<PassiveAlertDelegate>)delegate;
++ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
  *  Closes the currently displaying alert. If no alert is displaying, nothing happens.
@@ -284,11 +287,12 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 - (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
- *  Shows alert in view controller.
+ *  Displays a passive alert with the specified message in the specified view controller.
  *
- *  @param vc View controller to display alert in.
+ *  @param vc       The view controller the alert should be displayed in.
+ *  @param originY  The y-coordinate of the alert origin.
  */
-- (void)showInViewController:(UIViewController *)vc;
+- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY;
 
 /**
  *  Closes alert.
