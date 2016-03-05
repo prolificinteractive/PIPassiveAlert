@@ -84,57 +84,57 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 /**
  *  The delegate of the passive alert.
  */
-@property (nonatomic, weak) id<PassiveAlertDelegate> delegate;
+@property (nonatomic, weak, readonly) id<PassiveAlertDelegate> delegate;
 
 /**
  *  The nib used for UI of passive alert.
  */
-@property (nonatomic, strong) UINib *nib;
+@property (nonatomic, strong, readonly) UINib *nib;
 
 /**
  *  The message of the passive alert.
  */
-@property (nonatomic, copy) NSString *message;
+@property (nonatomic, copy, readonly) NSString *message;
 
 /**
  *  The height of the passive alert.
  */
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign, readonly) CGFloat height;
 
 /**
  *  The show type of the passive alert.
  */
-@property (nonatomic, assign) PassiveAlertShowType showType;
+@property (nonatomic, assign, readonly) PassiveAlertShowType showType;
 
 /**
  *  Whether the passive alert should auto-hide.
  */
-@property (nonatomic, assign) BOOL shouldAutoHide;
+@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
 
 /**
  *  If auto-hiding, time after display before auto-hide occurs.
  */
-@property (nonatomic, assign) CGFloat autoHideDelay;
+@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
 
 /**
  *  Background color.
  */
-@property (nonatomic, strong) UIColor *backgroundColor;
+@property (nonatomic, strong, readonly) UIColor *backgroundColor;
 
 /**
  *  Text color.
  */
-@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong, readonly) UIColor *textColor;
 
 /**
  *  The font of the passive alert.
  */
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong, readonly) UIFont *font;
 
 /**
  *  The text alignment of the passive alert.
  */
-@property (nonatomic, assign) NSTextAlignment textAlignment;
+@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
 
 /**
  *  Creates new passive alert with the specified attributes.

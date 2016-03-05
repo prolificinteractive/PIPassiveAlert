@@ -29,6 +29,18 @@
 
 @interface PassiveAlert () <PassiveAlertViewDelegate>
 
+@property (nonatomic, weak, readwrite) id<PassiveAlertDelegate> delegate;
+@property (nonatomic, strong, readwrite) UINib *nib;
+@property (nonatomic, copy, readwrite) NSString *message;
+@property (nonatomic, assign, readwrite) CGFloat height;
+@property (nonatomic, assign, readwrite) PassiveAlertShowType showType;
+@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
+@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
+@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
+@property (nonatomic, strong, readwrite) UIColor *textColor;
+@property (nonatomic, strong, readwrite) UIFont *font;
+@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
+
 @property (nonatomic, strong) PassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
 
