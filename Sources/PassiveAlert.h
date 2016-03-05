@@ -84,107 +84,57 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 /**
  *  The delegate of the passive alert.
  */
-@property (nonatomic, weak) id<PassiveAlertDelegate> delegate;
+@property (nonatomic, weak, readonly) id<PassiveAlertDelegate> delegate;
 
 /**
  *  The nib used for UI of passive alert.
  */
-@property (nonatomic, strong) UINib *nib;
+@property (nonatomic, strong, readonly) UINib *nib;
 
 /**
  *  The message of the passive alert.
  */
-@property (nonatomic, copy) NSString *message;
+@property (nonatomic, copy, readonly) NSString *message;
 
 /**
  *  The height of the passive alert.
  */
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign, readonly) CGFloat height;
 
 /**
  *  The show type of the passive alert.
  */
-@property (nonatomic, assign) PassiveAlertShowType showType;
+@property (nonatomic, assign, readonly) PassiveAlertShowType showType;
 
 /**
  *  Whether the passive alert should auto-hide.
  */
-@property (nonatomic, assign) BOOL shouldAutoHide;
+@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
 
 /**
  *  If auto-hiding, time after display before auto-hide occurs.
  */
-@property (nonatomic, assign) CGFloat autoHideDelay;
+@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
 
 /**
  *  Background color.
  */
-@property (nonatomic, strong) UIColor *backgroundColor;
+@property (nonatomic, strong, readonly) UIColor *backgroundColor;
 
 /**
  *  Text color.
  */
-@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong, readonly) UIColor *textColor;
 
 /**
  *  The font of the passive alert.
  */
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong, readonly) UIFont *font;
 
 /**
  *  The text alignment of the passive alert.
  */
-@property (nonatomic, assign) NSTextAlignment textAlignment;
-
-/**
- *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
- *
- *  @param message  The message to display in the passive alert.
- *  @param vc       The view controller the alert should be displayed in.
- *  @param delegate The delegate for the passive alert.
- */
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PassiveAlertDelegate>)delegate;
-
-/**
- *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
- *
- *  @param message  The message to display in the passive alert.
- *  @param vc       The view controller the alert should be displayed in.
- *  @param showType Defines where the passive alert should display from.
- *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
- *  @param delegate The delegate for the passive alert.
- */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate;
-
-/**
- *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
- *
- *  @param message  The message to display in the passive alert.
- *  @param vc       The view controller the alert should be displayed in.
- *  @param originY  The y-coordinate of the alert origin.
- *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
- *  @param delegate The delegate for the passive alert.
- */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate;
-
-/**
- *  Closes the currently displaying alert. If no alert is displaying, nothing happens.
- *
- *  @param animated YES if the alert should close with an animation; otherwise NO.
- */
-+ (void)closeCurrentAlertAnimated:(BOOL)animated;
-
-/**
- *  Default config used to supply values when none provided.
- *
- *  @returns Config.
- */
-+ (PassiveAlertConfig *)defaultConfig;
+@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
 
 /**
  *  Creates new passive alert with the specified attributes.

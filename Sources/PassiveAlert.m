@@ -27,12 +27,19 @@
 #import "PassiveAlertConfig.h"
 #import "PassiveAlertView.h"
 
-#pragma mark - Constants
-
-static NSString *const kPIPassiveAlertResourceBundleName = @"PIPassiveAlert";
-static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
-
 @interface PassiveAlert () <PassiveAlertViewDelegate>
+
+@property (nonatomic, weak, readwrite) id<PassiveAlertDelegate> delegate;
+@property (nonatomic, strong, readwrite) UINib *nib;
+@property (nonatomic, copy, readwrite) NSString *message;
+@property (nonatomic, assign, readwrite) CGFloat height;
+@property (nonatomic, assign, readwrite) PassiveAlertShowType showType;
+@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
+@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
+@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
+@property (nonatomic, strong, readwrite) UIColor *textColor;
+@property (nonatomic, strong, readwrite) UIFont *font;
+@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
 
 @property (nonatomic, strong) PassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
@@ -42,74 +49,9 @@ static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
 
 @implementation PassiveAlert
 
-#pragma mark - Class
-
-#pragma mark Class properties
-
-static PassiveAlert *currentAlert = nil;
-
-#pragma mark Class methods
-
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PassiveAlertDelegate>)delegate {
-    [self showMessage:message inViewController:vc showType:PassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
-}
-
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    CGFloat originY = [alert originForPassiveAlertOfShowType:showType inViewController:vc];
-    
-    [alert showInViewController:vc originY:originY];
-}
-
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
-    
-    [alert showInViewController:vc originY:originY];
-}
-
-+ (void)closeCurrentAlertAnimated:(BOOL)animated {
-    if (currentAlert) {
-        [currentAlert closeAnimated:animated];
-    }
-}
-
-+ (PassiveAlertConfig *)defaultConfig {
-    PassiveAlertConfig *defaultConfig = [[PassiveAlertConfig alloc] init];
-    
-    defaultConfig.nib = [self defaultNib];
-    defaultConfig.showType = PassiveAlertShowTypeTop;
-    defaultConfig.shouldAutoHide = YES;
-    defaultConfig.autoHideDelay = 3.f;
-    defaultConfig.height = 70.f;
-    defaultConfig.backgroundColor = [UIColor redColor];
-    defaultConfig.textColor = [UIColor whiteColor];
-    defaultConfig.font = [UIFont systemFontOfSize:15.f];
-    defaultConfig.textAlignment = NSTextAlignmentCenter;
-    
-    return defaultConfig;
-}
+#pragma mark - Class methods
 
 #pragma mark Private class methods
-
-+ (UINib *)defaultNib {
-    // Source: http://www.the-nerd.be/2015/08/07/load-assets-from-bundle-resources-in-cocoapods/
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *bundleURLForNib = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
-    NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
-    
-    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
-}
-
-+ (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    PassiveAlertConfig *config = [PassiveAlertConfig mergeConfig:[self defaultConfig] withSecondConfig:[delegate passiveAlertConfig]];
-    
-    config.showType = showType;
-    config.shouldAutoHide = shouldAutoHide;
-    
-    return [[PassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
-}
 
 + (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {
     switch (alertShowType) {
@@ -202,17 +144,11 @@ static PassiveAlert *currentAlert = nil;
 
 - (void)showInView:(UIView *)view origin:(CGPoint)origin
 {
-    if (currentAlert) {
-        [currentAlert closeAnimated:YES];
-        currentAlert = nil;
-    }
-    
     // In case the view is already gone when the alert is about to being shown
     if (!view) {
         return;
     }
     
-    currentAlert = self;
     self.alertView = [PassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
     CGRect frame = self.alertView.frame;
@@ -359,32 +295,6 @@ static PassiveAlert *currentAlert = nil;
 - (void)animateBlock:(void (^)())block completion:(void (^)(BOOL finished))completion
 {
     [UIView animateWithDuration:0.6f delay:0.f usingSpringWithDamping:0.5f initialSpringVelocity:0.6f options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
-}
-
-- (CGFloat)originForPassiveAlertOfShowType:(PassiveAlertShowType)showType inViewController:(UIViewController *)vc
-{
-    switch (showType) {
-        case PassiveAlertShowTypeTop:
-            return 0.f;
-            break;
-            
-        case PassiveAlertShowTypeBottom:
-            return vc.view.bounds.size.height - self.height;
-            break;
-            
-        case PassiveAlertShowTypeNavigationBar:
-            return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
-            break;
-            
-        case PassiveAlertShowTypeCustomOrigin:
-            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
-            break;
-            
-        default:
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
-            break;
-    }
 }
 
 #pragma mark - Protocol conformance
