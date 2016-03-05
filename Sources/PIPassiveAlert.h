@@ -26,3 +26,4 @@
 #import <Foundation/Foundation.h>
 
 #import "PassiveAlert.h"
+#import "PassiveAlertConfig.h"
