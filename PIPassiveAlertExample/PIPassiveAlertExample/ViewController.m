@@ -30,7 +30,8 @@
 - (PassiveAlertConfig *)passiveAlertConfig {
     PassiveAlertConfig *config = [PassiveAlertConfig config];
     
-    config.autoHideDelay = 0.5f;
+    config.autoHideDelay = 1.f;
+    config.height = 70.f;
     config.backgroundColor = [self passiveAlertBackgroundColor];
     config.font = [UIFont systemFontOfSize:22.f];
     
