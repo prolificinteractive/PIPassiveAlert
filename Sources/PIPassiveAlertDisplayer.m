@@ -24,6 +24,7 @@
 //
 
 #import "PIPassiveAlertDisplayer.h"
+#import "PIPassiveAlertDisplayType.h"
 
 #pragma mark - Constants
 
@@ -42,9 +43,30 @@ static PIPassiveAlert *currentAlert = nil;
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    CGFloat originY = [self originYForPassiveAlert:alert inViewController:vc];
+    PIPassiveAlertDisplayType *displayType = nil;
     
-    [self displayAlert:alert inViewController:vc originY:originY];
+    switch (showType) {
+        case PIPassiveAlertShowTypeTop:
+            displayType = [PIPassiveAlertDisplayer topDisplayType];
+            break;
+            
+        case PIPassiveAlertShowTypeBottom:
+            displayType = [PIPassiveAlertDisplayer bottomDisplayType];
+            break;
+            
+        case PIPassiveAlertShowTypeNavigationBar:
+            displayType = [PIPassiveAlertDisplayer navigationBarDisplayType];
+            break;
+            
+        case PIPassiveAlertShowTypeCustomOrigin:
+            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self displayAlert:alert withDisplayType:displayType inViewController:vc];
 }
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
@@ -84,6 +106,19 @@ static PIPassiveAlert *currentAlert = nil;
     
     currentAlert = alert;
     
+    [alert showInViewController:vc originY:originY];
+}
+
++ (void)displayAlert:(PIPassiveAlert *)alert withDisplayType:(PIPassiveAlertDisplayType *)displayType inViewController:(UIViewController *)vc {
+    if (currentAlert) {
+        [currentAlert closeAnimated:YES];
+        currentAlert = nil;
+    }
+    
+    currentAlert = alert;
+    
+    CGFloat originY = displayType.originYCalculation(alert, vc);
+
     [alert showInViewController:vc originY:originY];
 }
 
@@ -140,6 +175,30 @@ static PIPassiveAlert *currentAlert = nil;
     NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
     
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
+}
+
++ (PIPassiveAlertDisplayType *)topDisplayType {
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
+        return 0.f;
+    };
+    
+    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromTop originYCalculation:originYCalculation];
+}
+
++ (PIPassiveAlertDisplayType *)bottomDisplayType {
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
+        return displayingViewController.view.bounds.size.height - alert.height;
+    };
+    
+    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromBottom originYCalculation:originYCalculation];
+}
+
++ (PIPassiveAlertDisplayType *)navigationBarDisplayType {
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
+        return (displayingViewController.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
+    };
+    
+    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromTop originYCalculation:originYCalculation];
 }
 
 @end

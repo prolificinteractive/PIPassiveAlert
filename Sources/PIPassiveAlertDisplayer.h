@@ -28,6 +28,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class PIPassiveAlertDisplayType;
+
 @interface PIPassiveAlertDisplayer : NSObject
 
 /**
