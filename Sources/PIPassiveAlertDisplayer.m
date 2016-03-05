@@ -42,15 +42,15 @@ static PIPassiveAlert *currentAlert = nil;
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    PIPassiveAlertDisplayType *displayType = nil;
+    PIPassiveAlertOriginYCalculation originYCalculation = nil;
     
     switch (showType) {
         case PIPassiveAlertShowTypeTop:
-            displayType = [PIPassiveAlertDisplayer topDisplayType];
+            originYCalculation = [PIPassiveAlertDisplayer topOriginYCalculation];
             break;
             
         case PIPassiveAlertShowTypeBottom:
-            displayType = [PIPassiveAlertDisplayer bottomDisplayType];
+            originYCalculation = [PIPassiveAlertDisplayer bottomOriginYCalculation];
             break;
             
         case PIPassiveAlertShowTypeCustomOrigin:
@@ -61,13 +61,13 @@ static PIPassiveAlert *currentAlert = nil;
             break;
     }
     
-    [self displayAlert:alert withDisplayType:displayType inViewController:vc];
+    [self displayAlert:alert originYCalculation:originYCalculation inViewController:vc];
 }
 
-+ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PIPassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
 
-    [self displayAlert:alert withDisplayType:displayType inViewController:vc];
+    [self displayAlert:alert originYCalculation:originYCalculation inViewController:vc];
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
@@ -93,7 +93,7 @@ static PIPassiveAlert *currentAlert = nil;
 
 #pragma mark Private class methods
 
-+ (void)displayAlert:(PIPassiveAlert *)alert withDisplayType:(PIPassiveAlertDisplayType *)displayType inViewController:(UIViewController *)vc {
++ (void)displayAlert:(PIPassiveAlert *)alert originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation inViewController:(UIViewController *)vc {
     if (currentAlert) {
         [currentAlert closeAnimated:YES];
         currentAlert = nil;
@@ -101,7 +101,7 @@ static PIPassiveAlert *currentAlert = nil;
     
     currentAlert = alert;
 
-    [alert showInView:vc.view displayType:displayType];
+    [alert showInView:vc.view originYCalculation:originYCalculation];
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
@@ -155,20 +155,20 @@ static PIPassiveAlert *currentAlert = nil;
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
 }
 
-+ (PIPassiveAlertDisplayType *)topDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
++ (PIPassiveAlertOriginYCalculation)topOriginYCalculation {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return 0.f;
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
+    return originYCalculation;
 }
 
-+ (PIPassiveAlertDisplayType *)bottomDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
++ (PIPassiveAlertOriginYCalculation)bottomOriginYCalculation {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return containingViewSize.height - alertConfig.height;
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
+    return originYCalculation;
 }
 
 @end

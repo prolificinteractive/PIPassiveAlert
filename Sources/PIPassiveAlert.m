@@ -25,7 +25,6 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
-#import "PIPassiveAlertDisplayType.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
@@ -111,13 +110,13 @@
 
 #pragma mark Private instance methods
 
-- (void)showInView:(UIView *)view displayType:(PIPassiveAlertDisplayType *)displayType {
+- (void)showInView:(UIView *)view originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation {
     // In case the view is already gone when the alert is about to being shown
     if (!view) {
         return;
     }
     
-    CGFloat originY = displayType.originYCalculation(self, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
+    CGFloat originY = originYCalculation(self, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     
     self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     

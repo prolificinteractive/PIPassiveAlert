@@ -27,7 +27,11 @@
 
 @class PIPassiveAlert;
 @class PIPassiveAlertConfig;
-@class PIPassiveAlertDisplayType;
+
+/**
+ *  Function calculating origin-Y given an alert config and containing frame.
+ */
+typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize);
 
 /**
  *  Defines methods for receiving notifications from a passive alert.
@@ -144,10 +148,10 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 /**
  *  Displays a passive alert with the specified message in the specified view controller.
  *
- *  @param vc           The view the alert should be displayed in.
- *  @param displayType  The display type for the alert.
+ *  @param View                The view the alert should be displayed in.
+ *  @param originYCalculation  Function to calculate origin Y.
  */
-- (void)showInView:(UIView *)view displayType:(PIPassiveAlertDisplayType *)displayType;
+- (void)showInView:(UIView *)view originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation;
 
 /**
  *  Closes alert.

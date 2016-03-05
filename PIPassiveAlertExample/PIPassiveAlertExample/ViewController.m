@@ -35,7 +35,7 @@
     self.alertCount++;
     
     // Custom alert - displays at random origin
-    [PIPassiveAlertDisplayer displayMessage:[self message:@"Random!"] inViewController:self displayType:[self randomOriginDisplayType] shouldAutoHide:NO delegate:self];
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Random!"] inViewController:self originYCalculation:[self randomOriginDisplayType] shouldAutoHide:NO delegate:self];
 }
 
 - (PIPassiveAlertConfig *)passiveAlertConfig {
@@ -51,12 +51,12 @@
 
 #pragma mark - Private functions
 
-- (PIPassiveAlertDisplayType *)randomOriginDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
+- (PIPassiveAlertOriginYCalculation)randomOriginDisplayType {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return [self randomNumberBetween:0 maxNumber:containingViewSize.height];
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
+    return originYCalculation;
 }
 
 - (NSString *)message:(NSString *)stub {
