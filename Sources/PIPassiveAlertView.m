@@ -1,5 +1,5 @@
 //
-//  PassiveAlertView.m
+//  PIPassiveAlertView.m
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,25 +23,25 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlertView.h"
+#import "PIPassiveAlertView.h"
 
-@interface PassiveAlertView ()
+@interface PIPassiveAlertView ()
 
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
 @property (nonatomic, strong) UIView *supportingBackgroundView;
 
 @end
 
-@implementation PassiveAlertView
+@implementation PIPassiveAlertView
 
 #pragma mark - Class
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PassiveAlertViewDelegate>)delegate {
-    PassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PIPassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate {
+    PIPassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
-    NSAssert([alertView isKindOfClass:[PassiveAlertView class]], @"Nib must contain view of type %@", [[PassiveAlertView class] description]);
+    NSAssert([alertView isKindOfClass:[PIPassiveAlertView class]], @"Nib must contain view of type %@", [[PIPassiveAlertView class] description]);
     
     alertView.clipsToBounds = YES;
     alertView.messageLabel.text = message;
@@ -87,19 +87,19 @@
     CGRect bounds = self.bounds;
     
     switch (self.showType) {
-        case PassiveAlertViewShowTypeTop:
+        case PIPassiveAlertViewShowTypeTop:
             bounds.origin.y = -(bounds.size.height);
             break;
             
-        case PassiveAlertViewShowTypeBottom:
+        case PIPassiveAlertViewShowTypeBottom:
             bounds.origin.y = (bounds.size.height);
             break;
             
-        case PassiveAlertViewShowTypeNavigationBar:
+        case PIPassiveAlertViewShowTypeNavigationBar:
             bounds.origin.y = -(bounds.size.height);
             break;
             
-        case PassiveAlertViewShowTypeCustomOrigin:
+        case PIPassiveAlertViewShowTypeCustomOrigin:
             bounds.origin.y = -(bounds.size.height);
             break;
             

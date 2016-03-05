@@ -1,5 +1,5 @@
 //
-//  PassiveAlertConfig.h
+//  PIPassiveAlertConfig.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,14 +23,14 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlert.h"
+#import "PIPassiveAlert.h"
 #import <UIKit/UIKit.h>
 
 /**
  *  Data object representing configurable
  *  attributes of a passive alert.
  */
-@interface PassiveAlertConfig : NSObject <NSCopying>
+@interface PIPassiveAlertConfig : NSObject <NSCopying>
 
 /**
  *  Nib.
@@ -40,7 +40,7 @@
 /**
  *  Show type.
  */
-@property (nonatomic, assign) PassiveAlertShowType showType;
+@property (nonatomic, assign) PIPassiveAlertShowType showType;
 
 /**
  *  Should auto-hide.
@@ -93,6 +93,6 @@
  *
  *  @returns New config.
  */
-+ (PassiveAlertConfig *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig;
++ (PIPassiveAlertConfig *)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig;
 
 @end
