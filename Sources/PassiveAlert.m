@@ -58,7 +58,7 @@ static PassiveAlert *currentAlert = nil;
 
 + (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
     PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    CGFloat originY = [alert originForPassiveAlertOfShowType:showType inViewController:vc];
+    CGFloat originY = [PassiveAlert originYForPassiveAlert:alert inViewController:vc];
     
     [alert showInViewController:vc originY:originY];
 }
@@ -361,15 +361,15 @@ static PassiveAlert *currentAlert = nil;
     [UIView animateWithDuration:0.6f delay:0.f usingSpringWithDamping:0.5f initialSpringVelocity:0.6f options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
 }
 
-- (CGFloat)originForPassiveAlertOfShowType:(PassiveAlertShowType)showType inViewController:(UIViewController *)vc
++ (CGFloat)originYForPassiveAlert:(PassiveAlert *)alert inViewController:(UIViewController *)vc
 {
-    switch (showType) {
+    switch (alert.showType) {
         case PassiveAlertShowTypeTop:
             return 0.f;
             break;
             
         case PassiveAlertShowTypeBottom:
-            return vc.view.bounds.size.height - self.height;
+            return vc.view.bounds.size.height - alert.height;
             break;
             
         case PassiveAlertShowTypeNavigationBar:
@@ -378,11 +378,11 @@ static PassiveAlert *currentAlert = nil;
             
         case PassiveAlertShowTypeCustomOrigin:
             NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
+            return 0.f;
             break;
             
         default:
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
+            return 0.f;
             break;
     }
 }
