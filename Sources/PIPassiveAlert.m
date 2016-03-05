@@ -1,5 +1,5 @@
 //
-//  PassiveAlert.h
+//  PIPassiveAlert.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,176 +23,76 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlert.h"
-#import "PassiveAlertView.h"
+#import "PIPassiveAlert.h"
+#import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertView.h"
 
-#pragma mark - Constants
+@interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
 
-static NSString *const kPIPassiveAlertResourceBundleName = @"PIPassiveAlert";
-static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
+@property (nonatomic, weak, readwrite) id<PIPassiveAlertDelegate> delegate;
+@property (nonatomic, strong, readwrite) UINib *nib;
+@property (nonatomic, copy, readwrite) NSString *message;
+@property (nonatomic, assign, readwrite) CGFloat height;
+@property (nonatomic, assign, readwrite) PIPassiveAlertShowType showType;
+@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
+@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
+@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
+@property (nonatomic, strong, readwrite) UIColor *textColor;
+@property (nonatomic, strong, readwrite) UIFont *font;
+@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
 
-@interface PassiveAlert () <PassiveAlertViewDelegate>
-
-@property (nonatomic, strong) PassiveAlertView *alertView;
+@property (nonatomic, strong) PIPassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
 
 @end
 
 
-@implementation PassiveAlert
+@implementation PIPassiveAlert
 
-#pragma mark - Class
-
-#pragma mark Class properties
-
-static PassiveAlert *currentAlert = nil;
-
-#pragma mark Class methods
-
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PassiveAlertDelegate>)delegate {
-    [self showMessage:message inViewController:vc showType:PassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
-}
-
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    CGFloat originY = [alert originForPassiveAlertOfShowType:showType inViewController:vc];
-    
-    [alert showInViewController:vc originY:originY];
-}
-
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    PassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
-    
-    [alert showInViewController:vc originY:originY];
-}
-
-+ (void)closeCurrentAlertAnimated:(BOOL)animated {
-    if (currentAlert) {
-        [currentAlert closeAnimated:animated];
-    }
-}
-
-+ (UINib *)defaultNib {
-    // Source: http://www.the-nerd.be/2015/08/07/load-assets-from-bundle-resources-in-cocoapods/
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *bundleURLForNib = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
-    NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
-    
-    return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
-}
-
-+ (CGFloat)defaultAutoHideDelay {
-    return 3.f;
-}
-
-+ (CGFloat)defaultHeight {
-    return 70;
-}
-
-+ (UIColor *)defaultBackgroundColor {
-    return [UIColor redColor];
-}
-
-+ (UIColor *)defaultTextColor {
-    return [UIColor whiteColor];
-}
-
-+ (UIFont *)defaultFont {
-    return [UIFont systemFontOfSize:15.f];
-}
-
-+ (NSTextAlignment)defaultTextAlignment {
-    return NSTextAlignmentCenter;
-}
+#pragma mark - Class methods
 
 #pragma mark Private class methods
 
-+ (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    UINib *nib = [self defaultNib];
-    CGFloat autoHideDelay = [self defaultAutoHideDelay];
-    CGFloat height = [self defaultHeight];
-    UIColor *backgroundColor = [self defaultBackgroundColor];
-    UIColor *textColor = [self defaultTextColor];
-    UIFont *font = [self defaultFont];
-    NSTextAlignment textAlignment = [self defaultTextAlignment];
-    
-    if (delegate) {
-        if ([delegate respondsToSelector:@selector(passiveAlertNib)]) {
-            nib = [delegate passiveAlertNib];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertAutoHideDelay)]) {
-            autoHideDelay = [delegate passiveAlertAutoHideDelay];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertHeight)]) {
-            height = [delegate passiveAlertHeight];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertBackgroundColor)]) {
-            backgroundColor = [delegate passiveAlertBackgroundColor];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertTextColor)]) {
-            textColor = [delegate passiveAlertTextColor];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertFont)]) {
-            font = [delegate passiveAlertFont];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertTextAlignment)]) {
-            textAlignment = [delegate passiveAlertTextAlignment];
-        }
-    }
-    
-    PassiveAlert *alert = [[PassiveAlert alloc] initWithNib:nib message:message showType:showType shouldAutoHide:shouldAutoHide autoHideDelay:autoHideDelay height:height backgroundColor:backgroundColor textColor:textColor font:font textAlignment:textAlignment delegate:delegate];
-    
-    return alert;
-}
-
-+ (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {
++ (PIPassiveAlertViewShowType)alertViewShowTypeForAlertType:(PIPassiveAlertShowType)alertShowType {
     switch (alertShowType) {
-        case PassiveAlertShowTypeTop:
-            return PassiveAlertViewShowTypeTop;
+        case PIPassiveAlertShowTypeTop:
+            return PIPassiveAlertViewShowTypeTop;
             break;
             
-        case PassiveAlertShowTypeBottom:
-            return PassiveAlertViewShowTypeBottom;
+        case PIPassiveAlertShowTypeBottom:
+            return PIPassiveAlertViewShowTypeBottom;
             break;
             
-        case PassiveAlertShowTypeNavigationBar:
-            return PassiveAlertViewShowTypeNavigationBar;
+        case PIPassiveAlertShowTypeNavigationBar:
+            return PIPassiveAlertViewShowTypeNavigationBar;
             break;
             
-        case PassiveAlertShowTypeCustomOrigin:
-            return PassiveAlertViewShowTypeCustomOrigin;
+        case PIPassiveAlertShowTypeCustomOrigin:
+            return PIPassiveAlertViewShowTypeCustomOrigin;
             break;
             
         default:
-            return [self alertViewShowTypeForAlertType:PassiveAlertShowTypeTop];
+            return [self alertViewShowTypeForAlertType:PIPassiveAlertShowTypeTop];
             break;
     }
 }
 
 #pragma mark - Initialization
 
-- (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate {
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate {
     self = [super init];
     
     if (self) {
-        self.nib = nib;
         self.message = message;
-        self.showType = showType;
-        self.shouldAutoHide = shouldAutoHide;
-        self.autoHideDelay = autoHideDelay;
-        self.height = height;
-        self.backgroundColor = backgroundColor;
-        self.textColor = textColor;
-        self.font = font;
-        self.textAlignment = textAlignment;
+        self.nib = config.nib;
+        self.showType = config.showType;
+        self.shouldAutoHide = config.shouldAutoHide;
+        self.autoHideDelay = config.autoHideDelay;
+        self.height = config.height;
+        self.backgroundColor = config.backgroundColor;
+        self.textColor = config.textColor;
+        self.font = config.font;
+        self.textAlignment = config.textAlignment;
         self.delegate = delegate;
     }
     
@@ -215,7 +115,7 @@ static PassiveAlert *currentAlert = nil;
     CGRect finalAlertFrame = self.alertView.frame;
     
     switch (self.showType) {
-        case PassiveAlertShowTypeBottom:
+        case PIPassiveAlertShowTypeBottom:
             finalAlertFrame.origin.y += finalAlertFrame.size.height;
             break;
             
@@ -244,18 +144,12 @@ static PassiveAlert *currentAlert = nil;
 
 - (void)showInView:(UIView *)view origin:(CGPoint)origin
 {
-    if (currentAlert) {
-        [currentAlert closeAnimated:YES];
-        currentAlert = nil;
-    }
-    
     // In case the view is already gone when the alert is about to being shown
     if (!view) {
         return;
     }
     
-    currentAlert = self;
-    self.alertView = [PassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PIPassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -301,8 +195,7 @@ static PassiveAlert *currentAlert = nil;
                                                              multiplier:1
                                                                constant:0];
     
-    // PassiveAlert for tooltip in schedule view, we want the animation from the bottom. Handling it here.
-    if (self.showType == PassiveAlertShowTypeBottom) {
+    if (self.showType == PIPassiveAlertShowTypeBottom) {
         [view addConstraints:@[ left, right, bottom ]];
     } else {
         [view addConstraints:@[ left, right, top ]];
@@ -338,7 +231,7 @@ static PassiveAlert *currentAlert = nil;
     }];
 }
 
-- (UIView *)containerViewForAlertView:(PassiveAlertView *)alertView
+- (UIView *)containerViewForAlertView:(PIPassiveAlertView *)alertView
 {
     UIView *containerView = [[UIView alloc] initWithFrame:alertView.frame];
     
@@ -404,37 +297,11 @@ static PassiveAlert *currentAlert = nil;
     [UIView animateWithDuration:0.6f delay:0.f usingSpringWithDamping:0.5f initialSpringVelocity:0.6f options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
 }
 
-- (CGFloat)originForPassiveAlertOfShowType:(PassiveAlertShowType)showType inViewController:(UIViewController *)vc
-{
-    switch (showType) {
-        case PassiveAlertShowTypeTop:
-            return 0.f;
-            break;
-            
-        case PassiveAlertShowTypeBottom:
-            return vc.view.bounds.size.height - self.height;
-            break;
-            
-        case PassiveAlertShowTypeNavigationBar:
-            return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
-            break;
-            
-        case PassiveAlertShowTypeCustomOrigin:
-            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
-            break;
-            
-        default:
-            return [self originForPassiveAlertOfShowType:PassiveAlertShowTypeTop inViewController:vc];
-            break;
-    }
-}
-
 #pragma mark - Protocol conformance
 
 #pragma PassiveAlertViewDelegate
 
-- (void)passiveAlertViewDidReceiveTap:(PassiveAlertView *)alertView {
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView {
     if (self.delegate) {
         if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:)]) {
             [self.delegate passiveAlertDidReceiveTap:self];

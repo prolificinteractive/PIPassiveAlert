@@ -23,6 +23,141 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#import "PassiveAlert.h"
+@class PIPassiveAlert;
+@class PIPassiveAlertConfig;
+
+/**
+ *  Defines methods for receiving notifications from a passive alert.
+ */
+@protocol PIPassiveAlertDelegate <NSObject>
+
+@optional
+
+/**
+ *  Indicates that the passive alert received a tap.
+ *
+ *  @param passiveAlert The passive alert that received the tap.
+ */
+- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert;
+
+/**
+ *  Config to be used for passive alert.
+ *
+ *  @returns Config.
+ */
+- (PIPassiveAlertConfig *)passiveAlertConfig;
+
+@end
+
+/**
+ *  The passive alert show-types.
+ */
+typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
+    /**
+     *  Passive alerts with origin at the top of the window.
+     */
+    PIPassiveAlertShowTypeTop,
+    
+    /**
+     *  Passive alerts with origin at the bottom of the window.
+     */
+    PIPassiveAlertShowTypeBottom,
+    
+    /**
+     *  Passive alerts with origin at the navigationbar of the view.
+     */
+    PIPassiveAlertShowTypeNavigationBar,
+    
+    /**
+     *  Passive alerts with custom origin.
+     */
+    PIPassiveAlertShowTypeCustomOrigin
+};
+
+/**
+ *  Passive alert.
+ */
+@interface PIPassiveAlert : NSObject
+
+/**
+ *  The delegate of the passive alert.
+ */
+@property (nonatomic, weak, readonly) id<PIPassiveAlertDelegate> delegate;
+
+/**
+ *  The nib used for UI of passive alert.
+ */
+@property (nonatomic, strong, readonly) UINib *nib;
+
+/**
+ *  The message of the passive alert.
+ */
+@property (nonatomic, copy, readonly) NSString *message;
+
+/**
+ *  The height of the passive alert.
+ */
+@property (nonatomic, assign, readonly) CGFloat height;
+
+/**
+ *  The show type of the passive alert.
+ */
+@property (nonatomic, assign, readonly) PIPassiveAlertShowType showType;
+
+/**
+ *  Whether the passive alert should auto-hide.
+ */
+@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
+
+/**
+ *  If auto-hiding, time after display before auto-hide occurs.
+ */
+@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
+
+/**
+ *  Background color.
+ */
+@property (nonatomic, strong, readonly) UIColor *backgroundColor;
+
+/**
+ *  Text color.
+ */
+@property (nonatomic, strong, readonly) UIColor *textColor;
+
+/**
+ *  The font of the passive alert.
+ */
+@property (nonatomic, strong, readonly) UIFont *font;
+
+/**
+ *  The text alignment of the passive alert.
+ */
+@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
+
+/**
+ *  Creates new passive alert with the specified attributes.
+ *
+ *  @param message  The message to display.
+ *  @param config   The config for the alert.
+ *  @param delegate The delegate for the alert.
+ */
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate;
+
+/**
+ *  Displays a passive alert with the specified message in the specified view controller.
+ *
+ *  @param vc       The view controller the alert should be displayed in.
+ *  @param originY  The y-coordinate of the alert origin.
+ */
+- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY;
+
+/**
+ *  Closes alert.
+ *
+ *  @param animated Whether closing of alert should be animated.
+ */
+- (void)closeAnimated:(BOOL)animted;
+
+@end

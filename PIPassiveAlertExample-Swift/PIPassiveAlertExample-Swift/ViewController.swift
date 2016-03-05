@@ -9,7 +9,7 @@
 import PIPassiveAlert
 import UIKit
 
-class ViewController: UIViewController, PassiveAlertDelegate {
+class ViewController: UIViewController, PIPassiveAlertDelegate {
     
     private var alertCount: Int = 0
 
@@ -17,26 +17,21 @@ class ViewController: UIViewController, PassiveAlertDelegate {
     
     // MARK: PIPassiveAlertDelegate
     
-    func passiveAlertDidReceiveTap(passiveAlert: PassiveAlert) {
+    func passiveAlertDidReceiveTap(passiveAlert: PIPassiveAlert) {
         alertCount = alertCount + 1
         
-        PassiveAlert.showMessage(message(), inViewController: self, showType: .Bottom, shouldAutoHide: true, delegate: self)
+        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Bottom, shouldAutoHide: true, delegate: self)
     }
     
-    func passiveAlertAutoHideDelay() -> CGFloat {
-        return 0.5
-    }
-    
-    func passiveAlertBackgroundColor() -> UIColor! {
-        if (alertCount % 2) == 0 {
-            return PassiveAlert.defaultBackgroundColor()
-        } else {
-            return randomColor()
-        }
-    }
-    
-    func passiveAlertFont() -> UIFont! {
-        return UIFont.systemFontOfSize(22.0)
+    func passiveAlertConfig() -> PIPassiveAlertConfig! {
+        let config = PIPassiveAlertConfig()
+        
+        config.autoHideDelay = 1.0
+        config.height = 70.0
+        config.backgroundColor = passiveAlertBackgroundColor()
+        config.font = UIFont.systemFontOfSize(22.0)
+        
+        return config
     }
     
     // MARK: - Instance functions
@@ -46,7 +41,15 @@ class ViewController: UIViewController, PassiveAlertDelegate {
     @IBAction private func didTapButton(sender: AnyObject) {
         alertCount = alertCount + 1
         
-        PassiveAlert.showMessage(message(), inViewController: self, showType: .Top, shouldAutoHide: false, delegate: self)
+        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Top, shouldAutoHide: false, delegate: self)
+    }
+    
+    private func passiveAlertBackgroundColor() -> UIColor! {
+        if (alertCount % 2) == 0 {
+            return PIPassiveAlertDisplayer.defaultConfig().backgroundColor
+        } else {
+            return randomColor()
+        }
     }
     
     private func message() -> String {

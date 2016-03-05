@@ -6,10 +6,10 @@
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
-#import "PIPassiveAlert.h"
+#import "PIPassiveAlertDisplayer.h"
 #import "ViewController.h"
 
-@interface ViewController () <PassiveAlertDelegate>
+@interface ViewController () <PIPassiveAlertDelegate>
 
 @property (nonatomic, assign) int alertCount;
 
@@ -21,29 +21,24 @@
 
 #pragma mark PassiveAlertDelegate
 
-- (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert {
+- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert {
     self.alertCount++;
     
-    [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
+    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
 }
 
-- (CGFloat)passiveAlertAutoHideDelay {
-    return 0.5f;
+- (PIPassiveAlertConfig *)passiveAlertConfig {
+    PIPassiveAlertConfig *config = [PIPassiveAlertConfig config];
+    
+    config.autoHideDelay = 1.f;
+    config.height = 70.f;
+    config.backgroundColor = [self passiveAlertBackgroundColor];
+    config.font = [UIFont systemFontOfSize:22.f];
+    
+    return config;
 }
 
-- (UIColor *)passiveAlertBackgroundColor {
-    if ((self.alertCount % 2) == 0) {
-        return [PassiveAlert defaultBackgroundColor];
-    } else {
-        return [self randomColor];
-    }
-}
-
-- (UIFont *)passiveAlertFont {
-    return [UIFont systemFontOfSize:22.f];
-}
-
-#pragma mark - Instance functions
+#pragma mark - Private functions
 
 - (NSString *)message {
     return [NSString stringWithFormat:@"Tap me! Alert #%i", self.alertCount];
@@ -58,12 +53,20 @@
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
 
+- (UIColor *)passiveAlertBackgroundColor {
+    if ((self.alertCount % 2) == 0) {
+        return [PIPassiveAlertDisplayer defaultConfig].backgroundColor;
+    } else {
+        return [self randomColor];
+    }
+}
+
 #pragma mark IB Actions
 
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
+    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
 }
 
 @end

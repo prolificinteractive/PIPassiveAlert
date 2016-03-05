@@ -17,7 +17,7 @@ PIPassiveAlert is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your `Podfile`:
 
 ```ruby
-pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.2'
+pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.3'
 ```
 
 ### Carthage
@@ -43,6 +43,6 @@ PIPassiveAlert is Copyright (c) 2016 Prolific Interactive. It may be redistribut
 
 ## Maintainers
 
-![prolific](https://s3.amazonaws.com/prolificsitestaging/logos/Prolific_Logo_Full_Color.png)
+[![Prolific Interactive](https://s3.amazonaws.com/prolificsitestaging/logos/Prolific_Logo_Full_Color.png)](http://prolificinteractive.com)
 
 PIPassiveAlert is maintained and funded by Prolific Interactive. The names and logos are trademarks of Prolific Interactive.
