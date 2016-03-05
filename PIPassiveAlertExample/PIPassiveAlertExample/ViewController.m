@@ -56,7 +56,7 @@
         return [self randomNumberBetween:0 maxNumber:containingViewSize.height];
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromBottom originYCalculation:originYCalculation];
+    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
 }
 
 - (NSString *)message:(NSString *)stub {

@@ -33,30 +33,10 @@
 typedef CGFloat (^PIPassiveAlertDisplayOriginYCalculation)(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize);
 
 /**
- *  Passive alert orientation.
- */
-typedef NS_ENUM(NSInteger, PIPassiveAlertDisplayOrientation) {
-    /**
-     *  From top.
-     */
-    PIPassiveAlertDisplayOrientationFromTop,
-    
-    /**
-     *  From bottom.
-     */
-    PIPassiveAlertDisplayOrientationFromBottom
-};
-
-/**
  *  Data object representing configurable
  *  attributes of a passive alert display.
  */
 @interface PIPassiveAlertDisplayType : NSObject
-
-/**
- *  Orientation.
- */
-@property (nonatomic, assign, readonly) PIPassiveAlertDisplayOrientation orientation;
 
 /**
  *  Block calculating origin Y for alert.
@@ -66,9 +46,8 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertDisplayOrientation) {
 /**
  *  Creates new display type with the specified attributes.
  *
- *  @param orientation        The orientation.
  *  @param originYCalculation Function calculating origin-Y.
  */
-- (instancetype)initWithOrientation:(PIPassiveAlertDisplayOrientation)orientation originYCalculation:(PIPassiveAlertDisplayOriginYCalculation)originYCalculation;
+- (instancetype)initWithOriginYCalculation:(PIPassiveAlertDisplayOriginYCalculation)originYCalculation;
 
 @end

@@ -27,7 +27,6 @@
 
 @interface PIPassiveAlertDisplayType ()
 
-@property (nonatomic, assign, readwrite) PIPassiveAlertDisplayOrientation orientation;
 @property (nonatomic, strong, readwrite) PIPassiveAlertDisplayOriginYCalculation originYCalculation;
 
 @end
@@ -36,11 +35,10 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithOrientation:(PIPassiveAlertDisplayOrientation)orientation originYCalculation:(PIPassiveAlertDisplayOriginYCalculation)originYCalculation {
+- (instancetype)initWithOriginYCalculation:(PIPassiveAlertDisplayOriginYCalculation)originYCalculation {
     self = [super init];
     
     if (self) {
-        self.orientation = orientation;
         self.originYCalculation = originYCalculation;
     }
     

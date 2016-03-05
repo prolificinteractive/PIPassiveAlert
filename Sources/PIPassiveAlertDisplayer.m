@@ -160,7 +160,7 @@ static PIPassiveAlert *currentAlert = nil;
         return 0.f;
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromTop originYCalculation:originYCalculation];
+    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
 }
 
 + (PIPassiveAlertDisplayType *)bottomDisplayType {
@@ -168,7 +168,7 @@ static PIPassiveAlert *currentAlert = nil;
         return containingViewSize.height - alertConfig.height;
     };
     
-    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromBottom originYCalculation:originYCalculation];
+    return [[PIPassiveAlertDisplayType alloc] initWithOriginYCalculation:originYCalculation];
 }
 
 @end

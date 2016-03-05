@@ -50,22 +50,6 @@
 
 @implementation PIPassiveAlert
 
-#pragma mark - Class methods
-
-#pragma mark Private class methods
-
-+ (PIPassiveAlertViewDisplayOrientation)alertViewOrientationForDisplayTypeOrientation:(PIPassiveAlertViewDisplayOrientation)orientation {
-    switch (orientation) {
-        case PIPassiveAlertViewDisplayOrientationFromTop:
-            return PIPassiveAlertViewDisplayOrientationFromTop;
-        case PIPassiveAlertViewDisplayOrientationFromBottom:
-            return PIPassiveAlertViewDisplayOrientationFromBottom;
-        default:
-            NSAssert(NO, @"Should not retrieve unexpected orientation.");
-            return PIPassiveAlertViewDisplayOrientationFromTop;
-    }
-}
-
 #pragma mark - Initialization
 
 - (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate {
@@ -136,7 +120,7 @@
     UIView *view = vc.view;
     CGFloat originY = displayType.originYCalculation(self, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     
-    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message orientation:[PIPassiveAlert alertViewOrientationForDisplayTypeOrientation:displayType.orientation] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
