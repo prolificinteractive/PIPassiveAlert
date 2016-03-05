@@ -24,6 +24,7 @@
 //
 
 #import "PIPassiveAlert.h"
+
 #import <UIKit/UIKit.h>
 
 /**
@@ -86,7 +87,7 @@
 
 /**
  *  Merges first config with second config. If both contain values,
- *  second config values take precedence.
+ *  second config value takes precedence.
  *
  *  @parameter firstConfig:  First config.
  *  @parameter secondConfig: Second config.
