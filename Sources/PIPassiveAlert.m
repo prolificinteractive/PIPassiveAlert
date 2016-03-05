@@ -68,10 +68,9 @@ static PassiveAlert *currentAlert = nil;
     defaultConfig.showType = PassiveAlertShowTypeTop;
     defaultConfig.shouldAutoHide = YES;
     defaultConfig.autoHideDelay = 3.f;
-    defaultConfig.height = 70.f;
     defaultConfig.backgroundColor = [UIColor redColor];
     defaultConfig.textColor = [UIColor whiteColor];
-    defaultConfig.font = [UIFont systemFontOfSize:15.f];
+    defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
     
     return defaultConfig;
