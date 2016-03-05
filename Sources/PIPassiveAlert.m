@@ -111,13 +111,12 @@
 
 #pragma mark Private instance methods
 
-- (void)showInViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType {
+- (void)showInView:(UIView *)view displayType:(PIPassiveAlertDisplayType *)displayType {
     // In case the view is already gone when the alert is about to being shown
-    if (!vc) {
+    if (!view) {
         return;
     }
     
-    UIView *view = vc.view;
     CGFloat originY = displayType.originYCalculation(self, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     
     self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
@@ -128,7 +127,7 @@
     self.alertView.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.alertViewContainer = [self containerViewForAlertView:self.alertView];
-    [vc.view addSubview:self.alertViewContainer];
+    [view addSubview:self.alertViewContainer];
     
     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                             attribute:NSLayoutAttributeLeading

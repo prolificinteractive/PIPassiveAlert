@@ -101,7 +101,7 @@ static PIPassiveAlert *currentAlert = nil;
     
     currentAlert = alert;
 
-    [alert showInViewController:vc displayType:displayType];
+    [alert showInView:vc.view displayType:displayType];
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {

@@ -144,10 +144,10 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 /**
  *  Displays a passive alert with the specified message in the specified view controller.
  *
- *  @param vc           The view controller the alert should be displayed in.
+ *  @param vc           The view the alert should be displayed in.
  *  @param displayType  The display type for the alert.
  */
-- (void)showInViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType;
+- (void)showInView:(UIView *)view displayType:(PIPassiveAlertDisplayType *)displayType;
 
 /**
  *  Closes alert.
