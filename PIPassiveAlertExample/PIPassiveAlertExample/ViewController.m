@@ -24,7 +24,7 @@
 - (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert {
     self.alertCount++;
     
-    [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
+    [PIPassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
 }
 
 - (PassiveAlertConfig *)passiveAlertConfig {
@@ -54,7 +54,7 @@
 
 - (UIColor *)passiveAlertBackgroundColor {
     if ((self.alertCount % 2) == 0) {
-        return [PassiveAlert defaultConfig].backgroundColor;
+        return [PIPassiveAlert defaultConfig].backgroundColor;
     } else {
         return [self randomColor];
     }
@@ -65,7 +65,7 @@
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
+    [PIPassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
 }
 
 @end
