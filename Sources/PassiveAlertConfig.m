@@ -27,38 +27,8 @@
 
 @interface PassiveAlertConfig ()
 
-@property (nonatomic, strong, readwrite) UINib *nib;
-@property (nonatomic, assign, readwrite) PassiveAlertShowType showType;
-@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
-@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
-@property (nonatomic, assign, readwrite) CGFloat height;
-@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
-@property (nonatomic, strong, readwrite) UIColor *textColor;
-@property (nonatomic, strong, readwrite) UIFont *font;
-@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
-
 @end
 
 @implementation PassiveAlertConfig
-
-#pragma mark - Initialization
-
-- (instancetype)initWithNib:(UINib *)nib showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment {
-    self = [super init];
-    
-    if (self) {
-        self.nib = nib;
-        self.showType = showType;
-        self.shouldAutoHide = shouldAutoHide;
-        self.autoHideDelay = autoHideDelay;
-        self.height = height;
-        self.backgroundColor = backgroundColor;
-        self.textColor = textColor;
-        self.font = font;
-        self.textAlignment = textAlignment;
-    }
-    
-    return self;
-}
 
 @end

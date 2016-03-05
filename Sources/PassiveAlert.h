@@ -26,6 +26,7 @@
 #import <UIKit/UIKit.h>
 
 @class PassiveAlert;
+@class PassiveAlertConfig;
 
 /**
  *  Defines methods for receiving notifications from a passive alert.
@@ -228,63 +229,20 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 + (CGFloat)defaultAutoHideDelay;
 
 /**
- *  Default nib used for passive alert if none provided.
+ *  Default config used to supply values when none provided.
  *
- *  @returns Nib.
+ *  @returns Config.
  */
-+ (UINib *)defaultNib;
-
-/**
- *  Default height used for passive alert if none provided.
- *
- *  @returns Height.
- */
-+ (CGFloat)defaultHeight;
-
-/**
- *  Default background color used for passive alert if none provided.
- *
- *  @returns Color.
- */
-+ (UIColor *)defaultBackgroundColor;
-
-/**
- *  Default text color used for passive alert if none provided.
- *
- *  @returns Height.
- */
-+ (UIColor *)defaultTextColor;
-
-/**
- *  Default font used for passive alert if none provided.
- *
- *  @returns Font.
- */
-+ (UIFont *)defaultFont;
-
-/**
- *  Default text alignment used for passive alert if none provided.
- *
- *  @returns Text alignment.
- */
-+ (NSTextAlignment)defaultTextAlignment;
++ (PassiveAlertConfig *)defaultConfig;
 
 /**
  *  Creates new passive alert with the specified attributes.
  *
- *  @param nib              A nib containing a PassiveAlertView.
- *  @param message          The message to display.
- *  @param showType         The show type.
- *  @param shouldAutoHide:  Whether the alert should auto-hide.
- *  @param autoHideDelay:   If auto-hiding, time after display before auto-hide occurs.
- *  @param height           The height.
- *  @param backgroundColor: Background color.
- *  @param textColor:       Text color.
- *  @param font             The font to use in display.
- *  @param textAlignment:   The text alignment to use in display.
- *  @param delegate         The delegate for the alert.
+ *  @param message  The message to display.
+ *  @param config   The config for the alert.
+ *  @param delegate The delegate for the alert.
  */
-- (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate;
+- (instancetype)initWithMessage:(NSString *)message config:(PassiveAlertConfig *)config delegate:(id<PassiveAlertDelegate>)delegate;
 
 /**
  *  Displays a passive alert with the specified message in the specified view controller.

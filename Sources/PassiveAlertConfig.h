@@ -35,46 +35,46 @@
 /**
  *  Nib.
  */
-@property (nonatomic, strong, readonly) UINib *nib;
+@property (nonatomic, strong) UINib *nib;
 
 /**
  *  Show type.
  */
-@property (nonatomic, assign, readonly) PassiveAlertShowType showType;
+@property (nonatomic, assign) PassiveAlertShowType showType;
 
 /**
  *  Should auto-hide.
  */
-@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
+@property (nonatomic, assign) BOOL shouldAutoHide;
 
 /**
  *  Auto-hide delay.
  */
-@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
+@property (nonatomic, assign) CGFloat autoHideDelay;
 
 /**
  *  Height.
  */
-@property (nonatomic, assign, readonly) CGFloat height;
+@property (nonatomic, assign) CGFloat height;
 
 /**
  *  Background color.
  */
-@property (nonatomic, strong, readonly) UIColor *backgroundColor;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
 /**
  *  Text color.
  */
-@property (nonatomic, strong, readonly) UIColor *textColor;
+@property (nonatomic, strong) UIColor *textColor;
 
 /**
  *  Font.
  */
-@property (nonatomic, strong, readonly) UIFont *font;
+@property (nonatomic, strong) UIFont *font;
 
 /**
  *  Text alignment.
  */
-@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, assign) NSTextAlignment textAlignment;
 
 @end

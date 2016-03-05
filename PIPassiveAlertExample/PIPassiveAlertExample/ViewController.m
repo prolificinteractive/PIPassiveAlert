@@ -33,7 +33,7 @@
 
 - (UIColor *)passiveAlertBackgroundColor {
     if ((self.alertCount % 2) == 0) {
-        return [PassiveAlert defaultBackgroundColor];
+        return [PassiveAlert defaultConfig].backgroundColor;
     } else {
         return [self randomColor];
     }

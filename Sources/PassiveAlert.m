@@ -24,6 +24,7 @@
 //
 
 #import "PassiveAlert.h"
+#import "PassiveAlertConfig.h"
 #import "PassiveAlertView.h"
 
 #pragma mark - Constants
@@ -74,6 +75,24 @@ static PassiveAlert *currentAlert = nil;
     }
 }
 
++ (PassiveAlertConfig *)defaultConfig {
+    PassiveAlertConfig *defaultConfig = [[PassiveAlertConfig alloc] init];
+    
+    defaultConfig.nib = [self defaultNib];
+    defaultConfig.showType = PassiveAlertShowTypeTop;
+    defaultConfig.shouldAutoHide = YES;
+    defaultConfig.autoHideDelay = 3.f;
+    defaultConfig.height = 70.f;
+    defaultConfig.backgroundColor = [UIColor redColor];
+    defaultConfig.textColor = [UIColor whiteColor];
+    defaultConfig.font = [UIFont systemFontOfSize:15.f];
+    defaultConfig.textAlignment = NSTextAlignmentCenter;
+    
+    return defaultConfig;
+}
+
+#pragma mark Private class methods
+
 + (UINib *)defaultNib {
     // Source: http://www.the-nerd.be/2015/08/07/load-assets-from-bundle-resources-in-cocoapods/
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -83,72 +102,41 @@ static PassiveAlert *currentAlert = nil;
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
 }
 
-+ (CGFloat)defaultAutoHideDelay {
-    return 3.f;
-}
-
-+ (CGFloat)defaultHeight {
-    return 70;
-}
-
-+ (UIColor *)defaultBackgroundColor {
-    return [UIColor redColor];
-}
-
-+ (UIColor *)defaultTextColor {
-    return [UIColor whiteColor];
-}
-
-+ (UIFont *)defaultFont {
-    return [UIFont systemFontOfSize:15.f];
-}
-
-+ (NSTextAlignment)defaultTextAlignment {
-    return NSTextAlignmentCenter;
-}
-
-#pragma mark Private class methods
-
 + (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    UINib *nib = [self defaultNib];
-    CGFloat autoHideDelay = [self defaultAutoHideDelay];
-    CGFloat height = [self defaultHeight];
-    UIColor *backgroundColor = [self defaultBackgroundColor];
-    UIColor *textColor = [self defaultTextColor];
-    UIFont *font = [self defaultFont];
-    NSTextAlignment textAlignment = [self defaultTextAlignment];
+    
+    PassiveAlertConfig *config = [self defaultConfig];
     
     if (delegate) {
         if ([delegate respondsToSelector:@selector(passiveAlertNib)]) {
-            nib = [delegate passiveAlertNib];
+            config.nib = [delegate passiveAlertNib];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertAutoHideDelay)]) {
-            autoHideDelay = [delegate passiveAlertAutoHideDelay];
+            config.autoHideDelay = [delegate passiveAlertAutoHideDelay];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertHeight)]) {
-            height = [delegate passiveAlertHeight];
+            config.height = [delegate passiveAlertHeight];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertBackgroundColor)]) {
-            backgroundColor = [delegate passiveAlertBackgroundColor];
+            config.backgroundColor = [delegate passiveAlertBackgroundColor];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertTextColor)]) {
-            textColor = [delegate passiveAlertTextColor];
+            config.textColor = [delegate passiveAlertTextColor];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertFont)]) {
-            font = [delegate passiveAlertFont];
+            config.font = [delegate passiveAlertFont];
         }
         
         if ([delegate respondsToSelector:@selector(passiveAlertTextAlignment)]) {
-            textAlignment = [delegate passiveAlertTextAlignment];
+            config.textAlignment = [delegate passiveAlertTextAlignment];
         }
     }
     
-    PassiveAlert *alert = [[PassiveAlert alloc] initWithNib:nib message:message showType:showType shouldAutoHide:shouldAutoHide autoHideDelay:autoHideDelay height:height backgroundColor:backgroundColor textColor:textColor font:font textAlignment:textAlignment delegate:delegate];
+    PassiveAlert *alert = [[PassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
     
     return alert;
 }
@@ -179,20 +167,20 @@ static PassiveAlert *currentAlert = nil;
 
 #pragma mark - Initialization
 
-- (instancetype)initWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide autoHideDelay:(CGFloat)autoHideDelay height:(CGFloat)height backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment delegate:(id<PassiveAlertDelegate>)delegate {
+- (instancetype)initWithMessage:(NSString *)message config:(PassiveAlertConfig *)config delegate:(id<PassiveAlertDelegate>)delegate {
     self = [super init];
     
     if (self) {
-        self.nib = nib;
         self.message = message;
-        self.showType = showType;
-        self.shouldAutoHide = shouldAutoHide;
-        self.autoHideDelay = autoHideDelay;
-        self.height = height;
-        self.backgroundColor = backgroundColor;
-        self.textColor = textColor;
-        self.font = font;
-        self.textAlignment = textAlignment;
+        self.nib = config.nib;
+        self.showType = config.showType;
+        self.shouldAutoHide = config.shouldAutoHide;
+        self.autoHideDelay = config.autoHideDelay;
+        self.height = config.height;
+        self.backgroundColor = config.backgroundColor;
+        self.textColor = config.textColor;
+        self.font = config.font;
+        self.textAlignment = config.textAlignment;
         self.delegate = delegate;
     }
     
