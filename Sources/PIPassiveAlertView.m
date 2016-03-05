@@ -28,7 +28,6 @@
 @interface PIPassiveAlertView ()
 
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
-@property (nonatomic, strong) UIView *supportingBackgroundView;
 
 @end
 
@@ -64,10 +63,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {
-        // Add extra background to the top, for the spring animation
-        [self setupSupportingBackgroundView];
-    }
+
     return self;
 }
 
@@ -75,15 +71,6 @@
 
 - (void)layoutSubviews
 {
-    CGRect frame = self.frame;
-    frame.size.width = CGRectGetWidth(self.superview.superview.bounds);
-    self.frame = frame;
-    
-    // Adjust container view's frame
-    frame = self.superview.frame;
-    frame.size.width = CGRectGetWidth(self.frame);
-    self.superview.frame = frame;
-    
     CGRect bounds = self.bounds;
     
     switch (self.showType) {
@@ -107,23 +94,12 @@
             break;
     }
     
-    self.supportingBackgroundView.frame = bounds;
-    self.supportingBackgroundView.backgroundColor = self.backgroundColor;
-    
     [super layoutSubviews];
 }
 
 #pragma mark - Instance methods
 
 #pragma mark Private instance methods
-
-- (void)setupSupportingBackgroundView
-{
-    self.supportingBackgroundView = [UIView new];
-    self.supportingBackgroundView.backgroundColor = self.backgroundColor;
-    [self insertSubview:self.supportingBackgroundView atIndex:[self.subviews count]];
-    [self setNeedsLayout];
-}
 
 - (IBAction)didReceiveTap:(id)sender
 {
