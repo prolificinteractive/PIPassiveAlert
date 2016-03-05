@@ -104,7 +104,10 @@ static PassiveAlert *currentAlert = nil;
 
 + (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
     PassiveAlertConfig *config = [PassiveAlertConfig mergeConfig:[self defaultConfig] withSecondConfig:[delegate passiveAlertConfig]];
-
+    
+    config.showType = showType;
+    config.shouldAutoHide = shouldAutoHide;
+    
     return [[PassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
 }
 
@@ -256,7 +259,6 @@ static PassiveAlert *currentAlert = nil;
                                                              multiplier:1
                                                                constant:0];
     
-    // PassiveAlert for tooltip in schedule view, we want the animation from the bottom. Handling it here.
     if (self.showType == PassiveAlertShowTypeBottom) {
         [view addConstraints:@[ left, right, bottom ]];
     } else {
