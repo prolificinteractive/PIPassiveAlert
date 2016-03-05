@@ -24,7 +24,6 @@
 //
 
 #import "PIPassiveAlertDisplayer.h"
-#import "PIPassiveAlertDisplayType.h"
 
 #pragma mark - Constants
 
@@ -69,10 +68,10 @@ static PIPassiveAlert *currentAlert = nil;
     [self displayAlert:alert withDisplayType:displayType inViewController:vc];
 }
 
-+ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PIPassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
-    
-    [self displayAlert:alert inViewController:vc originY:originY];
+
+    [self displayAlert:alert withDisplayType:displayType inViewController:vc];
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
@@ -98,17 +97,6 @@ static PIPassiveAlert *currentAlert = nil;
 
 #pragma mark Private class methods
 
-+ (void)displayAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc originY:(CGFloat)originY {
-    if (currentAlert) {
-        [currentAlert closeAnimated:YES];
-        currentAlert = nil;
-    }
-    
-    currentAlert = alert;
-    
-    [alert showInViewController:vc originY:originY];
-}
-
 + (void)displayAlert:(PIPassiveAlert *)alert withDisplayType:(PIPassiveAlertDisplayType *)displayType inViewController:(UIViewController *)vc {
     if (currentAlert) {
         [currentAlert closeAnimated:YES];
@@ -116,10 +104,8 @@ static PIPassiveAlert *currentAlert = nil;
     }
     
     currentAlert = alert;
-    
-    CGFloat originY = displayType.originYCalculation(alert, vc);
 
-    [alert showInViewController:vc originY:originY];
+    [alert showInViewController:vc displayType:displayType];
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {

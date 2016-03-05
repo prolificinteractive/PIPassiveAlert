@@ -67,8 +67,10 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertDisplayOrientation) {
 /**
  *  Creates new display type with the specified attributes.
  *
- *  @param orientation        The message to display.
- *  @param originYCalculation The config for the alert.
+ *  @warning The objects passed into the origin-Y calculation should not be mutated.
+ *
+ *  @param orientation        The orientation.
+ *  @param originYCalculation Function calculating origin-Y.
  */
 - (instancetype)initWithOrientation:(PIPassiveAlertDisplayOrientation)orientation originYCalculation:(PIPassiveAlertDisplayOriginYCalculation)originYCalculation;
 

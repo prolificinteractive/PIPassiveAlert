@@ -25,10 +25,9 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertDisplayType.h"
 
 #import <UIKit/UIKit.h>
-
-@class PIPassiveAlertDisplayType;
 
 @interface PIPassiveAlertDisplayer : NSObject
 
@@ -62,16 +61,17 @@
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
  *
- *  @param message  The message to display in the passive alert.
- *  @param vc       The view controller the alert should be displayed in.
- *  @param originY  The y-coordinate of the alert origin.
- *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
- *  @param delegate The delegate for the passive alert.
+ *  @param message       The message to display in the passive alert.
+ *  @param vc            The view controller the alert should be displayed in.
+ *  @param displayType   The display type for the passive alert.
+ *  @param shouldAutHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
+ *  @param delegate      The delegate for the passive alert.
  */
 + (void)displayMessage:(NSString *)message
       inViewController:(UIViewController *)vc
-               originY:(CGFloat)originY
-        shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
+       displayType:(PIPassiveAlertDisplayType *)displayType
+        shouldAutoHide:(BOOL)shouldAutHide
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Closes the currently displaying alert. If no alert is displaying, nothing happens.

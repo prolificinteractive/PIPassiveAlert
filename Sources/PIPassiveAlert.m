@@ -25,6 +25,7 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertDisplayType.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
@@ -53,27 +54,15 @@
 
 #pragma mark Private class methods
 
-+ (PIPassiveAlertViewShowType)alertViewShowTypeForAlertType:(PIPassiveAlertShowType)alertShowType {
-    switch (alertShowType) {
-        case PIPassiveAlertShowTypeTop:
-            return PIPassiveAlertViewShowTypeTop;
-            break;
-            
-        case PIPassiveAlertShowTypeBottom:
-            return PIPassiveAlertViewShowTypeBottom;
-            break;
-            
-        case PIPassiveAlertShowTypeNavigationBar:
-            return PIPassiveAlertViewShowTypeNavigationBar;
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            return PIPassiveAlertViewShowTypeCustomOrigin;
-            break;
-            
++ (PIPassiveAlertViewDisplayOrientation)alertViewOrientationForDisplayTypeOrientation:(PIPassiveAlertViewDisplayOrientation)orientation {
+    switch (orientation) {
+        case PIPassiveAlertViewDisplayOrientationFromTop:
+            return PIPassiveAlertViewDisplayOrientationFromTop;
+        case PIPassiveAlertViewDisplayOrientationFromBottom:
+            return PIPassiveAlertViewDisplayOrientationFromBottom;
         default:
-            return [self alertViewShowTypeForAlertType:PIPassiveAlertShowTypeTop];
-            break;
+            NSAssert(NO, @"Should not retrieve unexpected orientation.");
+            return PIPassiveAlertViewDisplayOrientationFromTop;
     }
 }
 
@@ -107,10 +96,6 @@
 
 #pragma mark - Instance methods
 
-- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY {
-    [self showInView:vc.view origin:CGPointMake(0.0f, originY)];
-}
-
 - (void)closeAnimated:(BOOL)animated {
     CGRect finalAlertFrame = self.alertView.frame;
     
@@ -142,14 +127,16 @@
 
 #pragma mark Private instance methods
 
-- (void)showInView:(UIView *)view origin:(CGPoint)origin
-{
+- (void)showInViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType {
     // In case the view is already gone when the alert is about to being shown
-    if (!view) {
+    if (!vc) {
         return;
     }
     
-    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PIPassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
+    CGFloat originY = displayType.originYCalculation(self, vc);
+    UIView *view = vc.view;
+    
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message orientation:[PIPassiveAlert alertViewOrientationForDisplayTypeOrientation:displayType.orientation] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -157,7 +144,7 @@
     self.alertView.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.alertViewContainer = [self containerViewForAlertView:self.alertView];
-    [view addSubview:self.alertViewContainer];
+    [vc.view addSubview:self.alertViewContainer];
     
     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                             attribute:NSLayoutAttributeLeading
@@ -179,7 +166,7 @@
                                                               toItem:view
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
-                                                            constant:origin.y];
+                                                            constant:originY];
     NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual

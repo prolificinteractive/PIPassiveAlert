@@ -44,23 +44,15 @@
 /**
  *  The passive alert view show-types.
  */
-typedef NS_ENUM(NSInteger, PIPassiveAlertViewShowType) {
+typedef NS_ENUM(NSInteger, PIPassiveAlertViewDisplayOrientation) {
     /**
-     *  Top.
+     *  From top.
      */
-    PIPassiveAlertViewShowTypeTop,
+    PIPassiveAlertViewDisplayOrientationFromTop,
     /**
-     *  Bottom.
+     *  From bottom.
      */
-    PIPassiveAlertViewShowTypeBottom,
-    /**
-     *  Navigation bar.
-     */
-    PIPassiveAlertViewShowTypeNavigationBar,
-    /**
-     *  Custom origin.
-     */
-    PIPassiveAlertViewShowTypeCustomOrigin
+    PIPassiveAlertViewDisplayOrientationFromBottom
 };
 
 /**
@@ -74,9 +66,9 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertViewShowType) {
 @property (nonatomic, weak) id<PIPassiveAlertViewDelegate> delegate;
 
 /**
- *  The show type of the passive alert view.
+ *  The  orientation of the passive alert view.
  */
-@property (nonatomic, assign) PIPassiveAlertViewShowType showType;
+@property (nonatomic, assign) PIPassiveAlertViewDisplayOrientation orientation;
 
 /**
  *  Creates alert view for provided attributes.
@@ -93,6 +85,6 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertViewShowType) {
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PIPassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message orientation:(PIPassiveAlertViewDisplayOrientation)orientation backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate;
 
 @end

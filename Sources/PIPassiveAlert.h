@@ -27,6 +27,7 @@
 
 @class PIPassiveAlert;
 @class PIPassiveAlertConfig;
+@class PIPassiveAlertDisplayType;
 
 /**
  *  Defines methods for receiving notifications from a passive alert.
@@ -148,10 +149,10 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 /**
  *  Displays a passive alert with the specified message in the specified view controller.
  *
- *  @param vc       The view controller the alert should be displayed in.
- *  @param originY  The y-coordinate of the alert origin.
+ *  @param vc           The view controller the alert should be displayed in.
+ *  @param displayType  The display type for the alert.
  */
-- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY;
+- (void)showInViewController:(UIViewController *)vc displayType:(PIPassiveAlertDisplayType *)displayType;
 
 /**
  *  Closes alert.
