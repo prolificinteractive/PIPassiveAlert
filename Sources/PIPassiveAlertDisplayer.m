@@ -53,10 +53,6 @@ static PIPassiveAlert *currentAlert = nil;
             displayType = [PIPassiveAlertDisplayer bottomDisplayType];
             break;
             
-        case PIPassiveAlertShowTypeNavigationBar:
-            displayType = [PIPassiveAlertDisplayer navigationBarDisplayType];
-            break;
-            
         case PIPassiveAlertShowTypeCustomOrigin:
             NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
             break;
@@ -139,10 +135,6 @@ static PIPassiveAlert *currentAlert = nil;
             return vc.view.bounds.size.height - alert.height;
             break;
             
-        case PIPassiveAlertShowTypeNavigationBar:
-            return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
-            break;
-            
         case PIPassiveAlertShowTypeCustomOrigin:
             NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
             return 0.f;
@@ -164,7 +156,7 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlertDisplayType *)topDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return 0.f;
     };
     
@@ -172,19 +164,11 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlertDisplayType *)bottomDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
-        return displayingViewController.view.bounds.size.height - alert.height;
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
+        return containingViewSize.height - alertConfig.height;
     };
     
     return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromBottom originYCalculation:originYCalculation];
-}
-
-+ (PIPassiveAlertDisplayType *)navigationBarDisplayType {
-    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
-        return (displayingViewController.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
-    };
-    
-    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromTop originYCalculation:originYCalculation];
 }
 
 @end

@@ -67,11 +67,6 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
     PIPassiveAlertShowTypeBottom,
     
     /**
-     *  Passive alerts with origin at the navigation bar.
-     */
-    PIPassiveAlertShowTypeNavigationBar,
-    
-    /**
      *  Passive alerts with custom origin.
      */
     PIPassiveAlertShowTypeCustomOrigin

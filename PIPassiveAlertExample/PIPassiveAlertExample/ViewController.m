@@ -22,7 +22,9 @@
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    [PIPassiveAlertDisplayer displayMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:YES delegate:self];
+    PIPassiveAlertShowType showType = ((self.alertCount % 2) == 0) ? PIPassiveAlertShowTypeBottom : PIPassiveAlertShowTypeTop;
+    
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Tap me!"] inViewController:self showType:showType shouldAutoHide:YES delegate:self];
 }
 
 #pragma mark - Protocol conformance
@@ -33,12 +35,7 @@
     self.alertCount++;
     
     // Custom alert - displays at random origin
-    PIPassiveAlertDisplayType *randomOriginDisplayType = [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromTop originYCalculation:^CGFloat(PIPassiveAlert *alert, UIViewController *displayingViewController) {
-        
-        return [self randomNumberBetween:0 maxNumber:displayingViewController.view.bounds.size.height];
-    }];
-    
-    [PIPassiveAlertDisplayer displayMessage:@"Random" inViewController:self displayType:randomOriginDisplayType shouldAutoHide:NO delegate:self];
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Random!"] inViewController:self displayType:[self randomOriginDisplayType] shouldAutoHide:NO delegate:self];
 }
 
 - (PIPassiveAlertConfig *)passiveAlertConfig {
@@ -54,8 +51,16 @@
 
 #pragma mark - Private functions
 
-- (NSString *)message {
-    return [NSString stringWithFormat:@"Tap me! Alert #%i", self.alertCount];
+- (PIPassiveAlertDisplayType *)randomOriginDisplayType {
+    PIPassiveAlertDisplayOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
+        return [self randomNumberBetween:0 maxNumber:containingViewSize.height];
+    };
+    
+    return [[PIPassiveAlertDisplayType alloc] initWithOrientation:PIPassiveAlertDisplayOrientationFromBottom originYCalculation:originYCalculation];
+}
+
+- (NSString *)message:(NSString *)stub {
+    return [NSString stringWithFormat:@"%@ Alert #%i", stub, self.alertCount];
 }
 
 - (UIColor *)randomColor {

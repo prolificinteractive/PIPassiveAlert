@@ -133,8 +133,8 @@
         return;
     }
     
-    CGFloat originY = displayType.originYCalculation(self, vc);
     UIView *view = vc.view;
+    CGFloat originY = displayType.originYCalculation(self, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     
     self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message orientation:[PIPassiveAlert alertViewOrientationForDisplayTypeOrientation:displayType.orientation] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     

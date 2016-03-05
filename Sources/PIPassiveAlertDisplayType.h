@@ -25,13 +25,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class PIPassiveAlert;
+@class PIPassiveAlertConfig;
 
 /**
- *  Function calculating origin-Y given an alert and its
- *  displaying view controller.
+ *  Function calculating origin-Y given an alert config and containing frame.
  */
-typedef CGFloat (^PIPassiveAlertDisplayOriginYCalculation)(PIPassiveAlert *alert, UIViewController *displayingViewController);
+typedef CGFloat (^PIPassiveAlertDisplayOriginYCalculation)(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize);
 
 /**
  *  Passive alert orientation.
@@ -66,8 +65,6 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertDisplayOrientation) {
 
 /**
  *  Creates new display type with the specified attributes.
- *
- *  @warning The objects passed into the origin-Y calculation should not be mutated.
  *
  *  @param orientation        The orientation.
  *  @param originYCalculation Function calculating origin-Y.
