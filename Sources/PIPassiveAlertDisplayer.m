@@ -88,8 +88,19 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlertConfig *config = [PIPassiveAlertConfig mergeConfig:[self defaultConfig] withSecondConfig:[delegate passiveAlertConfig]];
+    // Start with default config
+    PIPassiveAlertConfig *config = [self defaultConfig];
     
+    // Merge with delegate config, if available
+    if (delegate) {
+        if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
+            PIPassiveAlertConfig *delegateConfig = [delegate passiveAlertConfig];
+            
+            config = [PIPassiveAlertConfig mergeConfig:config withSecondConfig:delegateConfig];
+        }
+    }
+    
+    // Override with more specific values supplied
     config.showType = showType;
     config.shouldAutoHide = shouldAutoHide;
     
