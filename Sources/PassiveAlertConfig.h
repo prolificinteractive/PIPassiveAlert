@@ -93,6 +93,6 @@
  *
  *  @returns New config.
  */
-+ (PassiveAlert *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig;
++ (PassiveAlertConfig *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig;
 
 @end

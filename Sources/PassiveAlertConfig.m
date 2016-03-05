@@ -37,7 +37,7 @@
     return [[PassiveAlertConfig alloc] init];
 }
 
-+ (PassiveAlert *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig {
++ (PassiveAlertConfig *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig {
     PassiveAlertConfig *config = [firstConfig copy];
     
     if (secondConfig.nib) {

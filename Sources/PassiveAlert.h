@@ -180,13 +180,6 @@ typedef NS_ENUM(NSInteger, PassiveAlertShowType) {
 + (void)closeCurrentAlertAnimated:(BOOL)animated;
 
 /**
- *  Default auto-hide delay used for passive alert if none provided.
- *
- *  @returns Auto-hide delay.
- */
-+ (CGFloat)defaultAutoHideDelay;
-
-/**
  *  Default config used to supply values when none provided.
  *
  *  @returns Config.
