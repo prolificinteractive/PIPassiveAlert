@@ -27,23 +27,17 @@
     [PassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
 }
 
-- (CGFloat)passiveAlertAutoHideDelay {
-    return 0.5f;
+- (PassiveAlertConfig *)passiveAlertConfig {
+    PassiveAlertConfig *config = [PassiveAlertConfig config];
+    
+    config.autoHideDelay = 0.5f;
+    config.backgroundColor = [self passiveAlertBackgroundColor];
+    config.font = [UIFont systemFontOfSize:22.f];
+    
+    return config;
 }
 
-- (UIColor *)passiveAlertBackgroundColor {
-    if ((self.alertCount % 2) == 0) {
-        return [PassiveAlert defaultConfig].backgroundColor;
-    } else {
-        return [self randomColor];
-    }
-}
-
-- (UIFont *)passiveAlertFont {
-    return [UIFont systemFontOfSize:22.f];
-}
-
-#pragma mark - Instance functions
+#pragma mark - Private functions
 
 - (NSString *)message {
     return [NSString stringWithFormat:@"Tap me! Alert #%i", self.alertCount];
@@ -56,6 +50,14 @@
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
     
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+- (UIColor *)passiveAlertBackgroundColor {
+    if ((self.alertCount % 2) == 0) {
+        return [PassiveAlert defaultConfig].backgroundColor;
+    } else {
+        return [self randomColor];
+    }
 }
 
 #pragma mark IB Actions

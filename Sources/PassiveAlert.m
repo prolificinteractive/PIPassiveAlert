@@ -103,42 +103,9 @@ static PassiveAlert *currentAlert = nil;
 }
 
 + (PassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PassiveAlertDelegate>)delegate {
-    
-    PassiveAlertConfig *config = [self defaultConfig];
-    
-    if (delegate) {
-        if ([delegate respondsToSelector:@selector(passiveAlertNib)]) {
-            config.nib = [delegate passiveAlertNib];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertAutoHideDelay)]) {
-            config.autoHideDelay = [delegate passiveAlertAutoHideDelay];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertHeight)]) {
-            config.height = [delegate passiveAlertHeight];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertBackgroundColor)]) {
-            config.backgroundColor = [delegate passiveAlertBackgroundColor];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertTextColor)]) {
-            config.textColor = [delegate passiveAlertTextColor];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertFont)]) {
-            config.font = [delegate passiveAlertFont];
-        }
-        
-        if ([delegate respondsToSelector:@selector(passiveAlertTextAlignment)]) {
-            config.textAlignment = [delegate passiveAlertTextAlignment];
-        }
-    }
-    
-    PassiveAlert *alert = [[PassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
-    
-    return alert;
+    PassiveAlertConfig *config = [PassiveAlertConfig mergeConfig:[self defaultConfig] withSecondConfig:[delegate passiveAlertConfig]];
+
+    return [[PassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
 }
 
 + (PassiveAlertViewShowType)alertViewShowTypeForAlertType:(PassiveAlertShowType)alertShowType {

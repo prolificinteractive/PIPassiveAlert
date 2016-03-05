@@ -31,4 +31,73 @@
 
 @implementation PassiveAlertConfig
 
+#pragma mark - Class methods
+
++ (instancetype)config {
+    return [[PassiveAlertConfig alloc] init];
+}
+
++ (PassiveAlert *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig {
+    PassiveAlertConfig *config = [firstConfig copy];
+    
+    if (secondConfig.nib) {
+        config.nib = [secondConfig.nib copy];
+    }
+    
+    if (secondConfig.showType) {
+        config.showType = secondConfig.showType;
+    }
+    
+    if (secondConfig.shouldAutoHide) {
+        config.shouldAutoHide = secondConfig.shouldAutoHide;
+    }
+    
+    if (secondConfig.autoHideDelay) {
+        config.autoHideDelay = secondConfig.autoHideDelay;
+    }
+    
+    if (secondConfig.height) {
+        config.height = secondConfig.height;
+    }
+    
+    if (secondConfig.backgroundColor) {
+        config.backgroundColor = [secondConfig.backgroundColor copy];
+    }
+    
+    if (secondConfig.textColor) {
+        config.textColor = [secondConfig.textColor copy];
+    }
+    
+    if (secondConfig.font) {
+        config.font = [secondConfig.font copy];
+    }
+    
+    if (secondConfig.textAlignment) {
+        config.textAlignment = secondConfig.textAlignment;
+    }
+    
+    return config;
+}
+
+#pragma mark - Protocol conformance
+
+#pragma mark <NSCopying>
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    PassiveAlertConfig *copy = [[PassiveAlertConfig allocWithZone: zone] init];
+    
+    copy.nib = self.nib;
+    copy.showType = self.showType;
+    copy.shouldAutoHide = self.shouldAutoHide;
+    copy.autoHideDelay = self.autoHideDelay;
+    copy.height = self.height;
+    copy.backgroundColor = self.backgroundColor;
+    copy.textColor = self.textColor;
+    copy.font = self.font;
+    copy.textAlignment = self.textAlignment;
+    
+    return copy;
+}
+
 @end

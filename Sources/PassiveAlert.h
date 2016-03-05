@@ -43,53 +43,11 @@
 - (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert;
 
 /**
- *  Nib used for UI of passive alert.
+ *  Config to be used for passive alert.
  *
- *  @returns Nib.
+ *  @returns Config.
  */
-- (UINib *)passiveAlertNib;
-
-/**
- *  Auto-hide delay to be used for passive alert.
- *
- *  @returns Auto-hide delay.
- */
-- (CGFloat)passiveAlertAutoHideDelay;
-
-/**
- *  Height to be used for passive alert.
- *
- *  @returns Height.
- */
-- (CGFloat)passiveAlertHeight;
-
-/**
- *  Background color to be used for passive alert.
- *
- *  @returns Color.
- */
-- (UIColor *)passiveAlertBackgroundColor;
-
-/**
- *  Text color to be used for passive alert.
- *
- *  @returns Color.
- */
-- (UIColor *)passiveAlertTextColor;
-
-/**
- *  Font to be used for passive alert.
- *
- *  @returns Font.
- */
-- (UIFont *)passiveAlertFont;
-
-/**
- *  Text alignment to be used for passive alert.
- *
- *  @returns Text alignment.
- */
-- (NSTextAlignment)passiveAlertTextAlignment;
+- (PassiveAlertConfig *)passiveAlertConfig;
 
 @end
 

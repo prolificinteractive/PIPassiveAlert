@@ -30,7 +30,7 @@
  *  Data object representing configurable
  *  attributes of a passive alert.
  */
-@interface PassiveAlertConfig : NSObject
+@interface PassiveAlertConfig : NSObject <NSCopying>
 
 /**
  *  Nib.
@@ -76,5 +76,23 @@
  *  Text alignment.
  */
 @property (nonatomic, assign) NSTextAlignment textAlignment;
+
+/**
+ *  Creates new config.
+ *
+ *  @returns New config.
+ */
++ (instancetype)config;
+
+/**
+ *  Merges first config with second config. If both contain values,
+ *  second config values take precedence.
+ *
+ *  @parameter firstConfig:  First config.
+ *  @parameter secondConfig: Second config.
+ *
+ *  @returns New config.
+ */
++ (PassiveAlert *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig;
 
 @end
