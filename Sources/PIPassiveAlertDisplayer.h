@@ -38,9 +38,9 @@
  *  @param vc       The view controller the alert should be displayed in.
  *  @param delegate The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
@@ -52,7 +52,11 @@
  *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
  *  @param delegate The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+              showType:(PIPassiveAlertShowType)showType
+        shouldAutoHide:(BOOL)shouldAutoHide
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
@@ -64,7 +68,10 @@
  *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
  *  @param delegate The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+               originY:(CGFloat)originY
+        shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Closes the currently displaying alert. If no alert is displaying, nothing happens.

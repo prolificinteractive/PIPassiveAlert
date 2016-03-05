@@ -24,7 +24,7 @@
 - (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert {
     self.alertCount++;
     
-    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
+    [PIPassiveAlertDisplayer displayMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
 }
 
 - (PIPassiveAlertConfig *)passiveAlertConfig {
@@ -66,7 +66,7 @@
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
+    [PIPassiveAlertDisplayer displayMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
 }
 
 @end

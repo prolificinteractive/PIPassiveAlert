@@ -20,7 +20,7 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
     func passiveAlertDidReceiveTap(passiveAlert: PIPassiveAlert) {
         alertCount = alertCount + 1
         
-        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Bottom, shouldAutoHide: true, delegate: self)
+        PIPassiveAlertDisplayer.displayMessage(message(), inViewController: self, showType: .Bottom, shouldAutoHide: true, delegate: self)
     }
     
     func passiveAlertConfig() -> PIPassiveAlertConfig! {
@@ -41,7 +41,7 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
     @IBAction private func didTapButton(sender: AnyObject) {
         alertCount = alertCount + 1
         
-        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Top, shouldAutoHide: false, delegate: self)
+        PIPassiveAlertDisplayer.displayMessage(message(), inViewController: self, showType: .Top, shouldAutoHide: false, delegate: self)
     }
     
     private func passiveAlertBackgroundColor() -> UIColor! {
