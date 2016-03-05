@@ -1,5 +1,5 @@
 //
-//  PassiveAlertConfig.m
+//  PIPassiveAlertConfig.m
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,22 +23,22 @@
 // THE SOFTWARE.
 //
 
-#import "PassiveAlertConfig.h"
+#import "PIPassiveAlertConfig.h"
 
-@interface PassiveAlertConfig ()
+@interface PIPassiveAlertConfig ()
 
 @end
 
-@implementation PassiveAlertConfig
+@implementation PIPassiveAlertConfig
 
 #pragma mark - Class methods
 
 + (instancetype)config {
-    return [[PassiveAlertConfig alloc] init];
+    return [[PIPassiveAlertConfig alloc] init];
 }
 
-+ (PassiveAlertConfig *)mergeConfig:(PassiveAlertConfig *)firstConfig withSecondConfig:(PassiveAlertConfig *)secondConfig {
-    PassiveAlertConfig *config = [firstConfig copy];
++ (PIPassiveAlertConfig *)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
+    PIPassiveAlertConfig *config = [firstConfig copy];
     
     if (secondConfig.nib) {
         config.nib = [secondConfig.nib copy];
@@ -85,7 +85,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    PassiveAlertConfig *copy = [[PassiveAlertConfig allocWithZone: zone] init];
+    PIPassiveAlertConfig *copy = [[PIPassiveAlertConfig allocWithZone: zone] init];
     
     copy.nib = self.nib;
     copy.showType = self.showType;

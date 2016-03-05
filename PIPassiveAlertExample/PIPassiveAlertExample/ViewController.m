@@ -6,10 +6,10 @@
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
-#import "PIPassiveAlert.h"
+#import "PIPassiveAlertDisplayer.h"
 #import "ViewController.h"
 
-@interface ViewController () <PassiveAlertDelegate>
+@interface ViewController () <PIPassiveAlertDelegate>
 
 @property (nonatomic, assign) int alertCount;
 
@@ -21,14 +21,14 @@
 
 #pragma mark PassiveAlertDelegate
 
-- (void)passiveAlertDidReceiveTap:(PassiveAlert *)passiveAlert {
+- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert {
     self.alertCount++;
     
-    [PIPassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
+    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
 }
 
-- (PassiveAlertConfig *)passiveAlertConfig {
-    PassiveAlertConfig *config = [PassiveAlertConfig config];
+- (PIPassiveAlertConfig *)passiveAlertConfig {
+    PIPassiveAlertConfig *config = [PIPassiveAlertConfig config];
     
     config.autoHideDelay = 1.f;
     config.height = 70.f;
@@ -55,7 +55,7 @@
 
 - (UIColor *)passiveAlertBackgroundColor {
     if ((self.alertCount % 2) == 0) {
-        return [PIPassiveAlert defaultConfig].backgroundColor;
+        return [PIPassiveAlertDisplayer defaultConfig].backgroundColor;
     } else {
         return [self randomColor];
     }
@@ -66,7 +66,7 @@
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    [PIPassiveAlert showMessage:[self message] inViewController:self showType:PassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
+    [PIPassiveAlertDisplayer showMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
 }
 
 @end

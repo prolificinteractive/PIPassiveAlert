@@ -1,5 +1,5 @@
 //
-//  PassiveAlertView.h
+//  PIPassiveAlertView.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -25,58 +25,58 @@
 
 #import <UIKit/UIKit.h>
 
-@class PassiveAlertView;
+@class PIPassiveAlertView;
 
 /**
  *  Defines methods for receiving notifications from a passive alert view.
  */
-@protocol PassiveAlertViewDelegate <NSObject>
+@protocol PIPassiveAlertViewDelegate <NSObject>
 
 /**
  *  Indicates that the passive alert view received a tap action.
  *
  *  @param passiveAlert The passive alert that received the close action.
  */
-- (void)passiveAlertViewDidReceiveTap:(PassiveAlertView *)alertView;
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView;
 
 @end
 
 /**
  *  The passive alert view show-types.
  */
-typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
+typedef NS_ENUM(NSInteger, PIPassiveAlertViewShowType) {
     /**
      *  Top.
      */
-    PassiveAlertViewShowTypeTop,
+    PIPassiveAlertViewShowTypeTop,
     /**
      *  Bottom.
      */
-    PassiveAlertViewShowTypeBottom,
+    PIPassiveAlertViewShowTypeBottom,
     /**
      *  Navigation bar.
      */
-    PassiveAlertViewShowTypeNavigationBar,
+    PIPassiveAlertViewShowTypeNavigationBar,
     /**
      *  Custom origin.
      */
-    PassiveAlertViewShowTypeCustomOrigin
+    PIPassiveAlertViewShowTypeCustomOrigin
 };
 
 /**
  *  Passive alert view.
  */
-@interface PassiveAlertView : UIView
+@interface PIPassiveAlertView : UIView
 
 /**
  *  The delegate of the passive alert view.
  */
-@property (nonatomic, weak) id<PassiveAlertViewDelegate> delegate;
+@property (nonatomic, weak) id<PIPassiveAlertViewDelegate> delegate;
 
 /**
  *  The show type of the passive alert view.
  */
-@property (nonatomic, assign) PassiveAlertViewShowType showType;
+@property (nonatomic, assign) PIPassiveAlertViewShowType showType;
 
 /**
  *  Creates alert view for provided attributes.
@@ -93,6 +93,6 @@ typedef NS_ENUM(NSInteger, PassiveAlertViewShowType) {
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PassiveAlertViewDelegate>)delegate;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PIPassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate;
 
 @end
