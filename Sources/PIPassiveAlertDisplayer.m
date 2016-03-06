@@ -36,23 +36,21 @@ static PIPassiveAlert *currentAlert = nil;
 
 #pragma mark - Class methods
 
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PIPassiveAlertDelegate>)delegate {
-    [self showMessage:message inViewController:vc showType:PIPassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc delegate:(id<PIPassiveAlertDelegate>)delegate {
+    [self displayMessage:message inViewController:vc showType:PIPassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
 }
 
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
     CGFloat originY = [self originYForPassiveAlert:alert inViewController:vc];
     
-    [self showAlert:alert inViewController:vc originY:originY];
+    [self displayAlert:alert inViewController:vc originY:originY];
 }
 
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PIPassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
     
-    [self showAlert:alert inViewController:vc originY:originY];
+    [self displayAlert:alert inViewController:vc originY:originY];
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
@@ -78,7 +76,7 @@ static PIPassiveAlert *currentAlert = nil;
 
 #pragma mark Private class methods
 
-+ (void)showAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc originY:(CGFloat)originY {
++ (void)displayAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc originY:(CGFloat)originY {
     if (currentAlert) {
         [currentAlert closeAnimated:YES];
         currentAlert = nil;
@@ -90,8 +88,19 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlertConfig *config = [PIPassiveAlertConfig mergeConfig:[self defaultConfig] withSecondConfig:[delegate passiveAlertConfig]];
+    // Start with default config
+    PIPassiveAlertConfig *config = [self defaultConfig];
     
+    // Merge with delegate config, if available
+    if (delegate) {
+        if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
+            PIPassiveAlertConfig *delegateConfig = [delegate passiveAlertConfig];
+            
+            config = [PIPassiveAlertConfig mergeConfig:config withSecondConfig:delegateConfig];
+        }
+    }
+    
+    // Override with more specific values supplied
     config.showType = showType;
     config.shouldAutoHide = shouldAutoHide;
     
