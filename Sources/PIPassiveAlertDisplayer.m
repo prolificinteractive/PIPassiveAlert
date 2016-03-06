@@ -116,16 +116,22 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    // Start with default config
+    // Start with default configs
     PIPassiveAlertConfig *alertConfig = [self defaultConfig];
     PIPassiveAlertAnimationConfig *animationConfig = [self defaultAnimationConfig];
     
-    // Merge with delegate config, if available
+    // Merge with delegate configs, if available
     if (delegate) {
         if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
-            PIPassiveAlertConfig *delegateConfig = [delegate passiveAlertConfig];
+            PIPassiveAlertConfig *delegateAlertConfig = [delegate passiveAlertConfig];
             
-            alertConfig = [PIPassiveAlertConfig mergeConfig:alertConfig withSecondConfig:delegateConfig];
+            alertConfig = [PIPassiveAlertConfig mergeConfig:alertConfig withSecondConfig:delegateAlertConfig];
+        }
+        
+        if ([delegate respondsToSelector:@selector(passiveAlertAnimationConfig)]) {
+            PIPassiveAlertAnimationConfig *delegateAnimationConfig = [delegate passiveAlertAnimationConfig];
+            
+            animationConfig = [PIPassiveAlertAnimationConfig mergeConfig:animationConfig withSecondConfig:delegateAnimationConfig];
         }
     }
     

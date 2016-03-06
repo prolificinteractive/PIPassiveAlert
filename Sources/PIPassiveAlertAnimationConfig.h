@@ -29,7 +29,7 @@
  *  Data object representing configurable
  *  attributes of a passive alert animation.
  */
-@interface PIPassiveAlertAnimationConfig : NSObject
+@interface PIPassiveAlertAnimationConfig : NSObject <NSCopying>
 
 /**
  *  The total duration of the animations, measured in seconds. 
@@ -66,5 +66,16 @@
  *  @returns New config.
  */
 + (instancetype)config;
+
+/**
+ *  Merges first config with second config. If both contain values,
+ *  second config value takes precedence.
+ *
+ *  @parameter firstConfig:  First config.
+ *  @parameter secondConfig: Second config.
+ *
+ *  @returns New config.
+ */
++ (instancetype)mergeConfig:(PIPassiveAlertAnimationConfig *)firstConfig withSecondConfig:(PIPassiveAlertAnimationConfig *)secondConfig;
 
 @end

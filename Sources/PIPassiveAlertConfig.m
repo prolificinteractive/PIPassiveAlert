@@ -33,7 +33,7 @@
     return [[PIPassiveAlertConfig alloc] init];
 }
 
-+ (PIPassiveAlertConfig *)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
++ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
     PIPassiveAlertConfig *firstCopy = [firstConfig copy];
     PIPassiveAlertConfig *secondCopy = [secondConfig copy];
     
