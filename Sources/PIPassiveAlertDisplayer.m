@@ -53,17 +53,33 @@ static PIPassiveAlert *currentAlert = nil;
             originYCalculation = [[self originFactory] bottomOriginYCalculation];
             break;
             
+        case PIPassiveAlertConstraintSideOrigin:
+            NSAssert(NO, @"Should use display method with custom origin-Y calculation.");
+            originYCalculation = [[self originFactory] topOriginYCalculation];
+            
         default:
+            originYCalculation = [[self originFactory] topOriginYCalculation];
             break;
     }
     
-    [self displayAlert:alert originYCalculation:originYCalculation inViewController:vc];
+    [self displayAlert:alert inViewController:vc originYCalculation:originYCalculation];
 }
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc side:PIPassiveAlertConstraintSideOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
 
-    [self displayAlert:alert originYCalculation:originYCalculation inViewController:vc];
+    [self displayAlert:alert inViewController:vc originYCalculation:originYCalculation];
+}
+
++ (void)displayAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc  originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation {
+    if (currentAlert) {
+        [currentAlert closeAnimated:YES];
+        currentAlert = nil;
+    }
+    
+    currentAlert = alert;
+    
+    [alert showInView:vc.view originYCalculation:originYCalculation];
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
@@ -103,17 +119,6 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 #pragma mark Private class methods
-
-+ (void)displayAlert:(PIPassiveAlert *)alert originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation inViewController:(UIViewController *)vc {
-    if (currentAlert) {
-        [currentAlert closeAnimated:YES];
-        currentAlert = nil;
-    }
-    
-    currentAlert = alert;
-
-    [alert showInView:vc.view originYCalculation:originYCalculation];
-}
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     // Start with default configs

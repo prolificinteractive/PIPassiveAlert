@@ -75,6 +75,17 @@
               delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
+ *  Displays a passive alert in the specified view controller.
+ *
+ *  @param alert              The alert to be displayed.
+ *  @param vc                 The view controller the alert should be displayed in.
+ *  @param originYCalculation Block to calculate origin y.
+ */
++ (void)displayAlert:(PIPassiveAlert *)alert
+    inViewController:(UIViewController *)vc
+  originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation;
+
+/**
  *  Closes the currently displaying alert. If no alert is displaying, nothing happens.
  *
  *  @param animated YES if the alert should close with an animation; otherwise NO.

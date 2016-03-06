@@ -103,6 +103,11 @@
         return;
     }
     
+    if (!originYCalculation) {
+        NSAssert(NO, @"Should have origin-Y calculation.");
+        return;
+    }
+    
     CGFloat originY = originYCalculation(self.config, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     CGFloat topConstraintConstant = self.config.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
     
