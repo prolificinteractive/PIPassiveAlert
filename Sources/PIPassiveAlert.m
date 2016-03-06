@@ -29,17 +29,9 @@
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
 
-@property (nonatomic, weak, readwrite) id<PIPassiveAlertDelegate> delegate;
-@property (nonatomic, strong, readwrite) UINib *nib;
 @property (nonatomic, copy, readwrite) NSString *message;
-@property (nonatomic, assign, readwrite) CGFloat height;
-@property (nonatomic, assign, readwrite) PIPassiveAlertConstraintSide side;
-@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
-@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
-@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
-@property (nonatomic, strong, readwrite) UIColor *textColor;
-@property (nonatomic, strong, readwrite) UIFont *font;
-@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
+@property (nonatomic, strong, readwrite) PIPassiveAlertConfig *config;
+@property (nonatomic, weak, readwrite) id<PIPassiveAlertDelegate> delegate;
 
 @property (nonatomic, strong) PIPassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
@@ -56,15 +48,7 @@
     
     if (self) {
         self.message = message;
-        self.nib = config.nib;
-        self.side = config.side;
-        self.shouldAutoHide = config.shouldAutoHide;
-        self.autoHideDelay = config.autoHideDelay;
-        self.height = config.height;
-        self.backgroundColor = config.backgroundColor;
-        self.textColor = config.textColor;
-        self.font = config.font;
-        self.textAlignment = config.textAlignment;
+        self.config = config;
         self.delegate = delegate;
     }
     
@@ -82,7 +66,7 @@
 - (void)closeAnimated:(BOOL)animated {
     CGRect finalAlertFrame = self.alertView.frame;
     
-    switch (self.side) {
+    switch (self.config.side) {
         case PIPassiveAlertConstraintSideBottom:
             finalAlertFrame.origin.y += finalAlertFrame.size.height;
             break;
@@ -116,10 +100,10 @@
         return;
     }
     
-    CGFloat originY = originYCalculation(self.height, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
-    CGFloat topConstraintConstant = self.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
+    CGFloat originY = originYCalculation(self.config.height, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
+    CGFloat topConstraintConstant = self.config.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
     
-    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.config.nib message:self.message backgroundColor:self.config.backgroundColor textColor:self.config.textColor font:self.config.font textAlignment:self.config.textAlignment height:self.config.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -165,7 +149,7 @@
                                                              multiplier:1
                                                                constant:0];
     
-    if (self.side == PIPassiveAlertConstraintSideBottom) {
+    if (self.config.side == PIPassiveAlertConstraintSideBottom) {
         [view addConstraints:@[ left, right, bottom ]];
     } else {
         [view addConstraints:@[ left, right, top ]];
@@ -181,21 +165,21 @@
         [self.alertViewContainer removeConstraint:height];
         
         // If alertViewFrameHeight not specified then let alert view size itself based off of the text height
-        if (self.height) {
+        if (self.config.height) {
             NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                                       attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:nil
                                                                       attribute:NSLayoutAttributeNotAnAttribute
                                                                      multiplier:1
-                                                                       constant:self.height];
+                                                                       constant:self.config.height];
             [self.alertViewContainer addConstraint:height];
         }
         
         [self.alertViewContainer setNeedsLayout];
         [self.alertViewContainer layoutIfNeeded];
     } completion:^(BOOL finished) {
-        if (self.shouldAutoHide) {
+        if (self.config.shouldAutoHide) {
             [self initiateAutomaticCloseTimer];
         }
     }];
@@ -247,7 +231,7 @@
 
 - (void)initiateAutomaticCloseTimer
 {
-    [self performSelector:@selector(close) withObject:nil afterDelay:self.autoHideDelay];
+    [self performSelector:@selector(close) withObject:nil afterDelay:self.config.autoHideDelay];
 }
 
 - (void)close {

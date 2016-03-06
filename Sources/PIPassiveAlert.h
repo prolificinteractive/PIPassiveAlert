@@ -87,54 +87,14 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertConstraintSide) {
 @property (nonatomic, weak, readonly) id<PIPassiveAlertDelegate> delegate;
 
 /**
- *  The nib used for UI of passive alert.
- */
-@property (nonatomic, strong, readonly) UINib *nib;
-
-/**
  *  The message of the passive alert.
  */
 @property (nonatomic, copy, readonly) NSString *message;
 
 /**
- *  The height of the passive alert.
+ *  The config for the passive alert.
  */
-@property (nonatomic, assign, readonly) CGFloat height;
-
-/**
- *  The side the passive alert is constrained to.
- */
-@property (nonatomic, assign, readonly) PIPassiveAlertConstraintSide side;
-
-/**
- *  Whether the passive alert should auto-hide.
- */
-@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
-
-/**
- *  If auto-hiding, time after display before auto-hide occurs.
- */
-@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
-
-/**
- *  The background color of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIColor *backgroundColor;
-
-/**
- *  The text color of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIColor *textColor;
-
-/**
- *  The font of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIFont *font;
-
-/**
- *  The text alignment of the passive alert.
- */
-@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, strong, readonly) PIPassiveAlertConfig *config;
 
 /**
  *  Creates new passive alert with the specified attributes.
