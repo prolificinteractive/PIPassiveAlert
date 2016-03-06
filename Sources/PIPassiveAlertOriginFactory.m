@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 //
 
+#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertOriginFactory.h"
 
 @implementation PIPassiveAlertOriginFactory
@@ -36,15 +37,15 @@
 #pragma mark - Instance methods
 
 - (PIPassiveAlertOriginYCalculation)bottomOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
-        return containingViewSize.height - alertHeight;
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
+        return containingViewSize.height - alertConfig.height;
     };
     
     return originYCalculation;
 }
 
 - (PIPassiveAlertOriginYCalculation)navBarOriginYCalculationForViewController:(UIViewController *)vc {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
     };
     
@@ -52,7 +53,7 @@
 }
 
 - (PIPassiveAlertOriginYCalculation)staticValueOriginYCalculationWithValue:(CGFloat)value {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return value;
     };
     
@@ -60,7 +61,7 @@
 }
 
 - (PIPassiveAlertOriginYCalculation)statusBarOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         return [[UIApplication sharedApplication] statusBarFrame].size.height;
     };
     

@@ -100,7 +100,7 @@
         return;
     }
     
-    CGFloat originY = originYCalculation(self.config.height, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
+    CGFloat originY = originYCalculation(self.config, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     CGFloat topConstraintConstant = self.config.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
     
     self.alertView = [PIPassiveAlertView alertViewWithNib:self.config.nib message:self.message backgroundColor:self.config.backgroundColor textColor:self.config.textColor font:self.config.font textAlignment:self.config.textAlignment height:self.config.height delegate: self];

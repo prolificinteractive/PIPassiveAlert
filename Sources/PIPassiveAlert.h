@@ -29,9 +29,9 @@
 @class PIPassiveAlertConfig;
 
 /**
- *  Block calculating origin-Y given an alert height and containing frame.
+ *  Block calculating origin-Y given an alert config and containing size.
  */
-typedef CGFloat (^PIPassiveAlertOriginYCalculation)(CGFloat alertHeight, CGSize containingViewSize);
+typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize);
 
 /**
  *  Defines methods for receiving notifications from a passive alert.

@@ -52,9 +52,9 @@
 #pragma mark - Private methods
 
 - (PIPassiveAlertOriginYCalculation)randomOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
         NSInteger randomNumber = [self randomNumberBetween:0 maxNumber:containingViewSize.height];
-        CGFloat max = containingViewSize.height - alertHeight;
+        CGFloat max = containingViewSize.height - alertConfig.height;
         
         if (randomNumber > max) {
             return max;
