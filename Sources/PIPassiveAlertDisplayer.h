@@ -25,6 +25,7 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertAnimationConfig.h"
 #import "PIPassiveAlertOriginFactory.h"
 
 #import <UIKit/UIKit.h>
@@ -86,6 +87,13 @@
  *  @returns Config.
  */
 + (PIPassiveAlertConfig *)defaultConfig;
+
+/**
+ *  Default animation config used to supply values when none provided.
+ *
+ *  @returns Config.
+ */
++ (PIPassiveAlertAnimationConfig *)defaultAnimationConfig;
 
 /**
  *  Factory used to calculate alert origin-Y values.

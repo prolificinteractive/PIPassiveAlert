@@ -32,22 +32,31 @@
 @interface PIPassiveAlertAnimationConfig : NSObject
 
 /**
- *  Duration.
+ *  The total duration of the animations, measured in seconds. 
+ *  If you specify a negative value or 0, the changes are made 
+ *  without animating them.
  */
 @property (nonatomic, assign) NSTimeInterval duration;
 
 /**
- *  Delay.
+ *  The amount of time (measured in seconds) to wait before 
+ *  beginning the animations. Specify a value of 0 to begin 
+ *  the animations immediately.
  */
-@property (nonatomic, assign) NSTimeInterval delaly;
+@property (nonatomic, assign) NSTimeInterval delay;
 
 /**
- *  Delay.
+ *  The damping ratio for the spring animation as it approaches 
+ *  its quiescent state. To smoothly decelerate the animation 
+ *  without oscillation, use a value of 1. Employ a damping 
+ *  ratio closer to zero to increase oscillation.
  */
 @property (nonatomic, assign) CGFloat damping;
 
 /**
- *  Initial velocity.
+ *  The initial spring velocity. For smooth start to the 
+ *  animation, match this value to the view’s velocity as it 
+ *  was prior to attachment.
  */
 @property (nonatomic, assign) CGFloat initialVelocity;
 

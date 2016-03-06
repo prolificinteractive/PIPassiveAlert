@@ -27,6 +27,7 @@
 
 @class PIPassiveAlert;
 @class PIPassiveAlertConfig;
+@class PIPassiveAlertAnimationConfig;
 
 /**
  *  Block calculating origin-Y given an alert config and containing size.
@@ -53,6 +54,13 @@ typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertC
  *  @returns Config.
  */
 - (PIPassiveAlertConfig *)passiveAlertConfig;
+
+/**
+ *  Animation config to be used for passive alert.
+ *
+ *  @returns Config.
+ */
+- (PIPassiveAlertAnimationConfig *)passiveAlertAnimationConfig;
 
 @end
 
@@ -97,13 +105,19 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertConstraintSide) {
 @property (nonatomic, strong, readonly) PIPassiveAlertConfig *config;
 
 /**
+ *  The animation config for the passive alert.
+ */
+@property (nonatomic, strong, readonly) PIPassiveAlertAnimationConfig *animationConfig;
+
+/**
  *  Creates new passive alert with the specified attributes.
  *
- *  @param message  The message to display.
- *  @param config   The config for the alert.
- *  @param delegate The delegate for the alert.
+ *  @param message         The message to display.
+ *  @param config          The config for the alert.
+ *  @param animationConfig The animation config for the alert.
+ *  @param delegate        The delegate for the alert.
  */
-- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate;
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config animationConfig:(PIPassiveAlertAnimationConfig *)animationConfig delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Displays a passive alert with the specified message in the specified view controller.

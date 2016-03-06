@@ -73,7 +73,7 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlertConfig *)defaultConfig {
-    PIPassiveAlertConfig *defaultConfig = [[PIPassiveAlertConfig alloc] init];
+    PIPassiveAlertConfig *defaultConfig = [PIPassiveAlertConfig config];
     
     defaultConfig.nib = [self defaultNib];
     defaultConfig.side = PIPassiveAlertConstraintSideTop;
@@ -83,6 +83,17 @@ static PIPassiveAlert *currentAlert = nil;
     defaultConfig.textColor = [UIColor whiteColor];
     defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
+    
+    return defaultConfig;
+}
+
++ (PIPassiveAlertAnimationConfig *)defaultAnimationConfig {
+    PIPassiveAlertAnimationConfig *defaultConfig = [PIPassiveAlertAnimationConfig config];
+    
+    defaultConfig.duration = 0.6f;
+    defaultConfig.delay = 0.f;
+    defaultConfig.damping = 0.5f;
+    defaultConfig.initialVelocity = 0.6f;
     
     return defaultConfig;
 }
@@ -106,22 +117,23 @@ static PIPassiveAlert *currentAlert = nil;
 
 + (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     // Start with default config
-    PIPassiveAlertConfig *config = [self defaultConfig];
+    PIPassiveAlertConfig *alertConfig = [self defaultConfig];
+    PIPassiveAlertAnimationConfig *animationConfig = [self defaultAnimationConfig];
     
     // Merge with delegate config, if available
     if (delegate) {
         if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
             PIPassiveAlertConfig *delegateConfig = [delegate passiveAlertConfig];
             
-            config = [PIPassiveAlertConfig mergeConfig:config withSecondConfig:delegateConfig];
+            alertConfig = [PIPassiveAlertConfig mergeConfig:alertConfig withSecondConfig:delegateConfig];
         }
     }
     
     // Override with more specific values supplied
-    config.side = side;
-    config.shouldAutoHide = shouldAutoHide;
+    alertConfig.side = side;
+    alertConfig.shouldAutoHide = shouldAutoHide;
     
-    return [[PIPassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
+    return [[PIPassiveAlert alloc] initWithMessage:message config:alertConfig animationConfig:animationConfig delegate:delegate];
 }
 
 + (UINib *)defaultNib {

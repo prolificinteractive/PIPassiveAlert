@@ -25,13 +25,15 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertAnimationConfig.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
 
-@property (nonatomic, copy, readwrite) NSString *message;
 @property (nonatomic, strong, readwrite) PIPassiveAlertConfig *config;
+@property (nonatomic, strong, readwrite) PIPassiveAlertAnimationConfig *animationConfig;
 @property (nonatomic, weak, readwrite) id<PIPassiveAlertDelegate> delegate;
+@property (nonatomic, copy, readwrite) NSString *message;
 
 @property (nonatomic, strong) PIPassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
@@ -43,13 +45,14 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate {
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config animationConfig:(PIPassiveAlertAnimationConfig *)animationConfig delegate:(id<PIPassiveAlertDelegate>)delegate {
     self = [super init];
     
     if (self) {
-        self.message = message;
+        self.animationConfig = animationConfig;
         self.config = config;
         self.delegate = delegate;
+        self.message = message;
     }
     
     return self;
@@ -248,7 +251,7 @@
 
 - (void)animateBlock:(void (^)())block completion:(void (^)(BOOL finished))completion
 {
-    [UIView animateWithDuration:0.6f delay:0.f usingSpringWithDamping:0.5f initialSpringVelocity:0.6f options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
+    [UIView animateWithDuration:self.animationConfig.duration delay:self.animationConfig.delay usingSpringWithDamping:self.animationConfig.damping initialSpringVelocity:self.animationConfig.initialVelocity options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
 }
 
 #pragma mark - Protocol conformance
