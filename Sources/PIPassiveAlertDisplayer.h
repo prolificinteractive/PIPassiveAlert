@@ -25,6 +25,7 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertOriginFactory.h"
 
 #import <UIKit/UIKit.h>
 
@@ -62,7 +63,7 @@
  *
  *  @param message            The message to display in the passive alert.
  *  @param vc                 The view controller the alert should be displayed in.
- *  @param originYCalculation Function to calculate origin y.
+ *  @param originYCalculation Block to calculate origin y.
  *  @param shouldAutHide      YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
  *  @param delegate           The delegate for the passive alert.
  */
@@ -85,5 +86,12 @@
  *  @returns Config.
  */
 + (PIPassiveAlertConfig *)defaultConfig;
+
+/**
+ *  Factory used to calculate alert origin-Y values.
+ *
+ *  @returns Factory.
+ */
++ (PIPassiveAlertOriginFactory *)originFactory;
 
 @end

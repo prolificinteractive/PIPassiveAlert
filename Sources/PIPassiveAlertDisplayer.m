@@ -46,11 +46,11 @@ static PIPassiveAlert *currentAlert = nil;
     
     switch (showType) {
         case PIPassiveAlertShowTypeTop:
-            originYCalculation = [PIPassiveAlertDisplayer topOriginYCalculation];
+            originYCalculation = [[self originFactory] topOriginYCalculation];
             break;
             
         case PIPassiveAlertShowTypeBottom:
-            originYCalculation = [PIPassiveAlertDisplayer bottomOriginYCalculation];
+            originYCalculation = [[self originFactory] bottomOriginYCalculation];
             break;
             
         case PIPassiveAlertShowTypeCustomOrigin:
@@ -89,6 +89,10 @@ static PIPassiveAlert *currentAlert = nil;
     defaultConfig.textAlignment = NSTextAlignmentCenter;
     
     return defaultConfig;
+}
+
++ (PIPassiveAlertOriginFactory *)originFactory {
+    return [PIPassiveAlertOriginFactory factory];
 }
 
 #pragma mark Private class methods
@@ -153,22 +157,6 @@ static PIPassiveAlert *currentAlert = nil;
     NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
     
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
-}
-
-+ (PIPassiveAlertOriginYCalculation)topOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
-        return 0.f;
-    };
-    
-    return originYCalculation;
-}
-
-+ (PIPassiveAlertOriginYCalculation)bottomOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
-        return containingViewSize.height - alertConfig.height;
-    };
-    
-    return originYCalculation;
 }
 
 @end
