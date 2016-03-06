@@ -37,14 +37,13 @@
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message showType:(PIPassiveAlertViewShowType)showType backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate {
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate {
     PIPassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
     NSAssert([alertView isKindOfClass:[PIPassiveAlertView class]], @"Nib must contain view of type %@", [[PIPassiveAlertView class] description]);
     
     alertView.clipsToBounds = YES;
     alertView.messageLabel.text = message;
-    alertView.showType = showType;
     alertView.backgroundColor = backgroundColor;
     alertView.messageLabel.textColor = textColor;
     alertView.messageLabel.font = font;
@@ -65,36 +64,6 @@
     self = [super initWithCoder:aDecoder];
 
     return self;
-}
-
-#pragma mark - Override methods
-
-- (void)layoutSubviews
-{
-    CGRect bounds = self.bounds;
-    
-    switch (self.showType) {
-        case PIPassiveAlertViewShowTypeTop:
-            bounds.origin.y = -(bounds.size.height);
-            break;
-            
-        case PIPassiveAlertViewShowTypeBottom:
-            bounds.origin.y = (bounds.size.height);
-            break;
-            
-        case PIPassiveAlertViewShowTypeNavigationBar:
-            bounds.origin.y = -(bounds.size.height);
-            break;
-            
-        case PIPassiveAlertViewShowTypeCustomOrigin:
-            bounds.origin.y = -(bounds.size.height);
-            break;
-            
-        default:
-            break;
-    }
-    
-    [super layoutSubviews];
 }
 
 #pragma mark - Instance methods

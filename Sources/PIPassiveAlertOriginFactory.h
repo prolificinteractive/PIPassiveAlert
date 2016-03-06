@@ -1,5 +1,5 @@
 //
-//  PIPassiveAlertConfig.h
+//  PIPassiveAlertOriginFactory.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -28,72 +28,52 @@
 #import <UIKit/UIKit.h>
 
 /**
- *  Data object representing configurable
- *  attributes of a passive alert.
+ *  Factory for common origin-Y calculation blocks.
  */
-@interface PIPassiveAlertConfig : NSObject <NSCopying>
+@interface PIPassiveAlertOriginFactory : NSObject
 
 /**
- *  Nib.
- */
-@property (nonatomic, strong) UINib *nib;
-
-/**
- *  Side.
- */
-@property (nonatomic, assign) PIPassiveAlertConstraintSide side;
-
-/**
- *  Should auto-hide.
- */
-@property (nonatomic, assign) BOOL shouldAutoHide;
-
-/**
- *  Auto-hide delay.
- */
-@property (nonatomic, assign) CGFloat autoHideDelay;
-
-/**
- *  Height.
- */
-@property (nonatomic, assign) CGFloat height;
-
-/**
- *  Background color.
- */
-@property (nonatomic, strong) UIColor *backgroundColor;
-
-/**
- *  Text color.
- */
-@property (nonatomic, strong) UIColor *textColor;
-
-/**
- *  Font.
- */
-@property (nonatomic, strong) UIFont *font;
-
-/**
- *  Text alignment.
- */
-@property (nonatomic, assign) NSTextAlignment textAlignment;
-
-/**
- *  Creates new config.
+ *  Creates a new instance of origin factory.
  *
- *  @returns New config.
+ *  @returns New instance.
  */
-+ (instancetype)config;
++ (instancetype)factory;
 
 /**
- *  Merges first config with second config. If both contain values,
- *  second config value takes precedence.
+ *  Block that calculates bottom origin-Y.
  *
- *  @parameter firstConfig:  First config.
- *  @parameter secondConfig: Second config.
- *
- *  @returns New config.
+ *  @returns Block.
  */
-+ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig;
+- (PIPassiveAlertOriginYCalculation)bottomOriginYCalculation;
+
+/**
+ *  Block that calculates for origin-Y at nav bar bottom.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)navBarOriginYCalculationForViewController:(UIViewController *)vc;
+
+/**
+ *  Block that simply returns the value provided for origin-Y.
+ *
+ *  @param value: Value of origin-Y.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)staticValueOriginYCalculationWithValue:(CGFloat)value;
+
+/**
+ *  Block that calculates for origin-Y at status bar bottom.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)statusBarOriginYCalculation;
+
+/**
+ *  Block that calculates top origin-Y.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)topOriginYCalculation;
 
 @end

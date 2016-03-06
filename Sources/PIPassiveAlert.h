@@ -27,6 +27,12 @@
 
 @class PIPassiveAlert;
 @class PIPassiveAlertConfig;
+@class PIPassiveAlertAnimationConfig;
+
+/**
+ *  Block calculating origin-Y given an alert config and containing size.
+ */
+typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize);
 
 /**
  *  Defines methods for receiving notifications from a passive alert.
@@ -49,31 +55,33 @@
  */
 - (PIPassiveAlertConfig *)passiveAlertConfig;
 
+/**
+ *  Animation config to be used for passive alert.
+ *
+ *  @returns Config.
+ */
+- (PIPassiveAlertAnimationConfig *)passiveAlertAnimationConfig;
+
 @end
 
 /**
- *  The passive alert show-types.
+ *  Where the alert is constrained to.
  */
-typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
+typedef NS_ENUM(NSInteger, PIPassiveAlertConstraintSide) {
     /**
-     *  Passive alerts with origin at the top of the view.
+     *  Constrained to top of view.
      */
-    PIPassiveAlertShowTypeTop,
+    PIPassiveAlertConstraintSideTop,
     
     /**
-     *  Passive alerts with origin at the bottom of the view.
+     *  Constrained to bottom of view.
      */
-    PIPassiveAlertShowTypeBottom,
+    PIPassiveAlertConstraintSideBottom,
     
     /**
-     *  Passive alerts with origin at the navigation bar.
+     *  Constrained to where origin-Y sits.
      */
-    PIPassiveAlertShowTypeNavigationBar,
-    
-    /**
-     *  Passive alerts with custom origin.
-     */
-    PIPassiveAlertShowTypeCustomOrigin
+    PIPassiveAlertConstraintSideOrigin
 };
 
 /**
@@ -87,71 +95,37 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 @property (nonatomic, weak, readonly) id<PIPassiveAlertDelegate> delegate;
 
 /**
- *  The nib used for UI of passive alert.
- */
-@property (nonatomic, strong, readonly) UINib *nib;
-
-/**
  *  The message of the passive alert.
  */
 @property (nonatomic, copy, readonly) NSString *message;
 
 /**
- *  The height of the passive alert.
+ *  The config for the passive alert.
  */
-@property (nonatomic, assign, readonly) CGFloat height;
+@property (nonatomic, strong, readonly) PIPassiveAlertConfig *config;
 
 /**
- *  The show-type of the passive alert.
+ *  The animation config for the passive alert.
  */
-@property (nonatomic, assign, readonly) PIPassiveAlertShowType showType;
-
-/**
- *  Whether the passive alert should auto-hide.
- */
-@property (nonatomic, assign, readonly) BOOL shouldAutoHide;
-
-/**
- *  If auto-hiding, time after display before auto-hide occurs.
- */
-@property (nonatomic, assign, readonly) CGFloat autoHideDelay;
-
-/**
- *  The background color of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIColor *backgroundColor;
-
-/**
- *  The text color of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIColor *textColor;
-
-/**
- *  The font of the passive alert.
- */
-@property (nonatomic, strong, readonly) UIFont *font;
-
-/**
- *  The text alignment of the passive alert.
- */
-@property (nonatomic, assign, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, strong, readonly) PIPassiveAlertAnimationConfig *animationConfig;
 
 /**
  *  Creates new passive alert with the specified attributes.
  *
- *  @param message  The message to display.
- *  @param config   The config for the alert.
- *  @param delegate The delegate for the alert.
+ *  @param message         The message to display.
+ *  @param config          The config for the alert.
+ *  @param animationConfig The animation config for the alert.
+ *  @param delegate        The delegate for the alert.
  */
-- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate;
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config animationConfig:(PIPassiveAlertAnimationConfig *)animationConfig delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Displays a passive alert with the specified message in the specified view controller.
  *
- *  @param vc       The view controller the alert should be displayed in.
- *  @param originY  The y-coordinate of the alert origin.
+ *  @param View                The view the alert should be displayed in.
+ *  @param originYCalculation  Block to calculate origin Y.
  */
-- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY;
+- (void)showInView:(UIView *)view originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation;
 
 /**
  *  Closes alert.

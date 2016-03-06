@@ -37,20 +37,49 @@ static PIPassiveAlert *currentAlert = nil;
 #pragma mark - Class methods
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc delegate:(id<PIPassiveAlertDelegate>)delegate {
-    [self displayMessage:message inViewController:vc showType:PIPassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
+    [self displayMessage:message inViewController:vc side:PIPassiveAlertConstraintSideTop shouldAutoHide:YES delegate:delegate];
 }
 
-+ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
-    CGFloat originY = [self originYForPassiveAlert:alert inViewController:vc];
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
+    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc side:side shouldAutoHide:shouldAutoHide delegate:delegate];
+    PIPassiveAlertOriginYCalculation originYCalculation = nil;
     
-    [self displayAlert:alert inViewController:vc originY:originY];
+    switch (side) {
+        case PIPassiveAlertConstraintSideTop:
+            originYCalculation = [[self originFactory] topOriginYCalculation];
+            break;
+            
+        case PIPassiveAlertConstraintSideBottom:
+            originYCalculation = [[self originFactory] bottomOriginYCalculation];
+            break;
+            
+        case PIPassiveAlertConstraintSideOrigin:
+            NSAssert(NO, @"Should use display method with custom origin-Y calculation.");
+            originYCalculation = [[self originFactory] topOriginYCalculation];
+            
+        default:
+            originYCalculation = [[self originFactory] topOriginYCalculation];
+            break;
+    }
+    
+    [self displayAlert:alert inViewController:vc originYCalculation:originYCalculation];
 }
 
-+ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PIPassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
+    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc side:PIPassiveAlertConstraintSideOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
+
+    [self displayAlert:alert inViewController:vc originYCalculation:originYCalculation];
+}
+
++ (void)displayAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc  originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation {
+    if (currentAlert) {
+        [currentAlert closeAnimated:YES];
+        currentAlert = nil;
+    }
     
-    [self displayAlert:alert inViewController:vc originY:originY];
+    currentAlert = alert;
+    
+    [alert showInView:vc.view originYCalculation:originYCalculation];
 }
 
 + (void)closeCurrentAlertAnimated:(BOOL)animated {
@@ -60,10 +89,10 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlertConfig *)defaultConfig {
-    PIPassiveAlertConfig *defaultConfig = [[PIPassiveAlertConfig alloc] init];
+    PIPassiveAlertConfig *defaultConfig = [PIPassiveAlertConfig config];
     
     defaultConfig.nib = [self defaultNib];
-    defaultConfig.showType = PIPassiveAlertShowTypeTop;
+    defaultConfig.side = PIPassiveAlertConstraintSideTop;
     defaultConfig.shouldAutoHide = YES;
     defaultConfig.autoHideDelay = 3.f;
     defaultConfig.backgroundColor = [UIColor redColor];
@@ -74,63 +103,48 @@ static PIPassiveAlert *currentAlert = nil;
     return defaultConfig;
 }
 
-#pragma mark Private class methods
-
-+ (void)displayAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc originY:(CGFloat)originY {
-    if (currentAlert) {
-        [currentAlert closeAnimated:YES];
-        currentAlert = nil;
-    }
++ (PIPassiveAlertAnimationConfig *)defaultAnimationConfig {
+    PIPassiveAlertAnimationConfig *defaultConfig = [PIPassiveAlertAnimationConfig config];
     
-    currentAlert = alert;
+    defaultConfig.duration = 0.6f;
+    defaultConfig.delay = 0.f;
+    defaultConfig.damping = 0.5f;
+    defaultConfig.initialVelocity = 0.6f;
     
-    [alert showInViewController:vc originY:originY];
+    return defaultConfig;
 }
 
-+ (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    // Start with default config
-    PIPassiveAlertConfig *config = [self defaultConfig];
++ (PIPassiveAlertOriginFactory *)originFactory {
+    return [PIPassiveAlertOriginFactory factory];
+}
+
+#pragma mark Private class methods
+
++ (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
+    // Start with default configs
+    PIPassiveAlertConfig *alertConfig = [self defaultConfig];
+    PIPassiveAlertAnimationConfig *animationConfig = [self defaultAnimationConfig];
     
-    // Merge with delegate config, if available
+    // Merge with delegate configs, if available
     if (delegate) {
         if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
-            PIPassiveAlertConfig *delegateConfig = [delegate passiveAlertConfig];
+            PIPassiveAlertConfig *delegateAlertConfig = [delegate passiveAlertConfig];
             
-            config = [PIPassiveAlertConfig mergeConfig:config withSecondConfig:delegateConfig];
+            alertConfig = [PIPassiveAlertConfig mergeConfig:alertConfig withSecondConfig:delegateAlertConfig];
+        }
+        
+        if ([delegate respondsToSelector:@selector(passiveAlertAnimationConfig)]) {
+            PIPassiveAlertAnimationConfig *delegateAnimationConfig = [delegate passiveAlertAnimationConfig];
+            
+            animationConfig = [PIPassiveAlertAnimationConfig mergeConfig:animationConfig withSecondConfig:delegateAnimationConfig];
         }
     }
     
     // Override with more specific values supplied
-    config.showType = showType;
-    config.shouldAutoHide = shouldAutoHide;
+    alertConfig.side = side;
+    alertConfig.shouldAutoHide = shouldAutoHide;
     
-    return [[PIPassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
-}
-
-+ (CGFloat)originYForPassiveAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc
-{
-    switch (alert.showType) {
-        case PIPassiveAlertShowTypeTop:
-            return 0.f;
-            break;
-            
-        case PIPassiveAlertShowTypeBottom:
-            return vc.view.bounds.size.height - alert.height;
-            break;
-            
-        case PIPassiveAlertShowTypeNavigationBar:
-            return (vc.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height);
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
-            return 0.f;
-            break;
-            
-        default:
-            return 0.f;
-            break;
-    }
+    return [[PIPassiveAlert alloc] initWithMessage:message config:alertConfig animationConfig:animationConfig delegate:delegate];
 }
 
 + (UINib *)defaultNib {

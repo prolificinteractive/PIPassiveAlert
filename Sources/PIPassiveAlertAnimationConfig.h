@@ -1,5 +1,5 @@
 //
-//  PIPassiveAlertConfig.h
+//  PIPassiveAlertAnimationConfig.h
 //  PIPassiveAlert
 //
 // Copyright (c) 2016 Prolific Interactive
@@ -23,60 +23,42 @@
 // THE SOFTWARE.
 //
 
-#import "PIPassiveAlert.h"
-
 #import <UIKit/UIKit.h>
 
 /**
  *  Data object representing configurable
- *  attributes of a passive alert.
+ *  attributes of a passive alert animation.
  */
-@interface PIPassiveAlertConfig : NSObject <NSCopying>
+@interface PIPassiveAlertAnimationConfig : NSObject <NSCopying>
 
 /**
- *  Nib.
+ *  The total duration of the animations, measured in seconds. 
+ *  If you specify a negative value or 0, the changes are made 
+ *  without animating them.
  */
-@property (nonatomic, strong) UINib *nib;
+@property (nonatomic, assign) NSTimeInterval duration;
 
 /**
- *  Side.
+ *  The amount of time (measured in seconds) to wait before 
+ *  beginning the animations. Specify a value of 0 to begin 
+ *  the animations immediately.
  */
-@property (nonatomic, assign) PIPassiveAlertConstraintSide side;
+@property (nonatomic, assign) NSTimeInterval delay;
 
 /**
- *  Should auto-hide.
+ *  The damping ratio for the spring animation as it approaches 
+ *  its quiescent state. To smoothly decelerate the animation 
+ *  without oscillation, use a value of 1. Employ a damping 
+ *  ratio closer to zero to increase oscillation.
  */
-@property (nonatomic, assign) BOOL shouldAutoHide;
+@property (nonatomic, assign) CGFloat damping;
 
 /**
- *  Auto-hide delay.
+ *  The initial spring velocity. For smooth start to the 
+ *  animation, match this value to the view’s velocity as it 
+ *  was prior to attachment.
  */
-@property (nonatomic, assign) CGFloat autoHideDelay;
-
-/**
- *  Height.
- */
-@property (nonatomic, assign) CGFloat height;
-
-/**
- *  Background color.
- */
-@property (nonatomic, strong) UIColor *backgroundColor;
-
-/**
- *  Text color.
- */
-@property (nonatomic, strong) UIColor *textColor;
-
-/**
- *  Font.
- */
-@property (nonatomic, strong) UIFont *font;
-
-/**
- *  Text alignment.
- */
-@property (nonatomic, assign) NSTextAlignment textAlignment;
+@property (nonatomic, assign) CGFloat initialVelocity;
 
 /**
  *  Creates new config.
@@ -94,6 +76,6 @@
  *
  *  @returns New config.
  */
-+ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig;
++ (instancetype)mergeConfig:(PIPassiveAlertAnimationConfig *)firstConfig withSecondConfig:(PIPassiveAlertAnimationConfig *)secondConfig;
 
 @end

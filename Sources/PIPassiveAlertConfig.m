@@ -33,7 +33,7 @@
     return [[PIPassiveAlertConfig alloc] init];
 }
 
-+ (PIPassiveAlertConfig *)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
++ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
     PIPassiveAlertConfig *firstCopy = [firstConfig copy];
     PIPassiveAlertConfig *secondCopy = [secondConfig copy];
     
@@ -41,8 +41,8 @@
         firstCopy.nib = secondCopy.nib;
     }
     
-    if (secondCopy.showType) {
-        firstCopy.showType = secondCopy.showType;
+    if (secondCopy.side) {
+        firstCopy.side = secondCopy.side;
     }
     
     if (secondCopy.shouldAutoHide) {
@@ -85,7 +85,7 @@
     PIPassiveAlertConfig *copy = [[PIPassiveAlertConfig allocWithZone: zone] init];
     
     copy.nib = self.nib;
-    copy.showType = self.showType;
+    copy.side = self.side;
     copy.shouldAutoHide = self.shouldAutoHide;
     copy.autoHideDelay = self.autoHideDelay;
     copy.height = self.height;

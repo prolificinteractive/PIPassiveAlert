@@ -17,6 +17,16 @@
 
 @implementation ViewController
 
+#pragma mark IB Actions
+
+- (IBAction)didTapButton:(id)sender {
+    self.alertCount++;
+    
+    PIPassiveAlertConstraintSide side = ((self.alertCount % 2) == 0) ? PIPassiveAlertConstraintSideBottom : PIPassiveAlertConstraintSideTop;
+    
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Tap me!"] inViewController:self side:side shouldAutoHide:YES delegate:self];
+}
+
 #pragma mark - Protocol conformance
 
 #pragma mark PassiveAlertDelegate
@@ -24,7 +34,8 @@
 - (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert {
     self.alertCount++;
     
-    [PIPassiveAlertDisplayer displayMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeBottom shouldAutoHide:YES delegate:self];
+    // Custom alert - displays at random origin
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Random!"] inViewController:self originYCalculation:[self randomOriginYCalculation] shouldAutoHide:NO delegate:self];
 }
 
 - (PIPassiveAlertConfig *)passiveAlertConfig {
@@ -38,10 +49,25 @@
     return config;
 }
 
-#pragma mark - Private functions
+#pragma mark - Private methods
 
-- (NSString *)message {
-    return [NSString stringWithFormat:@"Tap me! Alert #%i", self.alertCount];
+- (PIPassiveAlertOriginYCalculation)randomOriginYCalculation {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(PIPassiveAlertConfig *alertConfig, CGSize containingViewSize) {
+        NSInteger randomNumber = [self randomNumberBetween:0 maxNumber:containingViewSize.height];
+        CGFloat max = containingViewSize.height - alertConfig.height;
+        
+        if (randomNumber > max) {
+            return max;
+        }
+        
+        return randomNumber;
+    };
+    
+    return originYCalculation;
+}
+
+- (NSString *)message:(NSString *)stub {
+    return [NSString stringWithFormat:@"%@ Alert #%i", stub, self.alertCount];
 }
 
 - (UIColor *)randomColor {
@@ -53,20 +79,17 @@
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
 
+- (NSInteger)randomNumberBetween:(NSInteger)min maxNumber:(NSInteger)max
+{
+    return min + arc4random() % (max - min);
+}
+
 - (UIColor *)passiveAlertBackgroundColor {
     if ((self.alertCount % 2) == 0) {
         return [PIPassiveAlertDisplayer defaultConfig].backgroundColor;
     } else {
         return [self randomColor];
     }
-}
-
-#pragma mark IB Actions
-
-- (IBAction)didTapButton:(id)sender {
-    self.alertCount++;
-    
-    [PIPassiveAlertDisplayer displayMessage:[self message] inViewController:self showType:PIPassiveAlertShowTypeTop shouldAutoHide:NO delegate:self];
 }
 
 @end
