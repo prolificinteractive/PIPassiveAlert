@@ -25,21 +25,15 @@
 
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertAnimationConfig.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
 
+@property (nonatomic, strong, readwrite) PIPassiveAlertConfig *config;
+@property (nonatomic, strong, readwrite) PIPassiveAlertAnimationConfig *animationConfig;
 @property (nonatomic, weak, readwrite) id<PIPassiveAlertDelegate> delegate;
-@property (nonatomic, strong, readwrite) UINib *nib;
 @property (nonatomic, copy, readwrite) NSString *message;
-@property (nonatomic, assign, readwrite) CGFloat height;
-@property (nonatomic, assign, readwrite) PIPassiveAlertShowType showType;
-@property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
-@property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
-@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
-@property (nonatomic, strong, readwrite) UIColor *textColor;
-@property (nonatomic, strong, readwrite) UIFont *font;
-@property (nonatomic, assign, readwrite) NSTextAlignment textAlignment;
 
 @property (nonatomic, strong) PIPassiveAlertView *alertView;
 @property (nonatomic, strong) UIView *alertViewContainer;
@@ -49,51 +43,16 @@
 
 @implementation PIPassiveAlert
 
-#pragma mark - Class methods
-
-#pragma mark Private class methods
-
-+ (PIPassiveAlertViewShowType)alertViewShowTypeForAlertType:(PIPassiveAlertShowType)alertShowType {
-    switch (alertShowType) {
-        case PIPassiveAlertShowTypeTop:
-            return PIPassiveAlertViewShowTypeTop;
-            break;
-            
-        case PIPassiveAlertShowTypeBottom:
-            return PIPassiveAlertViewShowTypeBottom;
-            break;
-            
-        case PIPassiveAlertShowTypeNavigationBar:
-            return PIPassiveAlertViewShowTypeNavigationBar;
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            return PIPassiveAlertViewShowTypeCustomOrigin;
-            break;
-            
-        default:
-            return [self alertViewShowTypeForAlertType:PIPassiveAlertShowTypeTop];
-            break;
-    }
-}
-
 #pragma mark - Initialization
 
-- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config delegate:(id<PIPassiveAlertDelegate>)delegate {
+- (instancetype)initWithMessage:(NSString *)message config:(PIPassiveAlertConfig *)config animationConfig:(PIPassiveAlertAnimationConfig *)animationConfig delegate:(id<PIPassiveAlertDelegate>)delegate {
     self = [super init];
     
     if (self) {
-        self.message = message;
-        self.nib = config.nib;
-        self.showType = config.showType;
-        self.shouldAutoHide = config.shouldAutoHide;
-        self.autoHideDelay = config.autoHideDelay;
-        self.height = config.height;
-        self.backgroundColor = config.backgroundColor;
-        self.textColor = config.textColor;
-        self.font = config.font;
-        self.textAlignment = config.textAlignment;
+        self.animationConfig = animationConfig;
+        self.config = config;
         self.delegate = delegate;
+        self.message = message;
     }
     
     return self;
@@ -107,15 +66,11 @@
 
 #pragma mark - Instance methods
 
-- (void)showInViewController:(UIViewController *)vc originY:(CGFloat)originY {
-    [self showInView:vc.view origin:CGPointMake(0.0f, originY)];
-}
-
 - (void)closeAnimated:(BOOL)animated {
     CGRect finalAlertFrame = self.alertView.frame;
     
-    switch (self.showType) {
-        case PIPassiveAlertShowTypeBottom:
+    switch (self.config.side) {
+        case PIPassiveAlertConstraintSideBottom:
             finalAlertFrame.origin.y += finalAlertFrame.size.height;
             break;
             
@@ -142,14 +97,21 @@
 
 #pragma mark Private instance methods
 
-- (void)showInView:(UIView *)view origin:(CGPoint)origin
-{
+- (void)showInView:(UIView *)view originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation {
     // In case the view is already gone when the alert is about to being shown
     if (!view) {
         return;
     }
     
-    self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message showType:[PIPassiveAlert alertViewShowTypeForAlertType:self.showType] backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
+    if (!originYCalculation) {
+        NSAssert(NO, @"Should have origin-Y calculation.");
+        return;
+    }
+    
+    CGFloat originY = originYCalculation(self.config, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
+    CGFloat topConstraintConstant = self.config.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
+    
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.config.nib message:self.message backgroundColor:self.config.backgroundColor textColor:self.config.textColor font:self.config.font textAlignment:self.config.textAlignment height:self.config.height delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -179,7 +141,7 @@
                                                               toItem:view
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
-                                                            constant:origin.y];
+                                                            constant:topConstraintConstant];
     NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual
@@ -195,7 +157,7 @@
                                                              multiplier:1
                                                                constant:0];
     
-    if (self.showType == PIPassiveAlertShowTypeBottom) {
+    if (self.config.side == PIPassiveAlertConstraintSideBottom) {
         [view addConstraints:@[ left, right, bottom ]];
     } else {
         [view addConstraints:@[ left, right, top ]];
@@ -211,21 +173,21 @@
         [self.alertViewContainer removeConstraint:height];
         
         // If alertViewFrameHeight not specified then let alert view size itself based off of the text height
-        if (self.height) {
+        if (self.config.height) {
             NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                                       attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:nil
                                                                       attribute:NSLayoutAttributeNotAnAttribute
                                                                      multiplier:1
-                                                                       constant:self.height];
+                                                                       constant:self.config.height];
             [self.alertViewContainer addConstraint:height];
         }
         
         [self.alertViewContainer setNeedsLayout];
         [self.alertViewContainer layoutIfNeeded];
     } completion:^(BOOL finished) {
-        if (self.shouldAutoHide) {
+        if (self.config.shouldAutoHide) {
             [self initiateAutomaticCloseTimer];
         }
     }];
@@ -277,7 +239,7 @@
 
 - (void)initiateAutomaticCloseTimer
 {
-    [self performSelector:@selector(close) withObject:nil afterDelay:self.autoHideDelay];
+    [self performSelector:@selector(close) withObject:nil afterDelay:self.config.autoHideDelay];
 }
 
 - (void)close {
@@ -294,7 +256,7 @@
 
 - (void)animateBlock:(void (^)())block completion:(void (^)(BOOL finished))completion
 {
-    [UIView animateWithDuration:0.6f delay:0.f usingSpringWithDamping:0.5f initialSpringVelocity:0.6f options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
+    [UIView animateWithDuration:self.animationConfig.duration delay:self.animationConfig.delay usingSpringWithDamping:self.animationConfig.damping initialSpringVelocity:self.animationConfig.initialVelocity options:UIViewAnimationOptionLayoutSubviews animations:block completion:completion];
 }
 
 #pragma mark - Protocol conformance

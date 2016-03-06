@@ -25,10 +25,6 @@
 
 #import "PIPassiveAlertConfig.h"
 
-@interface PIPassiveAlertConfig ()
-
-@end
-
 @implementation PIPassiveAlertConfig
 
 #pragma mark - Class methods
@@ -37,46 +33,47 @@
     return [[PIPassiveAlertConfig alloc] init];
 }
 
-+ (PIPassiveAlertConfig *)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
-    PIPassiveAlertConfig *config = [firstConfig copy];
++ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig {
+    PIPassiveAlertConfig *firstCopy = [firstConfig copy];
+    PIPassiveAlertConfig *secondCopy = [secondConfig copy];
     
-    if (secondConfig.nib) {
-        config.nib = [secondConfig.nib copy];
+    if (secondCopy.nib) {
+        firstCopy.nib = secondCopy.nib;
     }
     
-    if (secondConfig.showType) {
-        config.showType = secondConfig.showType;
+    if (secondCopy.side) {
+        firstCopy.side = secondCopy.side;
     }
     
-    if (secondConfig.shouldAutoHide) {
-        config.shouldAutoHide = secondConfig.shouldAutoHide;
+    if (secondCopy.shouldAutoHide) {
+        firstCopy.shouldAutoHide = secondCopy.shouldAutoHide;
     }
     
-    if (secondConfig.autoHideDelay) {
-        config.autoHideDelay = secondConfig.autoHideDelay;
+    if (secondCopy.autoHideDelay) {
+        firstCopy.autoHideDelay = secondCopy.autoHideDelay;
     }
     
-    if (secondConfig.height) {
-        config.height = secondConfig.height;
+    if (secondCopy.height) {
+        firstCopy.height = secondCopy.height;
     }
     
-    if (secondConfig.backgroundColor) {
-        config.backgroundColor = [secondConfig.backgroundColor copy];
+    if (secondCopy.backgroundColor) {
+        firstCopy.backgroundColor = secondCopy.backgroundColor;
     }
     
-    if (secondConfig.textColor) {
-        config.textColor = [secondConfig.textColor copy];
+    if (secondCopy.textColor) {
+        firstCopy.textColor = secondCopy.textColor;
     }
     
-    if (secondConfig.font) {
-        config.font = [secondConfig.font copy];
+    if (secondCopy.font) {
+        firstCopy.font = secondCopy.font;
     }
     
-    if (secondConfig.textAlignment) {
-        config.textAlignment = secondConfig.textAlignment;
+    if (secondCopy.textAlignment) {
+        firstCopy.textAlignment = secondCopy.textAlignment;
     }
     
-    return config;
+    return firstCopy;
 }
 
 #pragma mark - Protocol conformance
@@ -88,13 +85,13 @@
     PIPassiveAlertConfig *copy = [[PIPassiveAlertConfig allocWithZone: zone] init];
     
     copy.nib = self.nib;
-    copy.showType = self.showType;
+    copy.side = self.side;
     copy.shouldAutoHide = self.shouldAutoHide;
     copy.autoHideDelay = self.autoHideDelay;
     copy.height = self.height;
-    copy.backgroundColor = self.backgroundColor;
-    copy.textColor = self.textColor;
-    copy.font = self.font;
+    copy.backgroundColor = [self.backgroundColor copy];
+    copy.textColor = [self.textColor copy];
+    copy.font = [self.font copy];
     copy.textAlignment = self.textAlignment;
     
     return copy;

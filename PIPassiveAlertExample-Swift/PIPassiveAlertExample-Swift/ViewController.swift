@@ -20,7 +20,7 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
     func passiveAlertDidReceiveTap(passiveAlert: PIPassiveAlert) {
         alertCount = alertCount + 1
         
-        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Bottom, shouldAutoHide: true, delegate: self)
+        PIPassiveAlertDisplayer.displayMessage(message("Random!"), inViewController: self, originYCalculation: randomOriginYCalculation(), shouldAutoHide: false, delegate: self)
     }
     
     func passiveAlertConfig() -> PIPassiveAlertConfig! {
@@ -41,7 +41,24 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
     @IBAction private func didTapButton(sender: AnyObject) {
         alertCount = alertCount + 1
         
-        PIPassiveAlertDisplayer.showMessage(message(), inViewController: self, showType: .Top, shouldAutoHide: false, delegate: self)
+        let side: PIPassiveAlertConstraintSide = ((alertCount % 2) == 0) ? .Bottom : .Top
+        
+        PIPassiveAlertDisplayer.displayMessage(message("Tap me!"), inViewController: self, side: side, shouldAutoHide: true, delegate: self)
+    }
+    
+    private func randomOriginYCalculation() -> PIPassiveAlertOriginYCalculation {
+        return {
+            (alertConfig, containingViewSize) in
+            
+            let randomNumber = self.getRandomNumber(between: 0, and: UInt32(containingViewSize.height))
+            let max = containingViewSize.height - alertConfig.height
+            
+            if randomNumber > max {
+                return max
+            }
+            
+            return randomNumber
+        }
     }
     
     private func passiveAlertBackgroundColor() -> UIColor! {
@@ -52,8 +69,12 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
         }
     }
     
-    private func message() -> String {
-        return "Tap me! Alert #\(alertCount)"
+    private func message(stub: String) -> String {
+        return "\(stub) Alert #\(alertCount)"
+    }
+    
+    private func getRandomNumber(between lower: UInt32, and upper: UInt32) -> CGFloat {
+        return CGFloat(lower + arc4random() % (upper - lower))
     }
     
     private func randomColor() -> UIColor {

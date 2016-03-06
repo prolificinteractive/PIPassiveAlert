@@ -23,10 +23,12 @@
 // THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+#import "PIPassiveAlertAnimationConfig.h"
+#import "PIPassiveAlertOriginFactory.h"
+
+#import <UIKit/UIKit.h>
 
 @interface PIPassiveAlertDisplayer : NSObject
 
@@ -38,33 +40,50 @@
  *  @param vc       The view controller the alert should be displayed in.
  *  @param delegate The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message
-   inViewController:(UIViewController *)vc
-           delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
  *
  *  @param message  The message to display in the passive alert.
  *  @param vc       The view controller the alert should be displayed in.
- *  @param showType Defines where the passive alert should display from.
+ *  @param side     Side the alert is constrained to.
  *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
  *  @param delegate The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+                  side:(PIPassiveAlertConstraintSide)side
+        shouldAutoHide:(BOOL)shouldAutoHide
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
  *
- *  @param message  The message to display in the passive alert.
- *  @param vc       The view controller the alert should be displayed in.
- *  @param originY  The y-coordinate of the alert origin.
- *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
- *  @param delegate The delegate for the passive alert.
+ *  @param message            The message to display in the passive alert.
+ *  @param vc                 The view controller the alert should be displayed in.
+ *  @param originYCalculation Block to calculate origin y.
+ *  @param shouldAutHide      YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
+ *  @param delegate           The delegate for the passive alert.
  */
-+ (void)showMessage:(NSString *)message inViewController:(UIViewController *)vc originY:(CGFloat)originY shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate;
++ (void)displayMessage:(NSString *)message
+      inViewController:(UIViewController *)vc
+    originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation
+        shouldAutoHide:(BOOL)shouldAutHide
+              delegate:(id<PIPassiveAlertDelegate>)delegate;
+
+/**
+ *  Displays a passive alert in the specified view controller.
+ *
+ *  @param alert              The alert to be displayed.
+ *  @param vc                 The view controller the alert should be displayed in.
+ *  @param originYCalculation Block to calculate origin y.
+ */
++ (void)displayAlert:(PIPassiveAlert *)alert
+    inViewController:(UIViewController *)vc
+  originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation;
 
 /**
  *  Closes the currently displaying alert. If no alert is displaying, nothing happens.
@@ -79,5 +98,19 @@
  *  @returns Config.
  */
 + (PIPassiveAlertConfig *)defaultConfig;
+
+/**
+ *  Default animation config used to supply values when none provided.
+ *
+ *  @returns Config.
+ */
++ (PIPassiveAlertAnimationConfig *)defaultAnimationConfig;
+
+/**
+ *  Factory used to calculate alert origin-Y values.
+ *
+ *  @returns Factory.
+ */
++ (PIPassiveAlertOriginFactory *)originFactory;
 
 @end
