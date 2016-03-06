@@ -35,14 +35,6 @@
 
 #pragma mark - Instance methods
 
-- (PIPassiveAlertOriginYCalculation)topOriginYCalculation {
-    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
-        return 0.f;
-    };
-    
-    return originYCalculation;
-}
-
 - (PIPassiveAlertOriginYCalculation)bottomOriginYCalculation {
     PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
         return containingViewSize.height - alertHeight;
@@ -59,12 +51,24 @@
     return originYCalculation;
 }
 
+- (PIPassiveAlertOriginYCalculation)staticValueOriginYCalculationWithValue:(CGFloat)value {
+    PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
+        return value;
+    };
+    
+    return originYCalculation;
+}
+
 - (PIPassiveAlertOriginYCalculation)statusBarOriginYCalculation {
     PIPassiveAlertOriginYCalculation originYCalculation = ^CGFloat(CGFloat alertHeight, CGSize containingViewSize) {
         return [[UIApplication sharedApplication] statusBarFrame].size.height;
     };
     
     return originYCalculation;
+}
+
+- (PIPassiveAlertOriginYCalculation)topOriginYCalculation {
+    return [self staticValueOriginYCalculationWithValue:0.f];
 }
 
 @end

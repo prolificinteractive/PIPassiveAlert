@@ -40,13 +40,6 @@
 + (instancetype)factory;
 
 /**
- *  Block that calculates top origin-Y.
- *
- *  @returns Block.
- */
-- (PIPassiveAlertOriginYCalculation)topOriginYCalculation;
-
-/**
  *  Block that calculates bottom origin-Y.
  *
  *  @returns Block.
@@ -61,10 +54,26 @@
 - (PIPassiveAlertOriginYCalculation)navBarOriginYCalculationForViewController:(UIViewController *)vc;
 
 /**
+ *  Block that simply returns the value provided for origin-Y.
+ *
+ *  @param value: Value of origin-Y.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)staticValueOriginYCalculationWithValue:(CGFloat)value;
+
+/**
  *  Block that calculates for origin-Y at status bar bottom.
  *
  *  @returns Block.
  */
 - (PIPassiveAlertOriginYCalculation)statusBarOriginYCalculation;
+
+/**
+ *  Block that calculates top origin-Y.
+ *
+ *  @returns Block.
+ */
+- (PIPassiveAlertOriginYCalculation)topOriginYCalculation;
 
 @end
