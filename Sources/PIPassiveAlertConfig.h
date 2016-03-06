@@ -39,9 +39,9 @@
 @property (nonatomic, strong) UINib *nib;
 
 /**
- *  Show type.
+ *  Side.
  */
-@property (nonatomic, assign) PIPassiveAlertShowType showType;
+@property (nonatomic, assign) PIPassiveAlertConstraintSide side;
 
 /**
  *  Should auto-hide.

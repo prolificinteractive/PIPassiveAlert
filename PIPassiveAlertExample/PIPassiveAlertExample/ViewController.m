@@ -22,9 +22,9 @@
 - (IBAction)didTapButton:(id)sender {
     self.alertCount++;
     
-    PIPassiveAlertShowType showType = ((self.alertCount % 2) == 0) ? PIPassiveAlertShowTypeBottom : PIPassiveAlertShowTypeTop;
+    PIPassiveAlertConstraintSide side = ((self.alertCount % 2) == 0) ? PIPassiveAlertConstraintSideBottom : PIPassiveAlertConstraintSideTop;
     
-    [PIPassiveAlertDisplayer displayMessage:[self message:@"Tap me!"] inViewController:self showType:showType shouldAutoHide:YES delegate:self];
+    [PIPassiveAlertDisplayer displayMessage:[self message:@"Tap me!"] inViewController:self side:side shouldAutoHide:YES delegate:self];
 }
 
 #pragma mark - Protocol conformance

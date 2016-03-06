@@ -48,13 +48,13 @@
  *
  *  @param message  The message to display in the passive alert.
  *  @param vc       The view controller the alert should be displayed in.
- *  @param showType Defines where the passive alert should display from.
+ *  @param side     Side the alert is constrained to.
  *  @param autoHide YES if the passive alert should auto hide after presentation; otherwise, it will wait for manual dismissal.
  *  @param delegate The delegate for the passive alert.
  */
 + (void)displayMessage:(NSString *)message
       inViewController:(UIViewController *)vc
-              showType:(PIPassiveAlertShowType)showType
+                  side:(PIPassiveAlertConstraintSide)side
         shouldAutoHide:(BOOL)shouldAutoHide
               delegate:(id<PIPassiveAlertDelegate>)delegate;
 

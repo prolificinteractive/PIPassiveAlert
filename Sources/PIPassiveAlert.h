@@ -57,23 +57,23 @@ typedef CGFloat (^PIPassiveAlertOriginYCalculation)(CGFloat alertHeight, CGSize 
 @end
 
 /**
- *  The passive alert show-types.
+ *  Where the alert is constrained to.
  */
-typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
+typedef NS_ENUM(NSInteger, PIPassiveAlertConstraintSide) {
     /**
-     *  Passive alerts with origin at the top of the view.
+     *  Constrained to top of view.
      */
-    PIPassiveAlertShowTypeTop,
+    PIPassiveAlertConstraintSideTop,
     
     /**
-     *  Passive alerts with origin at the bottom of the view.
+     *  Constrained to bottom of view.
      */
-    PIPassiveAlertShowTypeBottom,
+    PIPassiveAlertConstraintSideBottom,
     
     /**
-     *  Passive alerts with custom origin.
+     *  Constrained to where origin-Y sits.
      */
-    PIPassiveAlertShowTypeCustomOrigin
+    PIPassiveAlertConstraintSideOrigin
 };
 
 /**
@@ -102,9 +102,9 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 @property (nonatomic, assign, readonly) CGFloat height;
 
 /**
- *  The show-type of the passive alert.
+ *  The side the passive alert is constrained to.
  */
-@property (nonatomic, assign, readonly) PIPassiveAlertShowType showType;
+@property (nonatomic, assign, readonly) PIPassiveAlertConstraintSide side;
 
 /**
  *  Whether the passive alert should auto-hide.

@@ -37,24 +37,20 @@ static PIPassiveAlert *currentAlert = nil;
 #pragma mark - Class methods
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc delegate:(id<PIPassiveAlertDelegate>)delegate {
-    [self displayMessage:message inViewController:vc showType:PIPassiveAlertShowTypeTop shouldAutoHide:YES delegate:delegate];
+    [self displayMessage:message inViewController:vc side:PIPassiveAlertConstraintSideTop shouldAutoHide:YES delegate:delegate];
 }
 
-+ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:showType shouldAutoHide:shouldAutoHide delegate:delegate];
++ (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
+    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc side:side shouldAutoHide:shouldAutoHide delegate:delegate];
     PIPassiveAlertOriginYCalculation originYCalculation = nil;
     
-    switch (showType) {
-        case PIPassiveAlertShowTypeTop:
+    switch (side) {
+        case PIPassiveAlertConstraintSideTop:
             originYCalculation = [[self originFactory] topOriginYCalculation];
             break;
             
-        case PIPassiveAlertShowTypeBottom:
+        case PIPassiveAlertConstraintSideBottom:
             originYCalculation = [[self originFactory] bottomOriginYCalculation];
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
             break;
             
         default:
@@ -65,7 +61,7 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (void)displayMessage:(NSString *)message inViewController:(UIViewController *)vc originYCalculation:(PIPassiveAlertOriginYCalculation)originYCalculation shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
-    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc showType:PIPassiveAlertShowTypeCustomOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
+    PIPassiveAlert *alert = [self alertWithMessage:message inViewController:vc side:PIPassiveAlertConstraintSideOrigin shouldAutoHide:shouldAutoHide delegate:delegate];
 
     [self displayAlert:alert originYCalculation:originYCalculation inViewController:vc];
 }
@@ -80,7 +76,7 @@ static PIPassiveAlert *currentAlert = nil;
     PIPassiveAlertConfig *defaultConfig = [[PIPassiveAlertConfig alloc] init];
     
     defaultConfig.nib = [self defaultNib];
-    defaultConfig.showType = PIPassiveAlertShowTypeTop;
+    defaultConfig.side = PIPassiveAlertConstraintSideTop;
     defaultConfig.shouldAutoHide = YES;
     defaultConfig.autoHideDelay = 3.f;
     defaultConfig.backgroundColor = [UIColor redColor];
@@ -108,7 +104,7 @@ static PIPassiveAlert *currentAlert = nil;
     [alert showInView:vc.view originYCalculation:originYCalculation];
 }
 
-+ (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc showType:(PIPassiveAlertShowType)showType shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
++ (PIPassiveAlert *)alertWithMessage:(NSString *)message inViewController:(UIViewController *)vc side:(PIPassiveAlertConstraintSide)side shouldAutoHide:(BOOL)shouldAutoHide delegate:(id<PIPassiveAlertDelegate>)delegate {
     // Start with default config
     PIPassiveAlertConfig *config = [self defaultConfig];
     
@@ -122,32 +118,10 @@ static PIPassiveAlert *currentAlert = nil;
     }
     
     // Override with more specific values supplied
-    config.showType = showType;
+    config.side = side;
     config.shouldAutoHide = shouldAutoHide;
     
     return [[PIPassiveAlert alloc] initWithMessage:message config:config delegate:delegate];
-}
-
-+ (CGFloat)originYForPassiveAlert:(PIPassiveAlert *)alert inViewController:(UIViewController *)vc
-{
-    switch (alert.showType) {
-        case PIPassiveAlertShowTypeTop:
-            return 0.f;
-            break;
-            
-        case PIPassiveAlertShowTypeBottom:
-            return vc.view.bounds.size.height - alert.height;
-            break;
-            
-        case PIPassiveAlertShowTypeCustomOrigin:
-            NSAssert(NO, @"Should not re-calculate origin for alert with custom origin.");
-            return 0.f;
-            break;
-            
-        default:
-            return 0.f;
-            break;
-    }
 }
 
 + (UINib *)defaultNib {

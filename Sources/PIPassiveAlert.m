@@ -33,7 +33,7 @@
 @property (nonatomic, strong, readwrite) UINib *nib;
 @property (nonatomic, copy, readwrite) NSString *message;
 @property (nonatomic, assign, readwrite) CGFloat height;
-@property (nonatomic, assign, readwrite) PIPassiveAlertShowType showType;
+@property (nonatomic, assign, readwrite) PIPassiveAlertConstraintSide side;
 @property (nonatomic, assign, readwrite) BOOL shouldAutoHide;
 @property (nonatomic, assign, readwrite) CGFloat autoHideDelay;
 @property (nonatomic, strong, readwrite) UIColor *backgroundColor;
@@ -57,7 +57,7 @@
     if (self) {
         self.message = message;
         self.nib = config.nib;
-        self.showType = config.showType;
+        self.side = config.side;
         self.shouldAutoHide = config.shouldAutoHide;
         self.autoHideDelay = config.autoHideDelay;
         self.height = config.height;
@@ -82,8 +82,8 @@
 - (void)closeAnimated:(BOOL)animated {
     CGRect finalAlertFrame = self.alertView.frame;
     
-    switch (self.showType) {
-        case PIPassiveAlertShowTypeBottom:
+    switch (self.side) {
+        case PIPassiveAlertConstraintSideBottom:
             finalAlertFrame.origin.y += finalAlertFrame.size.height;
             break;
             
@@ -117,6 +117,7 @@
     }
     
     CGFloat originY = originYCalculation(self.height, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
+    CGFloat topConstraintConstant = self.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
     
     self.alertView = [PIPassiveAlertView alertViewWithNib:self.nib message:self.message backgroundColor:self.backgroundColor textColor:self.textColor font:self.font textAlignment:self.textAlignment height:self.height delegate: self];
     
@@ -148,7 +149,7 @@
                                                               toItem:view
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
-                                                            constant:originY];
+                                                            constant:topConstraintConstant];
     NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.alertViewContainer
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual
@@ -164,7 +165,7 @@
                                                              multiplier:1
                                                                constant:0];
     
-    if (self.showType == PIPassiveAlertShowTypeBottom) {
+    if (self.side == PIPassiveAlertConstraintSideBottom) {
         [view addConstraints:@[ left, right, bottom ]];
     } else {
         [view addConstraints:@[ left, right, top ]];
