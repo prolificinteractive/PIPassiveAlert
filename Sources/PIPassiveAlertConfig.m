@@ -25,10 +25,6 @@
 
 #import "PIPassiveAlertConfig.h"
 
-@interface PIPassiveAlertConfig ()
-
-@end
-
 @implementation PIPassiveAlertConfig
 
 #pragma mark - Class methods

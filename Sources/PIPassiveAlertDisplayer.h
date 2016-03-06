@@ -23,10 +23,10 @@
 // THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "PIPassiveAlert.h"
 #import "PIPassiveAlertConfig.h"
+
+#import <UIKit/UIKit.h>
 
 @interface PIPassiveAlertDisplayer : NSObject
 
@@ -44,7 +44,6 @@
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
  *
  *  @param message  The message to display in the passive alert.
  *  @param vc       The view controller the alert should be displayed in.
@@ -60,7 +59,6 @@
 
 /**
  *  Creates and displays a passive alert with the specified message in the specified view controller.
- *  The passive alert will display from the top of the view controller's view.
  *
  *  @param message  The message to display in the passive alert.
  *  @param vc       The view controller the alert should be displayed in.

@@ -56,17 +56,17 @@
  */
 typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
     /**
-     *  Passive alerts with origin at the top of the window.
+     *  Passive alerts with origin at the top of the view.
      */
     PIPassiveAlertShowTypeTop,
     
     /**
-     *  Passive alerts with origin at the bottom of the window.
+     *  Passive alerts with origin at the bottom of the view.
      */
     PIPassiveAlertShowTypeBottom,
     
     /**
-     *  Passive alerts with origin at the navigationbar of the view.
+     *  Passive alerts with origin at the navigation bar.
      */
     PIPassiveAlertShowTypeNavigationBar,
     
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 @property (nonatomic, assign, readonly) CGFloat height;
 
 /**
- *  The show type of the passive alert.
+ *  The show-type of the passive alert.
  */
 @property (nonatomic, assign, readonly) PIPassiveAlertShowType showType;
 
@@ -117,12 +117,12 @@ typedef NS_ENUM(NSInteger, PIPassiveAlertShowType) {
 @property (nonatomic, assign, readonly) CGFloat autoHideDelay;
 
 /**
- *  Background color.
+ *  The background color of the passive alert.
  */
 @property (nonatomic, strong, readonly) UIColor *backgroundColor;
 
 /**
- *  Text color.
+ *  The text color of the passive alert.
  */
 @property (nonatomic, strong, readonly) UIColor *textColor;
 
