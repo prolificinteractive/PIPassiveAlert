@@ -36,8 +36,9 @@
  *  Indicates that the passive alert view received a tap action.
  *
  *  @param passiveAlert The passive alert that received the close action.
+ *  @param touchPoint   The point at which the alert was touch in terms of the alert.
  */
-- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView;
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint;
 
 @end
 
