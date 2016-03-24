@@ -26,8 +26,8 @@
 #import <UIKit/UIKit.h>
 
 @class PIPassiveAlert;
-@class PIPassiveAlertConfig;
 @class PIPassiveAlertAnimationConfig;
+@class PIPassiveAlertConfig;
 
 /**
  *  Block calculating origin-Y given an alert config and containing size.

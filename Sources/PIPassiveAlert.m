@@ -24,8 +24,8 @@
 //
 
 #import "PIPassiveAlert.h"
-#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertAnimationConfig.h"
+#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
