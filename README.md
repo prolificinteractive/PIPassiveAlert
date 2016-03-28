@@ -17,7 +17,7 @@ PIPassiveAlert is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your `Podfile`:
 
 ```ruby
-pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.4'
+pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.5'
 ```
 
 ### Carthage
