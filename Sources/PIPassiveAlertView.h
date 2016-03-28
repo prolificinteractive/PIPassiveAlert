@@ -63,17 +63,19 @@
 /**
  *  Creates alert view for provided attributes.
  *
- *  @param nib             Nib for alert view.
- *  @param message         Message for alert view.
- *  @param backgroundColor Background color type for alert view.
- *  @param textColor       Text color for alert view.
- *  @param font            Font for alert view.
- *  @param textAlightment  Text alignment for alert view.
- *  @param height          Height for alert view.
- *  @param delegate        The delegate for the alert view.
+ *  @param nib                 Nib for alert view.
+ *  @param message             Message for alert view.
+ *  @param backgroundColor     Background color type for alert view.
+ *  @param textColor           Text color for alert view.
+ *  @param font                Font for alert view.
+ *  @param textAlightment      Text alignment for alert view.
+ *  @param height              Height for alert view.
+ *  @param isCloseButtonActive Whether the close button is active.
+ *  @param closeButtonImage    Close button image.
+ *  @param delegate            The delegate for the alert view.
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height delegate:(id<PIPassiveAlertViewDelegate>)delegate;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height  isCloseButtonActive:(BOOL)isCloseButtonActive closeButtonImage:(UIImage *)closeButtonImage delegate:(id<PIPassiveAlertViewDelegate>)delegate;
 
 @end

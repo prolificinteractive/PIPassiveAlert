@@ -45,9 +45,7 @@
         firstCopy.side = secondCopy.side;
     }
     
-    if (secondCopy.shouldAutoHide) {
-        firstCopy.shouldAutoHide = secondCopy.shouldAutoHide;
-    }
+    firstCopy.shouldAutoHide = secondCopy.shouldAutoHide;
     
     if (secondCopy.autoHideDelay) {
         firstCopy.autoHideDelay = secondCopy.autoHideDelay;
@@ -73,9 +71,7 @@
         firstCopy.textAlignment = secondCopy.textAlignment;
     }
     
-    if (secondCopy.isCloseButtonActive) {
-        firstCopy.isCloseButtonActive = secondCopy.isCloseButtonActive;
-    }
+    firstCopy.isCloseButtonActive = secondCopy.isCloseButtonActive;
     
     if (secondCopy.closeButtonImage) {
         firstCopy.closeButtonImage = secondCopy.closeButtonImage;

@@ -53,6 +53,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="closeButton" destination="Ium-AE-8GB" id="3qZ-eJ-sOW"/>
                 <outlet property="messageLabel" destination="K8O-83-Q0P" id="oAv-1b-Npr"/>
                 <outletCollection property="gestureRecognizers" destination="ua1-0c-eVM" appends="YES" id="HOO-ou-5Tp"/>
             </connections>
