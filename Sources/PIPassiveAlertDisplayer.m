@@ -102,6 +102,7 @@ static PIPassiveAlert *currentAlert = nil;
     defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
     defaultConfig.closeButtonImage = [self defaultCloseImage];
+    defaultConfig.closeButtonWidth = 40.f;
     
     return defaultConfig;
 }
