@@ -29,6 +29,7 @@
 
 static NSString *const kPIPassiveAlertResourceBundleName = @"PIPassiveAlert";
 static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
+static NSString *const kPIPassiveAlertDefaultAccessoryImageName = @"PIPassiveAlertDefaultAccessoryImage";
 
 @implementation PIPassiveAlertDisplayer
 
@@ -99,6 +100,8 @@ static PIPassiveAlert *currentAlert = nil;
     defaultConfig.textColor = [UIColor whiteColor];
     defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
+    defaultConfig.isCloseButtonActive = YES;
+    defaultConfig.closeButtonImage = [self defaultCloseImage];
     
     return defaultConfig;
 }
@@ -154,6 +157,15 @@ static PIPassiveAlert *currentAlert = nil;
     NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
     
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
+}
+
++ (UIImage *)defaultCloseImage {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *bundleURLForImage = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
+    NSBundle *bundleForImage = [NSBundle bundleWithURL:bundleURLForImage];
+    UIImage *image = [UIImage imageNamed:kPIPassiveAlertDefaultAccessoryImageName inBundle:bundleForImage compatibleWithTraitCollection:nil];
+    
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 @end

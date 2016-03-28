@@ -24,8 +24,8 @@
 //
 
 #import "PIPassiveAlert.h"
-#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertAnimationConfig.h"
+#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
@@ -111,7 +111,7 @@
     CGFloat originY = originYCalculation(self.config, CGSizeMake(view.bounds.size.width, view.bounds.size.height));
     CGFloat topConstraintConstant = self.config.side == PIPassiveAlertConstraintSideOrigin ? originY : 0.f;
     
-    self.alertView = [PIPassiveAlertView alertViewWithNib:self.config.nib message:self.message backgroundColor:self.config.backgroundColor textColor:self.config.textColor font:self.config.font textAlignment:self.config.textAlignment height:self.config.height delegate: self];
+    self.alertView = [PIPassiveAlertView alertViewWithNib:self.config.nib message:self.message backgroundColor:self.config.backgroundColor textColor:self.config.textColor font:self.config.font textAlignment:self.config.textAlignment height:self.config.height isCloseButtonActive:self.config.isCloseButtonActive closeButtonImage:self.config.closeButtonImage delegate: self];
     
     CGRect frame = self.alertView.frame;
     frame.size.width = view.frame.size.width;
@@ -261,14 +261,20 @@
 
 #pragma mark - Protocol conformance
 
-#pragma PassiveAlertViewDelegate
+#pragma PIPassiveAlertViewDelegate
 
-- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView {
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint
+{
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:)]) {
-            [self.delegate passiveAlertDidReceiveTap:self];
+        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:atPoint:)]) {
+            [self.delegate passiveAlertDidReceiveTap:self atPoint:touchPoint];
         }
     }
+}
+
+- (void)passiveAlertViewDidReceiveClose:(PIPassiveAlertView *)alertView
+{
+    [self close];
 }
 
 @end

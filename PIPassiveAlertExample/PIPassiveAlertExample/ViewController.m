@@ -31,7 +31,7 @@
 
 #pragma mark PassiveAlertDelegate
 
-- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert {
+- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert atPoint:(CGPoint)touchPoint {
     self.alertCount++;
     
     // Custom alert - displays at random origin

@@ -23,8 +23,6 @@
 // THE SOFTWARE.
 //
 
-#import "PIPassiveAlert.h"
-
 #import <UIKit/UIKit.h>
 
 /**

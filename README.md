@@ -17,7 +17,7 @@ PIPassiveAlert is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your `Podfile`:
 
 ```ruby
-pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.4'
+pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.5'
 ```
 
 ### Carthage
@@ -34,6 +34,14 @@ github "prolificInteractive/PIPassiveAlert"
 To report a bug or enhancement request, feel free to file an issue under the respective heading.
 
 If you wish to contribute to the project, fork this repo and submit a pull request. Code contributions should follow the standards specified in the [Prolific Objective-C Style Guide](https://github.com/prolificinteractive/objective-c-style-guide).
+
+## Credits
+
+### Icons
+
+The default close icon was made by [Freepik](http://www.freepik.com) and made available by [Flaticon](http://www.flaticon.com) under the [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/) license. 
+
+Usage of this library in which the default icon is not replaced must provide this attribution.
 
 ## License
 

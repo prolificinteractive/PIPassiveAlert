@@ -26,8 +26,8 @@
 #import <UIKit/UIKit.h>
 
 @class PIPassiveAlert;
-@class PIPassiveAlertConfig;
 @class PIPassiveAlertAnimationConfig;
+@class PIPassiveAlertConfig;
 
 /**
  *  Block calculating origin-Y given an alert config and containing size.
@@ -45,8 +45,9 @@ typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertC
  *  Indicates that the passive alert received a tap.
  *
  *  @param passiveAlert The passive alert that received the tap.
+ *  @param touchPoint   The point at which the alert was touch in terms of the alert.
  */
-- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert;
+- (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert atPoint:(CGPoint)touchPoint;
 
 /**
  *  Config to be used for passive alert.
