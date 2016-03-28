@@ -79,8 +79,13 @@
 @property (nonatomic, assign) NSTextAlignment textAlignment;
 
 /**
- *  Close button image.
+ *  Close button image. Set to nil to remove image.
  */
 @property (nonatomic, strong) UIImage *closeButtonImage;
+
+/**
+ *  Close button width.
+ */
+@property (nonatomic, assign) CGFloat closeButtonWidth;
 
 @end
