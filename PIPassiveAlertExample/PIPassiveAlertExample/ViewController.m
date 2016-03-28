@@ -38,15 +38,12 @@
     [PIPassiveAlertDisplayer displayMessage:[self message:@"Random!"] inViewController:self originYCalculation:[self randomOriginYCalculation] shouldAutoHide:NO delegate:self];
 }
 
-- (PIPassiveAlertConfig *)passiveAlertConfig {
-    PIPassiveAlertConfig *config = [PIPassiveAlertConfig config];
-    
+- (void)configurePassiveAlert:(PIPassiveAlertConfig *)config {
     config.autoHideDelay = 1.f;
     config.height = 70.f;
     config.backgroundColor = [self passiveAlertBackgroundColor];
     config.font = [UIFont systemFontOfSize:22.f];
-    
-    return config;
+    config.textAlignment = NSTextAlignmentLeft;
 }
 
 #pragma mark - Private methods
