@@ -24,8 +24,8 @@
 //
 
 #import "PIPassiveAlert.h"
-#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertAnimationConfig.h"
+#import "PIPassiveAlertConfig.h"
 #import "PIPassiveAlertView.h"
 
 @interface PIPassiveAlert () <PIPassiveAlertViewDelegate>
@@ -261,12 +261,12 @@
 
 #pragma mark - Protocol conformance
 
-#pragma PassiveAlertViewDelegate
+#pragma PIPassiveAlertViewDelegate
 
-- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView {
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint {
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:)]) {
-            [self.delegate passiveAlertDidReceiveTap:self];
+        if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:atPoint:)]) {
+            [self.delegate passiveAlertDidReceiveTap:self atPoint:touchPoint];
         }
     }
 }

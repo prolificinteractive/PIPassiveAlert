@@ -70,11 +70,13 @@
 
 #pragma mark Private instance methods
 
-- (IBAction)didReceiveTap:(id)sender
+- (IBAction)didReceiveTap:(UITapGestureRecognizer *)sender
 {
+    CGPoint touchPoint = [sender locationInView: self];
+    
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(passiveAlertViewDidReceiveTap:)]) {
-            [self.delegate passiveAlertViewDidReceiveTap:self];
+        if ([self.delegate respondsToSelector:@selector(passiveAlertViewDidReceiveTap:atPoint:)]) {
+            [self.delegate passiveAlertViewDidReceiveTap:self atPoint:touchPoint];
         }
     }
 }
