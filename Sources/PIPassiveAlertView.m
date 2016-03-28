@@ -81,4 +81,13 @@
     }
 }
 
+- (IBAction)didReceiveTapToCloseButton:(UIButton *)sender
+{
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(passiveAlertViewDidReceiveClose:)]) {
+            [self.delegate passiveAlertViewDidReceiveClose:self];
+        }
+    }
+}
+
 @end

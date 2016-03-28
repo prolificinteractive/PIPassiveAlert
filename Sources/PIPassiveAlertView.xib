@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10102" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -17,6 +17,26 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Z6-ih-Kc6" userLabel="Image Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="70"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ium-AE-8GB" userLabel="Close Button">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="70"/>
+                            <state key="normal" image="PIPassiveAlertDefaultAccessoryImage.png"/>
+                            <connections>
+                                <action selector="didReceiveTapToCloseButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="SvO-zf-Y0T"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Ium-AE-8GB" firstAttribute="centerY" secondItem="1Z6-ih-Kc6" secondAttribute="centerY" id="L3l-Pz-fyD"/>
+                        <constraint firstAttribute="width" constant="40" id="VGq-5a-PiX"/>
+                        <constraint firstItem="Ium-AE-8GB" firstAttribute="centerX" secondItem="1Z6-ih-Kc6" secondAttribute="centerX" id="gp2-SC-IM2"/>
+                        <constraint firstItem="Ium-AE-8GB" firstAttribute="width" secondItem="1Z6-ih-Kc6" secondAttribute="width" id="yiG-ip-Tkb"/>
+                        <constraint firstItem="Ium-AE-8GB" firstAttribute="height" secondItem="1Z6-ih-Kc6" secondAttribute="height" id="zV6-EX-IWx"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
@@ -24,8 +44,11 @@
                 <constraint firstItem="K8O-83-Q0P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="LP9-Ej-fZl"/>
                 <constraint firstItem="K8O-83-Q0P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" constant="15" id="M83-2J-3bZ"/>
                 <constraint firstItem="K8O-83-Q0P" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bb4-fa-2e1"/>
+                <constraint firstItem="1Z6-ih-Kc6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="edE-0n-8Ig"/>
                 <constraint firstAttribute="trailing" secondItem="K8O-83-Q0P" secondAttribute="trailing" constant="15" id="gyh-TW-gCB"/>
                 <constraint firstAttribute="bottom" secondItem="K8O-83-Q0P" secondAttribute="bottom" priority="750" constant="15" id="qX2-sf-R2p"/>
+                <constraint firstItem="1Z6-ih-Kc6" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="s24-jD-lo2"/>
+                <constraint firstItem="1Z6-ih-Kc6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zsW-Ye-po6"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -40,4 +63,7 @@
             </connections>
         </tapGestureRecognizer>
     </objects>
+    <resources>
+        <image name="PIPassiveAlertDefaultAccessoryImage.png" width="16" height="16"/>
+    </resources>
 </document>

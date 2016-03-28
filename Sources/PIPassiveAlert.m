@@ -263,12 +263,20 @@
 
 #pragma PIPassiveAlertViewDelegate
 
-- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint {
+- (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint
+{
+    NSLog(@"Tapped!");
+    
     if (self.delegate) {
         if ([self.delegate respondsToSelector:@selector(passiveAlertDidReceiveTap:atPoint:)]) {
             [self.delegate passiveAlertDidReceiveTap:self atPoint:touchPoint];
         }
     }
+}
+
+- (void)passiveAlertViewDidReceiveClose:(PIPassiveAlertView *)alertView
+{
+    NSLog(@"Button!");
 }
 
 @end

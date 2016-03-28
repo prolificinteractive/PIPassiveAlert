@@ -33,12 +33,20 @@
 @protocol PIPassiveAlertViewDelegate <NSObject>
 
 /**
- *  Indicates that the passive alert view received a tap action.
+ *  Indicates that the passive alert view received a tap action. Will not be
+ *  called if tap is made in close button while close button is active.
  *
- *  @param passiveAlert The passive alert that received the close action.
+ *  @param passiveAlert The passive alert that received the tap action.
  *  @param touchPoint   The point at which the alert was touch in terms of the alert.
  */
 - (void)passiveAlertViewDidReceiveTap:(PIPassiveAlertView *)alertView atPoint:(CGPoint)touchPoint;
+
+/**
+ *  Indicates that the passive alert view received a close action.
+ *
+ *  @param passiveAlert The passive alert that received the close action.
+ */
+- (void)passiveAlertViewDidReceiveClose:(PIPassiveAlertView *)alertView;
 
 @end
 
