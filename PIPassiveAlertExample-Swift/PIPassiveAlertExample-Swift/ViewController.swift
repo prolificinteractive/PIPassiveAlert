@@ -17,21 +17,16 @@ class ViewController: UIViewController, PIPassiveAlertDelegate {
     
     // MARK: PIPassiveAlertDelegate
     
-    func passiveAlertDidReceiveTap(passiveAlert: PIPassiveAlert) {
+    func passiveAlertDidReceiveTap(passiveAlert: PIPassiveAlert, atPoint: CGPoint) {
         alertCount = alertCount + 1
         
         PIPassiveAlertDisplayer.displayMessage(message("Random!"), inViewController: self, originYCalculation: randomOriginYCalculation(), shouldAutoHide: false, delegate: self)
     }
     
-    func passiveAlertConfig() -> PIPassiveAlertConfig! {
-        let config = PIPassiveAlertConfig()
-        
+    func configurePassiveAlert(config: PIPassiveAlertConfig) {
         config.autoHideDelay = 1.0
-        config.height = 70.0
         config.backgroundColor = passiveAlertBackgroundColor()
         config.font = UIFont.systemFontOfSize(22.0)
-        
-        return config
     }
     
     // MARK: - Instance functions

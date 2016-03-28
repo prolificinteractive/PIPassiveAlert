@@ -1,5 +1,5 @@
 PODS:
-  - PIPassiveAlert (0.0.5)
+  - PIPassiveAlert (0.0.6)
 
 DEPENDENCIES:
   - PIPassiveAlert (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PIPassiveAlert: 16d2332171629baad739cf571f4a94886a1c20fa
+  PIPassiveAlert: 55d72fbc401edc5113af159373807dbb7a98f972
 
 COCOAPODS: 0.39.0

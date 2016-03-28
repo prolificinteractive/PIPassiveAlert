@@ -50,18 +50,18 @@ typedef CGFloat (^PIPassiveAlertOriginYCalculation)(PIPassiveAlertConfig *alertC
 - (void)passiveAlertDidReceiveTap:(PIPassiveAlert *)passiveAlert atPoint:(CGPoint)touchPoint;
 
 /**
- *  Config to be used for passive alert.
+ *  Override point for updating configuration values for passive alerts.
  *
- *  @returns Config.
+ *  @param config: Config used for passive alerts.
  */
-- (PIPassiveAlertConfig *)passiveAlertConfig;
+- (void)configurePassiveAlert:(PIPassiveAlertConfig *)config;
 
 /**
- *  Animation config to be used for passive alert.
+ *  Override point for updating configuration values for passive alert animation.
  *
- *  @returns Config.
+ *  @param config: Config used for passive alert animation.
  */
-- (PIPassiveAlertAnimationConfig *)passiveAlertAnimationConfig;
+- (void)configurePassiveAlertAnimation:(PIPassiveAlertAnimationConfig *)config;
 
 @end
 

@@ -70,12 +70,12 @@
  *  @param font                Font for alert view.
  *  @param textAlightment      Text alignment for alert view.
  *  @param height              Height for alert view.
- *  @param isCloseButtonActive Whether the close button is active.
  *  @param closeButtonImage    Close button image.
+ *  @param closeButtonWidth    Close button width.
  *  @param delegate            The delegate for the alert view.
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height  isCloseButtonActive:(BOOL)isCloseButtonActive closeButtonImage:(UIImage *)closeButtonImage delegate:(id<PIPassiveAlertViewDelegate>)delegate;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage closeButtonWidth:(CGFloat)closeButtonWidth delegate:(id<PIPassiveAlertViewDelegate>)delegate;
 
 @end

@@ -27,49 +27,4 @@
 
 @implementation PIPassiveAlertAnimationConfig
 
-#pragma mark - Class methods
-
-+ (instancetype)config {
-    return [[PIPassiveAlertAnimationConfig alloc] init];
-}
-
-+ (instancetype)mergeConfig:(PIPassiveAlertAnimationConfig *)firstConfig withSecondConfig:(PIPassiveAlertAnimationConfig *)secondConfig {
-    PIPassiveAlertAnimationConfig *firstCopy = [firstConfig copy];
-    PIPassiveAlertAnimationConfig *secondCopy = [secondConfig copy];
-    
-    if (secondCopy.duration) {
-        firstCopy.duration = secondCopy.duration;
-    }
-    
-    if (secondCopy.delay) {
-        firstCopy.delay = secondCopy.delay;
-    }
-    
-    if (secondCopy.damping) {
-        firstCopy.damping = secondCopy.damping;
-    }
-    
-    if (secondCopy.initialVelocity) {
-        firstCopy.initialVelocity = secondCopy.initialVelocity;
-    }
-    
-    return firstCopy;
-}
-
-#pragma mark - Protocol conformance
-
-#pragma mark <NSCopying>
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    PIPassiveAlertAnimationConfig *copy = [[PIPassiveAlertAnimationConfig allocWithZone: zone] init];
-    
-    copy.duration = self.duration;
-    copy.delay = self.delay;
-    copy.damping = self.damping;
-    copy.initialVelocity = self.initialVelocity;
-    
-    return copy;
-}
-
 @end

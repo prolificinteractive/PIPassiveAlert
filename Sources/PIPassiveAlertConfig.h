@@ -31,7 +31,7 @@
  *  Data object representing configurable
  *  attributes of a passive alert.
  */
-@interface PIPassiveAlertConfig : NSObject <NSCopying>
+@interface PIPassiveAlertConfig : NSObject
 
 /**
  *  Nib.
@@ -79,31 +79,13 @@
 @property (nonatomic, assign) NSTextAlignment textAlignment;
 
 /**
- *  Whether the close button is active.
- */
-@property (nonatomic, assign) BOOL isCloseButtonActive;
-
-/**
- *  Close button image.
+ *  Close button image. Set to nil to remove image.
  */
 @property (nonatomic, strong) UIImage *closeButtonImage;
 
 /**
- *  Creates new config.
- *
- *  @returns New config.
+ *  Close button width.
  */
-+ (instancetype)config;
-
-/**
- *  Merges first config with second config. If both contain values,
- *  second config value takes precedence.
- *
- *  @parameter firstConfig:  First config.
- *  @parameter secondConfig: Second config.
- *
- *  @returns New config.
- */
-+ (instancetype)mergeConfig:(PIPassiveAlertConfig *)firstConfig withSecondConfig:(PIPassiveAlertConfig *)secondConfig;
+@property (nonatomic, assign) CGFloat closeButtonWidth;
 
 @end

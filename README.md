@@ -17,10 +17,11 @@ PIPassiveAlert is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your `Podfile`:
 
 ```ruby
-pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.5'
+pod "PIPassiveAlert", :git => 'git@github.com:prolificinteractive/PIPassiveAlert.git', :tag => '0.0.6'
 ```
 
 ### Carthage
+
 You can also add PIPassiveAlert to your project using [Carthage](https://github.com/Carthage/Carthage). Add the following to your `Cartfile`:
 
 ```ruby
@@ -28,6 +29,20 @@ github "prolificInteractive/PIPassiveAlert"
 ```
 
 ## Usage
+
+### Configuration
+
+#### Custom Nib
+
+While a default look is provided for the alert, you have the option to provide a custom nib. The nib you provided *must* be of type `PIPassiveAlertView`.
+
+For example, if we had a nib file with the file name `MyAlertView`, we could indicate a custom nib on our configuration as follows:
+
+``` swift
+config.nib = [UINib nibWithNibName:@"MyAlertView" bundle:nil];
+```
+
+Don't forget to implement `PIPassiveAlertView` delegate functions in your bustom nib, if desired!
 
 ## Contributing
 
