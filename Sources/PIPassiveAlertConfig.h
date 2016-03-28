@@ -79,6 +79,16 @@
 @property (nonatomic, assign) NSTextAlignment textAlignment;
 
 /**
+ *  Whether the close button is active.
+ */
+@property (nonatomic, assign) BOOL isCloseButtonActive;
+
+/**
+ *  Close button image.
+ */
+@property (nonatomic, strong) UIImage *closeButtonImage;
+
+/**
  *  Creates new config.
  *
  *  @returns New config.
