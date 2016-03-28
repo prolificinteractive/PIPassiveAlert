@@ -73,6 +73,14 @@
         firstCopy.textAlignment = secondCopy.textAlignment;
     }
     
+    if (secondCopy.isCloseButtonActive) {
+        firstCopy.isCloseButtonActive = secondCopy.isCloseButtonActive;
+    }
+    
+    if (secondCopy.closeButtonImage) {
+        firstCopy.closeButtonImage = secondCopy.closeButtonImage;
+    }
+    
     return firstCopy;
 }
 
@@ -93,6 +101,8 @@
     copy.textColor = [self.textColor copy];
     copy.font = [self.font copy];
     copy.textAlignment = self.textAlignment;
+    copy.isCloseButtonActive = self.isCloseButtonActive;
+    copy.closeButtonImage = [self.closeButtonImage copy];
     
     return copy;
 }

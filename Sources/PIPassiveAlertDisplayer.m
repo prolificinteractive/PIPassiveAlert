@@ -100,6 +100,8 @@ static PIPassiveAlert *currentAlert = nil;
     defaultConfig.textColor = [UIColor whiteColor];
     defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
+    defaultConfig.isCloseButtonActive = YES;
+    defaultConfig.closeButtonImage = [self defaultCloseImage];
     
     return defaultConfig;
 }
@@ -157,7 +159,7 @@ static PIPassiveAlert *currentAlert = nil;
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
 }
 
-+ (UIImage *)defaultAccessoryImage {
++ (UIImage *)defaultCloseImage {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSURL *bundleURLForImage = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
     NSBundle *bundleForImage = [NSBundle bundleWithURL:bundleURLForImage];
