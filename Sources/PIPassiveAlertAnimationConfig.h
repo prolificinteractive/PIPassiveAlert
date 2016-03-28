@@ -29,7 +29,7 @@
  *  Data object representing configurable
  *  attributes of a passive alert animation.
  */
-@interface PIPassiveAlertAnimationConfig : NSObject <NSCopying>
+@interface PIPassiveAlertAnimationConfig : NSObject
 
 /**
  *  The total duration of the animations, measured in seconds. 
@@ -59,23 +59,5 @@
  *  was prior to attachment.
  */
 @property (nonatomic, assign) CGFloat initialVelocity;
-
-/**
- *  Creates new config.
- *
- *  @returns New config.
- */
-+ (instancetype)config;
-
-/**
- *  Merges first config with second config. If both contain values,
- *  second config value takes precedence.
- *
- *  @parameter firstConfig:  First config.
- *  @parameter secondConfig: Second config.
- *
- *  @returns New config.
- */
-+ (instancetype)mergeConfig:(PIPassiveAlertAnimationConfig *)firstConfig withSecondConfig:(PIPassiveAlertAnimationConfig *)secondConfig;
 
 @end

@@ -90,24 +90,24 @@ static PIPassiveAlert *currentAlert = nil;
 }
 
 + (PIPassiveAlertConfig *)defaultConfig {
-    PIPassiveAlertConfig *defaultConfig = [PIPassiveAlertConfig config];
+    PIPassiveAlertConfig *defaultConfig = [[PIPassiveAlertConfig alloc] init];
     
     defaultConfig.nib = [self defaultNib];
     defaultConfig.side = PIPassiveAlertConstraintSideTop;
     defaultConfig.shouldAutoHide = YES;
     defaultConfig.autoHideDelay = 3.f;
+    defaultConfig.height = 100.f;
     defaultConfig.backgroundColor = [UIColor redColor];
     defaultConfig.textColor = [UIColor whiteColor];
     defaultConfig.font = [UIFont systemFontOfSize:17.f]; // default Apple body text size
     defaultConfig.textAlignment = NSTextAlignmentCenter;
-    defaultConfig.isCloseButtonActive = YES;
     defaultConfig.closeButtonImage = [self defaultCloseImage];
     
     return defaultConfig;
 }
 
 + (PIPassiveAlertAnimationConfig *)defaultAnimationConfig {
-    PIPassiveAlertAnimationConfig *defaultConfig = [PIPassiveAlertAnimationConfig config];
+    PIPassiveAlertAnimationConfig *defaultConfig = [[PIPassiveAlertAnimationConfig alloc] init];
     
     defaultConfig.duration = 0.6f;
     defaultConfig.delay = 0.f;
@@ -130,16 +130,12 @@ static PIPassiveAlert *currentAlert = nil;
     
     // Merge with delegate configs, if available
     if (delegate) {
-        if ([delegate respondsToSelector:@selector(passiveAlertConfig)]) {
-            PIPassiveAlertConfig *delegateAlertConfig = [delegate passiveAlertConfig];
-            
-            alertConfig = [PIPassiveAlertConfig mergeConfig:alertConfig withSecondConfig:delegateAlertConfig];
+        if ([delegate respondsToSelector:@selector(configurePassiveAlert:)]) {
+            [delegate configurePassiveAlert:alertConfig];
         }
         
-        if ([delegate respondsToSelector:@selector(passiveAlertAnimationConfig)]) {
-            PIPassiveAlertAnimationConfig *delegateAnimationConfig = [delegate passiveAlertAnimationConfig];
-            
-            animationConfig = [PIPassiveAlertAnimationConfig mergeConfig:animationConfig withSecondConfig:delegateAnimationConfig];
+        if ([delegate respondsToSelector:@selector(configurePassiveAlertAnimation:)]) {
+            [delegate configurePassiveAlertAnimation:animationConfig];
         }
     }
     

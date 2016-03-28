@@ -29,6 +29,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *clostButtonContainerWidthConstraint;
 
 @end
 
@@ -38,7 +40,7 @@
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height isCloseButtonActive:(BOOL)isCloseButtonActive closeButtonImage:(UIImage *)closeButtonImage delegate:(id<PIPassiveAlertViewDelegate>)delegate {
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage delegate:(id<PIPassiveAlertViewDelegate>)delegate {
     PIPassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
     NSAssert([alertView isKindOfClass:[PIPassiveAlertView class]], @"Nib must contain view of type %@", [[PIPassiveAlertView class] description]);
@@ -55,9 +57,11 @@
         alertView.frame = CGRectMake(alertView.frame.origin.x, alertView.frame.origin.y, alertView.frame.size.width, height);
     }
     
-    if (isCloseButtonActive) {
-        if (closeButtonImage) {
-            alertView.closeButton.imageView.image = closeButtonImage;
+    if (closeButtonImage) {
+        alertView.closeButton.imageView.image = closeButtonImage;
+        
+        if (textAlignment == NSTextAlignmentLeft) {
+            alertView.messageLabelLeadingConstraint.constant = alertView.clostButtonContainerWidthConstraint.constant;
         }
     } else {
         alertView.closeButton.hidden = true;
