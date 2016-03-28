@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files     = 'Sources/*.{h,m}'
 
   s.resource_bundles = {
-    'PIPassiveAlert' => ['Sources/*.{xib}']
+    'PIPassiveAlert' => ['Sources/*.{png,xib}']
   }
 
 end

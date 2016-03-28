@@ -29,6 +29,7 @@
 
 static NSString *const kPIPassiveAlertResourceBundleName = @"PIPassiveAlert";
 static NSString *const kPIPassiveAlertDefaultNibName = @"PIPassiveAlertView";
+static NSString *const kPIPassiveAlertDefaultAccessoryImageName = @"PIPassiveAlertDefaultAccessoryImage";
 
 @implementation PIPassiveAlertDisplayer
 
@@ -154,6 +155,15 @@ static PIPassiveAlert *currentAlert = nil;
     NSBundle *bundleForNib = [NSBundle bundleWithURL:bundleURLForNib];
     
     return [UINib nibWithNibName:kPIPassiveAlertDefaultNibName bundle:bundleForNib];
+}
+
++ (UIImage *)defaultAccessoryImage {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *bundleURLForImage = [bundle URLForResource:kPIPassiveAlertResourceBundleName withExtension:@"bundle"];
+    NSBundle *bundleForImage = [NSBundle bundleWithURL:bundleURLForImage];
+    UIImage *image = [UIImage imageNamed:kPIPassiveAlertDefaultAccessoryImageName inBundle:bundleForImage compatibleWithTraitCollection:nil];
+    
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 @end
