@@ -59,7 +59,7 @@
     }
     
     if (closeButtonImage) {
-        alertView.closeButton.imageView.image = closeButtonImage;
+        [alertView.closeButton setImage:closeButtonImage forState:UIControlStateNormal];
         
         if (textAlignment == NSTextAlignmentLeft) {
             alertView.messageLabelLeadingConstraint.constant = alertView.clostButtonContainerWidthConstraint.constant;
