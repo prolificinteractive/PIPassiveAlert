@@ -66,8 +66,8 @@
  *  @param nib                 Nib for alert view.
  *  @param message             Message for alert view.
  *  @param backgroundColor     Background color type for alert view.
- *  @param textColor           Text color for alert view.
  *  @param font                Font for alert view.
+ *  @param textColor           Text color for alert view.
  *  @param textAlightment      Text alignment for alert view.
  *  @param height              Height for alert view.
  *  @param closeButtonImage    Close button image.
@@ -76,6 +76,6 @@
  *
  *  @returns New alert view.
  */
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage closeButtonWidth:(CGFloat)closeButtonWidth delegate:(id<PIPassiveAlertViewDelegate>)delegate;
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor font:(UIFont *)font textColor:(UIColor *)textColor textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage closeButtonWidth:(CGFloat)closeButtonWidth delegate:(id<PIPassiveAlertViewDelegate>)delegate;
 
 @end

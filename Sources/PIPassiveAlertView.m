@@ -40,7 +40,7 @@
 
 #pragma mark Class methods
 
-+ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor textColor:(UIColor *)textColor font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage closeButtonWidth:(CGFloat)closeButtonWidth delegate:(id<PIPassiveAlertViewDelegate>)delegate {
++ (instancetype)alertViewWithNib:(UINib *)nib message:(NSString *)message backgroundColor:(UIColor *)backgroundColor font:(UIFont *)font textColor:(UIColor *)textColor textAlignment:(NSTextAlignment)textAlignment height:(CGFloat)height closeButtonImage:(UIImage *)closeButtonImage closeButtonWidth:(CGFloat)closeButtonWidth delegate:(id<PIPassiveAlertViewDelegate>)delegate {
     PIPassiveAlertView *alertView = [[nib instantiateWithOwner:self options:nil] firstObject];
     
     NSAssert([alertView isKindOfClass:[PIPassiveAlertView class]], @"Nib must contain view of type %@", [[PIPassiveAlertView class] description]);

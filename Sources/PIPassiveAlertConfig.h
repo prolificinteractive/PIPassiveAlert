@@ -64,14 +64,19 @@
 @property (nonatomic, strong) UIColor *backgroundColor;
 
 /**
+ *  Font.
+ */
+@property (nonatomic, strong) UIFont *font;
+
+/**
  *  Text color.
  */
 @property (nonatomic, strong) UIColor *textColor;
 
 /**
- *  Font.
+ *  Text edge insets.
  */
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, assign) UIEdgeInsets textEdgeInsets;
 
 /**
  *  Text alignment.
