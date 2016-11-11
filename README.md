@@ -1,10 +1,10 @@
 # [DEPRECATED] PIPassiveAlert
 
-⚠️ **This repository is no longer maintained or supported. New pull requests will not be reviewed.** ⚠️
-
 [![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)]()
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-brightgreen.svg)](https://github.com/CocoaPods/CocoaPods)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
+
+⚠️ **This repository is no longer maintained or supported. New pull requests will not be reviewed.** ⚠️
 
 A passive alert library in Objective-C. :rotating_light:
 
