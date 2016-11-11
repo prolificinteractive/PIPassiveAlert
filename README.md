@@ -1,4 +1,6 @@
-# PIPassiveAlert
+# [DEPRECATED] PIPassiveAlert
+
+⚠️ **This repository is no longer maintained or supported. New pull requests will not be reviewed.** ⚠️
 
 [![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)]()
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-brightgreen.svg)](https://github.com/CocoaPods/CocoaPods)
